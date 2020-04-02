@@ -1,26 +1,24 @@
--- Caricamento del socket come dipendenza
 local socket = require("socket")
 
--- Inizializzazione del TCP
-local tcp = assert(socket.tcp())
-
--- Connesione al client al segunte host con alla porta 9898
-tcp:connect("192.168.1.8", 9898)
-tcp:send("\n")
-
--- Attesa della callback di risposta
-while true do
-    -- Ricezione del dato
-    local s, status, partial = tcp:receive()
-
-    -- Validazione del dato ricevuto come file LUA
-    pcall(load(partial))
-
-    -- Chiusura della ricezione
-    if status == "closed" then
-        break
+function post(param, risultato)
+    if (param - risultato * risultato < 0.1) then
+        return true
+    else
+        return false
     end
 end
 
--- Chiusura del TCP
-tcp:close()
+udp = socket.udp()
+
+udp:setpeername("192.168.1.8", 9898)
+udp:settimeout()
+
+udp:send("2")
+
+data = tonumber(udp:receive())
+
+if (data and post(2, data)) then
+    pcall(load("risultato = " .. data))
+else
+    print("Postcondizioni non superate")
+end
