@@ -1,21 +1,17 @@
 Service = {}
 Service.__index = Service
 
-function Service:create(name)
-    local srv = {}
-    setmetatable(srv, Service)
-    srv.name = name
-    return srv
+function Service:new(i, f, d, p, ...)
+    if type(i) == "string" and type(f) == "function" and type(d) == "function" and
+        type(p) == "function" then
+        return setmetatable({
+            name = i,
+            func = f,
+            daemon = d,
+            pre = p,
+            features = {...}
+        }, Service)
+    else
+        return nil
+    end
 end
-
-function Service:func(...)
-    local socket = require("socket")
-
-    --    self.balance = self.balance - amount
-end
-
-function Service:pre(...) if (...) then end end
-
--- create and use an Service
-acc = Service:create(1000)
-acc:withdraw(100)
