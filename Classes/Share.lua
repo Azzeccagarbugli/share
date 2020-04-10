@@ -22,6 +22,7 @@ function Share:discovery(s)
 end
 
 function Share:find(s)
+    --udp:send(share:find(s))
     if #self.services == 0 then return 0 end
     for k, v in pairs(self.services) do if v == s then return k end end
     return 0
