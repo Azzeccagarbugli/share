@@ -2,6 +2,11 @@ dofile("Share.lua")
 dofile("Service.lua")
 dofile("Feature.lua")
 
+net.wf.setup(net.wf.mode.STA, "TIM-29055875", "Mercurio12345!")
+net.wf.start()
+
+net.service.mdns.start("whitecat-share")
+
 sqrt_srv = Service:new("1.2.3", function()
     local socket = require("socket")
     udp = socket.udp()
