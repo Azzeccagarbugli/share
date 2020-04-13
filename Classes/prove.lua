@@ -45,9 +45,15 @@ udp:settimeout(1)
 while true do
     data, ip, port = udp:receivefrom()
     if data then
+        local success, result = pcall( abc )
+            while not success do
+            print("Error: "..result)
+            wait() --or a specific time
+            success, result = pcall( abc )
+        end
         print("Received: ", data, ip, port)
         table = load(data)
-        udp:sendto(table_to_string(table), ip, port)
+        udp:sendto(table_to_string(result), ip, port)
     end
 
     socket.sleep(0.01)
