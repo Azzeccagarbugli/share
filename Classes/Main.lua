@@ -17,7 +17,7 @@ udp:settimeout(1)
 --    if data then sqrt_srv.func(data,ip,port) end
 --end 
     
-sqrt_srv = Service:new("1.2.3", 
+service1 = Service:new("1.2.3", 
     --function
     function(data,ip,port)
         local success, result = pcall(data)
@@ -45,7 +45,7 @@ sqrt_srv = Service:new("1.2.3",
     end
 ))
 
-lol = Service:new("1.2.7.43", 
+service2 = Service:new("1.2.7.43", 
     --function
     function(data,ip,port)
         local success, result = pcall(data)
@@ -73,20 +73,14 @@ lol = Service:new("1.2.7.43",
     end
 ))
 
-printTable = function (tab) for i,k in pairs(tab) do print(i,k.name) end end
+print_services = function (tab) for i,k in pairs(tab) do print(i,k.name) end end
+print_matched_mib = function (tab) for i,k in pairs(tab) do print(i,k) end end
 
 disc = Share:new()
+disc:attach(service1)
+disc:attach(service2)
 
-
-disc:attach(lol)
-
-disc:attach(sqrt_srv)
-
-disc:attach(sqrt_srv)
-
-print(disc:ispresent(sqrt_srv))
-
-printTable(disc.services)
-print("Lunghezza Tabella: "..#disc.services)
+palo = disc:find("1.2.*")
+print_matched_mib(palo)
 
 

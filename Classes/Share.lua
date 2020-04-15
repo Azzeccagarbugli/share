@@ -11,12 +11,12 @@ end
 
 function Share:detach(s)
     if (getmetatable(s) == Service) and self:ispresent(s) then
-      for i,k in pairs(self.services) do if (s == k) then table.remove(self.services, self.services[k]) end end 
+      for i,k in pairs(self.services) do if (s == k) then table.remove(self.services, i) end end 
     end 
 end
 
 function Share:ispresent(s) 
-   if(self.services[s] ~= nil) then return true else return false end 
+    for i,k in pairs(self.services) do if(s == k) then return true end end return false
 end
 
 function Share:discovery(macroMib)
@@ -38,7 +38,7 @@ function Share:find(macroMib)
     if #self.services == 0 then return 0 end
     local saved = {}
     for i,k in pairs(self.services) do
-        if k.name:match(macroMib) ~=  nil then
+        if (k.name:match(macroMib)) then
           table.insert(saved, k.name)
         end
     end
