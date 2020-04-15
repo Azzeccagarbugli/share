@@ -33,13 +33,12 @@ function table_to_string(tbl)
     return result.."}"
 end
 
-table = {1,2,3}
 
 find = function(num)  return table end
 
 udp = socket.udp()
 
-udp:setsockname("192.168.1.9", 9898)
+udp:setsockname("*", 9898)
 udp:settimeout(1)
 
 while true do
@@ -53,7 +52,7 @@ while true do
         end
         print("Received: ", data, ip, port)
         table = load(data)
-        udp:sendto(table_to_string(result), ip, port)
+       udp:sendto(table_to_string(result), ip, port)
     end
 
     socket.sleep(0.01)
