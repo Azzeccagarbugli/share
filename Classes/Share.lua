@@ -4,31 +4,33 @@ Share.__index = Share
 function Share:new() return setmetatable({services = {}}, Share) end
 
 function Share:attach(s)
-    if (getmetatable(s) == Service) and (not self:ispresent(s))  then
+    if (getmetatable(s) == Service) and (not self:ispresent(s, self.services))  then
         table.insert(self.services, s)
     end
 end
 
 function Share:detach(s)
-    if (getmetatable(s) == Service) and self:ispresent(s) then
+    if (getmetatable(s) == Service) and self:ispresent(s, self.services) then
       for i,k in pairs(self.services) do if (s == k) then table.remove(self.services, i) end end 
     end 
 end
 
-function Share:ispresent(s) 
-    for i,k in pairs(self.services) do if(s == k) then return true end end return false
+--Cerca una entry "s" in una table "t"
+function Share:ispresent(s, t) 
+    for i,k in pairs(t) do if(s == k) then return true end end return false
 end
 
+
 function Share:discovery(macroMib)
-     local set_services = {}
+    local result = {}
     -- Memorizza gli indirizzi ip di tutti i dispositivi
     --results = net.service.mdns.resolvehost("whitecat-share")
-    results = {"192.168.1.9"}
+    ip = {"80.211.186.133"}
 
     --Vado a popolare set_services con tutti i servizi che trovo in rete
-    for k, ip in pairs(results) do self:open_udp_socket(ip,macroMib,set_services) end
+    for k, ip in pairs(ip) do self:open_udp_socket(ip,macroMib,result) end
 
-    return set_services
+    return result
 end
 
 --[[
@@ -46,7 +48,8 @@ function Share:find(macroMib)
     if #saved == 0 then return 0 else return saved end
 end
 
-function Share:open_udp_socket(ip,macroMib,set_services)
+
+function Share:open_udp_socket(ip,macroMib,result)
     local socket = require("socket")
     udp = socket.udp()
     udp:setpeername(ip, 9898)
@@ -56,6 +59,9 @@ function Share:open_udp_socket(ip,macroMib,set_services)
     --data è la stringa dalla forma {"1.2.4", "1.2.7", ...}
     data = udp:receive()
     if data then
-        pcall(load("tab = "..data.." for i,k in pairs(tab) do table.insert(set_services,tab[i]) end"))
+        pcall(load("tab = "..data))
+        
+        for i,k in pairs(tab) do if(not self:ispresent(k, result)) then table.insert(result,k) end end
     end
+    udp:close()
 end

@@ -6,8 +6,7 @@ dofile("Feature.lua")
 -- net.wf.start()
 -- net.service.mdns.start("whitecat-share")
 
-print_services = function (tab) for i,k in pairs(tab) do print(i,k.name) end end
-print_matched_mib = function (tab) for i,k in pairs(tab) do print(i,k) end end
+print_table = function (tab) for i,k in pairs(tab) do print(i,k) end end
 
 --socket sempre in ascolto
 local socket = require("socket")
@@ -73,8 +72,6 @@ service2_main2 = Service:new("1.2.7.43",
 
 
 disc_main2 = Share:new()
-bella = disc_main2:discovery("1.2.*")
+disc_main2:discovery("1.2.*")
 
-print_services(bella)
-
-
+print_table(disc_main2:discovery("1.2.*"))
