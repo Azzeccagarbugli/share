@@ -15,7 +15,7 @@ udp = socket.udp()
 udp:setsockname("*", 9898)
 udp:settimeout(1)
 
-service1 = Service:new("1.2.3", 
+service1_main2 = Service:new("1.2.3", 
     --function
     function(data,ip,port)
         local success, result = pcall(data)
@@ -43,7 +43,7 @@ service1 = Service:new("1.2.3",
     end
 ))
 
-service2 = Service:new("1.2.7.43", 
+service2_main2 = Service:new("1.2.7.43", 
     --function
     function(data,ip,port)
         local success, result = pcall(data)
@@ -72,23 +72,9 @@ service2 = Service:new("1.2.7.43",
 ))
 
 
-disc = Share:new()
-disc:attach(service1)
-disc:attach(service2)
+disc_main2 = Share:new()
+bella = disc_main2:discovery("1.2.*")
 
-while true do
-    data, ip, port = udp:receivefrom()
-    if data then
-        local success, result = pcall(disc:find(data) )
-            while not success do
-            print("Error: "..result)
-            wait() --or a specific time
-            success, result = pcall( disc:find(data) )
-        end
-        print("Received: ", data, ip, port)
-       udp:sendto(table_to_string(result), ip, port)
-    end
+print_services(bella)
 
-    socket.sleep(0.01)
-end
 
