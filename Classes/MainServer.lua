@@ -16,6 +16,7 @@ udp:setsockname("*", 9898)
 udp:settimeout(1)
 
 function table_to_string(tbl)
+    if not(type(tbl) == table) then return "{}" end
     local result = "{"
     for k, v in pairs(tbl) do
         -- Check the key type (ignore any numerical keys - assume its an array)

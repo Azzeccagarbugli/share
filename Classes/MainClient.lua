@@ -7,20 +7,6 @@ dofile("Feature.lua")
 -- net.service.mdns.start("whitecat-share")
 
 
--- function DeepPrint (e)
---     if type(e) == "table" then
---        for k,v in pairs(e) do
---            if(type(v) == "table") then
---             DeepPrint(v)
---            else 
---            for x,y in pairs(v) do print("chiave: "..x ,y ) end
---            end
---        end  
---     else
---        print(e)
---     end
---  end
-
 function tprint (tbl, indent)
   if not indent then indent = 0 end
   for k, v in pairs(tbl) do
@@ -98,6 +84,4 @@ service2_main2 = Service:new("1.2.7.43",
 
 
 disc_main2 = Share:new()
-result = disc_main2:discovery("1.2.*")
-
 tprint(disc_main2:discovery("1.2.*"))

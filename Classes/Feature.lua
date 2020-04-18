@@ -11,7 +11,6 @@ end
 
 function Feature:call(...)
     local set_services = Share:discovery(self.id)
-
     if #set_services == 0 then return false, nil end
 
     for index, service in pairs(set_services) do
