@@ -20,11 +20,6 @@ function tprint (tbl, indent)
   end
 end
 
---socket sempre in ascolto
-local socket = require("socket")
-udp = socket.udp()
-udp:setsockname("*", 9898)
-udp:settimeout(1)
 
 service1_main2 = Service:new("1.2.3", 
     --function

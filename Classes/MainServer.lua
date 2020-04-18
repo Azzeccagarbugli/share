@@ -16,7 +16,7 @@ udp:setsockname("*", 9898)
 udp:settimeout(1)
 
 function table_to_string(tbl)
-    if not(type(tbl) == table) then return "{}" end
+    if not(type(tbl) == "table") then return "{}" end
     local result = "{"
     for k, v in pairs(tbl) do
         -- Check the key type (ignore any numerical keys - assume its an array)
@@ -41,7 +41,7 @@ function table_to_string(tbl)
     return result.."}"
 end
 
-service1 = Service:new("1.2.1.4.6.7.3.223", 
+services = {["1.2.1.4.6.7.3.223"] = Service:new("1.2.1.4.6.7.3.223", 
     --function
     function(data,ip,port)
         local success, result = pcall(data)
@@ -67,68 +67,10 @@ service1 = Service:new("1.2.1.4.6.7.3.223",
     function(n, m)
     if (n - m * m < 0.1) then return true else return false end 
     end
-))
-
-service2 = Service:new("1.2.34.56.13", 
-    --function
-    function(data,ip,port)
-        local success, result = pcall(data)
-        while not success do
-            print("Error: "..result)
-            success, result = pcall(data)
-        end
-        print("Received: ", data, ip, port)
-        table = load(data)
-        udp:sendto(self.table_to_string(result), ip, port)
-
-        socket.sleep(0.01)
-    end, 
-    --daemon
-    function(n) return math.sqrt(n) end,
-    --pre
-    function(n)
-        if (n > 0) then return true else return false end
-    end,
-    --features
-    Feature:new("1.2.*", 
-    function(n, m)
-    if (n - m * m < 0.1) then return true else return false end 
-    end
-))
-
-service3 = Service:new("1.8.7.43", 
-    --function
-    function(data,ip,port)
-        local success, result = pcall(data)
-        while not success do
-            print("Error: "..result)
-            success, result = pcall(data)
-        end
-        print("Received: ", data, ip, port)
-        table = load(data)
-        udp:sendto(self.table_to_string(result), ip, port)
-
-        socket.sleep(0.01)
-    end, 
-    --daemon
-    function(n) return math.sqrt(n) end,
-    --pre
-    function(n)
-        if (n > 0) then return true else return false end
-    end,
-    --features
-    Feature:new("1.2.*", 
-    function(n, m)
-    if (n - m * m < 0.1) then return true else return false end 
-    end
-))
-
+))}
 
 disc = Share:new()
-disc:attach(service1)
-disc:attach(service2)
-disc:attach(service3)
-
+disc:attach(services["1.2.1.4.6.7.3.223"])
 
 while true do
     data, ip, port = udp:receivefrom()
