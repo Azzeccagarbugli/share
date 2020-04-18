@@ -40,7 +40,7 @@ function table_to_string(tbl)
     return result.."}"
 end
 
-service1 = Service:new("1.2.3", 
+service1 = Service:new("1.2.1.4.6.7.3.223", 
     --function
     function(data,ip,port)
         local success, result = pcall(data)
@@ -68,7 +68,7 @@ service1 = Service:new("1.2.3",
     end
 ))
 
-service2 = Service:new("1.2.7.43", 
+service2 = Service:new("1.2.34.56.13", 
     --function
     function(data,ip,port)
         local success, result = pcall(data)

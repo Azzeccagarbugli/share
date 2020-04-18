@@ -6,7 +6,33 @@ dofile("Feature.lua")
 -- net.wf.start()
 -- net.service.mdns.start("whitecat-share")
 
-print_table = function (tab) for i,k in pairs(tab) do print(i,k) end end
+
+-- function DeepPrint (e)
+--     if type(e) == "table" then
+--        for k,v in pairs(e) do
+--            if(type(v) == "table") then
+--             DeepPrint(v)
+--            else 
+--            for x,y in pairs(v) do print("chiave: "..x ,y ) end
+--            end
+--        end  
+--     else
+--        print(e)
+--     end
+--  end
+
+function tprint (tbl, indent)
+  if not indent then indent = 0 end
+  for k, v in pairs(tbl) do
+    formatting = string.rep("  ", indent) .. k .. ": "
+    if type(v) == "table" then
+      print(formatting)
+      tprint(v, indent+1)
+    else
+      print(formatting .. v)
+    end
+  end
+end
 
 --socket sempre in ascolto
 local socket = require("socket")
@@ -72,6 +98,6 @@ service2_main2 = Service:new("1.2.7.43",
 
 
 disc_main2 = Share:new()
-disc_main2:discovery("1.2.*")
+result = disc_main2:discovery("1.2.*")
 
-print_table(disc_main2:discovery("1.2.*"))
+tprint(disc_main2:discovery("1.2.*"))

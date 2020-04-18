@@ -25,7 +25,7 @@ function Share:discovery(macroMib)
     local result = {}
     -- Memorizza gli indirizzi ip di tutti i dispositivi
     --results = net.service.mdns.resolvehost("whitecat-share")
-    ip = {"80.211.186.133"}
+    ip = {"80.211.186.133","192.168.1.49"}
 
     --Vado a popolare set_services con tutti i servizi che trovo in rete
     for k, ip in pairs(ip) do self:open_udp_socket(ip,macroMib,result) end
@@ -48,6 +48,16 @@ function Share:find(macroMib)
     if #saved == 0 then return 0 else return saved end
 end
 
+function DeepPrint (e)
+    if type(e) == "table" then
+       for k,v in pairs(e) do
+           print("chiave: "..k ,v )
+           DeepPrint(v)
+       end  
+    else
+       print(e)
+    end
+ end
 
 function Share:open_udp_socket(ip,macroMib,result)
     local socket = require("socket")
@@ -56,12 +66,18 @@ function Share:open_udp_socket(ip,macroMib,result)
     udp:settimeout()
     udp:send(macroMib)
 
+    function addNewIP(keyTable, myTable, key, value)
+        table.insert(keyTable, key)
+        myTable[key] = value 
+    end 
+
     --data è la stringa dalla forma {"1.2.4", "1.2.7", ...}
     data = udp:receive()
-    if data then
-        pcall(load("tab = "..data))
-        
-        for i,k in pairs(tab) do if(not self:ispresent(k, result)) then table.insert(result,k) end end
+    if data then  
+        pcall(load("mib_tab = "..data))  
+        ip_tab = {}
+        table.insert(ip_tab,ip)
+        addNewIP(ip_tab,result,ip,mib_tab)
     end
     udp:close()
 end
