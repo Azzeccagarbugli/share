@@ -8,9 +8,15 @@ dofile("Feature.lua")
 
 -- socket sempre in ascolto
 local socket = require("socket")
+
 udp = socket.udp()
 udp:setsockname("*", 9898)
 udp:settimeout(1)
+
+udp_call = socket.udp()
+udp_call:setsockname("*", 8888)
+udp_call:settimeout(1)
+
 
 function table_to_string(tbl)
     if not (type(tbl) == "table") then return "{}" end
@@ -74,8 +80,19 @@ disc:attach(services["1.2.1.4.6.7.3.223"])
 while true do
     data, ip, port = udp:receivefrom()
     if data then
-        print("Received: ", data, ip, port)
-        udp:sendto(table_to_string(disc:find(data)), ip, port)
+        print("Ricevuto [DISCOVERY]: ", data, ip, port)
+        udp:sendto(table_to_string(disc:find(data)), ip, port) --mib
     end
+    
+    data1, ip1, port1 = udp_call:receivefrom()
+    if data1 then
+        print("Ricevuto [CALL]: ", data1, ip1, port1)
+        load(data1)()
+        function bool_to_string(n) 
+            return n and 'true' or 'false'
+        end
+        udp_call:sendto(bool_to_string(services[mib].pre(param)), ip1, port1)
+    end   
+    
     socket.sleep(0.01)
 end

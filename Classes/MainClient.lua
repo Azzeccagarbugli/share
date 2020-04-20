@@ -20,4 +20,6 @@ function tprint(tbl, indent)
 end
 
 disc_main = Share:new()
-tprint(disc_main:discovery("1.2.*"))
+
+feat = Feature:new("1.2.*",function(n)  print(n) end)
+feat:call(2)
