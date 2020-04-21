@@ -23,10 +23,18 @@ function tprint(tbl, indent)
     end
 end
 
-function Feature:call(...)
+function getTableSize(t)
+    local count = 0
+    for _, __ in pairs(t) do
+        count = count + 1
+    end
+    return count
+end
 
+function Feature:call(...)
     local set_services = Share:discovery(self.id)
-    if #set_services == 0 then print("VUOTO")  end--return false, nil end
+    if getTableSize(set_services) == 0 then return {},false end --ritorna table(?)
+    
     tprint(set_services)
     
     for ip, services in pairs(set_services) do
@@ -37,11 +45,12 @@ function Feature:call(...)
             udp:settimeout()
             udp:send('mib, param = "'.. mib ..'", '.. ... ..'')
             data = udp:receive()
-            
-            if (data == "true") then
-                print("PRECONDIZIONI SUPERATE")
+            if (not(data == "nil")) then --precondizioni
+                if(self.post(...,data)) then --postcondizioni
+                    return data,true
+                end
             end
-            udp:close()
+        udp:close()
         end
     end
 end

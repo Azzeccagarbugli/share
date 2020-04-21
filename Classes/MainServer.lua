@@ -45,7 +45,8 @@ end
 services = {
     ["1.2.1.4.6.7.3.223"] = Service:new("1.2.1.4.6.7.3.223", -- function
     function(data, ip, port)
-        local success, result = pcall(data)
+        udp_call:sendto(data, ip, port)
+       --[[  local success, result = pcall(data)
         while not success do
             print("Error: " .. result)
             wait() -- or a specific time
@@ -55,7 +56,7 @@ services = {
         table = load(data)
         udp:sendto(self.table_to_string(result), ip, port)
 
-        socket.sleep(0.01)
+        socket.sleep(0.01) ]]
     end, -- daemon
     function(n) return math.sqrt(n) end, -- pre
     function(n)
@@ -87,12 +88,14 @@ while true do
     data1, ip1, port1 = udp_call:receivefrom()
     if data1 then
         print("Ricevuto [CALL]: ", data1, ip1, port1)
+        
         load(data1)()
-        function bool_to_string(n) 
-            return n and 'true' or 'false'
-        end
-        udp_call:sendto(bool_to_string(services[mib].pre(param)), ip1, port1)
-    end   
-    
+        
+        if(services[mib].pre(param)) then
+            services[mib].func(tostring(services[mib].daemon(param)),ip1,port1) 
+        else 
+            services[mib].func("nil",ip1,port1)
+        end 
+    end  
     socket.sleep(0.01)
 end

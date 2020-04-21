@@ -19,7 +19,8 @@ function tprint(tbl, indent)
     end
 end
 
+
 disc_main = Share:new()
 
-feat = Feature:new("1.2.*",function(n)  print(n) end)
-feat:call(2)
+feat = Feature:new("1.2.*",function(n , ris) if(n-ris*ris < 0.000001) then return true else return false end end)
+print(feat:call(2))
