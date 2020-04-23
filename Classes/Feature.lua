@@ -45,8 +45,11 @@ function Feature:call(...)
             udp:settimeout()
             udp:send('mib, param = "'.. mib ..'", '.. ... ..'')
             data = udp:receive()
+            print(data)
             if (not(data == "nil")) then --precondizioni
+                print("PRE-CONDIZIONI SUPERATE")
                 if(self.post(...,data)) then --postcondizioni
+                    print("POST-CONDIZIONI SUPERATE")
                     return data,true
                 end
             end

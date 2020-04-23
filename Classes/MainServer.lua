@@ -43,40 +43,24 @@ function table_to_string(tbl)
 end
 
 services = {
-    ["1.2.1.4.6.7.3.223"] = Service:new("1.2.1.4.6.7.3.223", -- function
-    function(data, ip, port)
-        udp_call:sendto(data, ip, port)
-       --[[  local success, result = pcall(data)
-        while not success do
-            print("Error: " .. result)
-            wait() -- or a specific time
-            success, result = pcall(data)
-        end
-        print("Received: ", data, ip, port)
-        table = load(data)
-        udp:sendto(self.table_to_string(result), ip, port)
-
-        socket.sleep(0.01) ]]
-    end, -- daemon
-    function(n) return math.sqrt(n) end, -- pre
-    function(n)
-        if (n > 0) then
-            return true
-        else
-            return false
-        end
-    end, -- features
-    Feature:new("1.2.*", function(n, m)
-        if (n - m * m < 0.1) then
-            return true
-        else
-            return false
-        end
-    end))
+    ["1.2.1.4.6.7.3.223"] = Service:new("1.2.1.4.6.7.3.223", 
+    -- function
+    function(data) udp_call:sendto(self.deamon(), ip_call, port_call) end,    
+    -- daemon 
+    function() return math.sqrt(data) end, 
+    -- pre
+    function(n) return n > 0 end
+    -- features
+    Feature:new("1.2.*", function(n, m) return n - m * m < 0.1 end)
+   )
 }
 
 disc = Share:new()
 disc:attach(services["1.2.1.4.6.7.3.223"])
+
+--disc:attach(Service:new(...))
+
+ip_call, port_call = "", 0
 
 while true do
     data, ip, port = udp:receivefrom()
@@ -85,16 +69,16 @@ while true do
         udp:sendto(table_to_string(disc:find(data)), ip, port) --mib
     end
     
-    data1, ip1, port1 = udp_call:receivefrom()
+    data1, ip_call, port_call = udp_call:receivefrom()
     if data1 then
-        print("Ricevuto [CALL]: ", data1, ip1, port1)
+        print("Ricevuto [CALL]: ", data1, ip_call, port_call)
         
         load(data1)()
         
         if(services[mib].pre(param)) then
-            services[mib].func(tostring(services[mib].daemon(param)),ip1,port1) 
+            services[mib].func(tostring(services[mib].daemon(param))) 
         else 
-            services[mib].func("nil",ip1,port1)
+            services[mib].func("nil")
         end 
     end  
     socket.sleep(0.01)
