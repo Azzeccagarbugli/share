@@ -20,36 +20,17 @@ dofile("Feature.lua")
 end ]]
 
 services = {
-    ["1.2.1.4.6.7.3.223"] = Service:new("1.2.1.4.6.7.3.223", -- function
-    function(data, ip, port)
-        udp_call:sendto(data, ip, port)
-       --[[  local success, result = pcall(data)
-        while not success do
-            print("Error: " .. result)
-            wait() -- or a specific time
-            success, result = pcall(data)
-        end
-        print("Received: ", data, ip, port)
-        table = load(data)
-        udp:sendto(self.table_to_string(result), ip, port)
-
-        socket.sleep(0.01) ]]
-    end,
-    
+    ["1.2.9.0"] = Service:new("1.2.9.0",
+     -- function
+    function(data, ip, port) udp_call:sendto(self.daemon(), ip, port) end,
     -- daemon
-    function(n) return math.sqrt(n) end, 
-    
+    function() return math.sqrt(data) end, 
     -- pre
-    function(n)
-        if (n > 0) then
-            return true
-        else
-            return false
-        end
-    end, -- features
+    function(n) return n > 0 end,
+     -- features
     Feature:new("1.2.*", function(n, m) return n - m * m < 0.0001 end ))
 }
 
 
 disc_main = Share:new()
-print(services["1.2.1.4.6.7.3.223"].features[1]:call(2))
+print(services["1.2.9.0"].features[1]:call(2))

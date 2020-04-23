@@ -43,20 +43,34 @@ function table_to_string(tbl)
 end
 
 services = {
-    ["1.2.1.4.6.7.3.223"] = Service:new("1.2.1.4.6.7.3.223", 
+    ["1.2.6.0"] = Service:new("1.2.6.0", 
     -- function
-    function(data) udp_call:sendto(self.deamon(), ip_call, port_call) end,    
+    function(data) udp_call:sendto(services["1.2.6.0"].daemon(), ip_call, port_call) end,    
     -- daemon 
-    function() return math.sqrt(data) end, 
+    function() return 1.4142135 end, 
     -- pre
-    function(n) return n > 0 end
+    function(n) return n > 0 end,
+    -- features
+    Feature:new("1.2.*", function(n, m) return n - m * m < 0.1 end)
+   ),
+
+   ["1.2.1.1.1"] = Service:new("1.2.1.1.1", 
+    -- function
+    function(data) udp_call:sendto(services["1.2.1.1.1"].daemon(), ip_call, port_call) end,    
+    -- daemon 
+    function() return 1.4142135 end, 
+    -- pre
+    function(n) return n > 0 end,
     -- features
     Feature:new("1.2.*", function(n, m) return n - m * m < 0.1 end)
    )
 }
 
+
+
 disc = Share:new()
-disc:attach(services["1.2.1.4.6.7.3.223"])
+disc:attach(services["1.2.6.0"])
+disc:attach(services["1.2.1.1.1"])
 
 --disc:attach(Service:new(...))
 
@@ -76,7 +90,7 @@ while true do
         load(data1)()
         
         if(services[mib].pre(param)) then
-            services[mib].func(tostring(services[mib].daemon(param))) 
+            services[mib].func(param) 
         else 
             services[mib].func("nil")
         end 
