@@ -31,6 +31,16 @@ function getTableSize(t)
     return count
 end
 
+abc = function(data,ip)
+    local socket = require("socket")
+
+    udp_func = socket.udp()
+    udp_func:setpeername(ip,7777)
+    udp_func:settimeout(1)
+    udp_func:send(data)
+    udp_func:close()
+ end
+
 function Feature:call(...)
     local set_services = Share:discovery(self.id)
     if getTableSize(set_services) == 0 then return {},false end --ritorna table(?)
@@ -44,17 +54,21 @@ function Feature:call(...)
             udp:setpeername(ip, 8888)
             udp:settimeout()
             udp:send('mib, param = "'.. mib ..'", '.. ... ..'')
-            data = udp:receive()
-            print(data)
-            if (not(data == "nil")) then --precondizioni
-                print("PRE-CONDIZIONI SUPERATE")
-                if(self.post(...,data)) then --postcondizioni
+            udp:close()
+          --  data = udp:receive() -- ricevo function dal chiamato
+            
+            abc(...,ip)
+           
+        
+            if (not(data == "nil")) then -- check risultato precondizioni eseguite nel chiamato                
+                if(self.post(load(data)(...))) then --postcondizioni
                     print("POST-CONDIZIONI SUPERATE")
-                    return data,true
+                    return load(data)(...),true
                 end
             end
         udp:close()
         end
     end
+    return {},false
 end
 

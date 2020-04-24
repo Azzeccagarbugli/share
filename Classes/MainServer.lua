@@ -45,9 +45,40 @@ end
 services = {
     ["1.2.6.0"] = Service:new("1.2.6.0", 
     -- function
-    function(data) udp_call:sendto(services["1.2.6.0"].daemon(), ip_call, port_call) end,    
+    function(data)
+        udp_func = socket.udp()
+        --udp_func:setpeername(ip, 7777) --porta temporanea
+        udp_func:setsockname(ip,7777)
+        udp_func:settimeout(1)
+        print("Invio sta robba"..data)
+        udp_func:send(data)
+
+        while true do
+            result, ip_chiamato, port_chiamato = udp_func:receivefrom()
+            print("Funtition: "..result, ip_chiamato, port_chiamato)
+            if result then
+                print("Ricevuto Risultato: ", result, ip_chiamato, port_chiamato)
+                return result
+            end
+        end
+     end,    
+
     -- daemon 
-    function() return 1.4142135 end, 
+    function()
+        udp_daemon = socket.udp()
+        udp_daemon:setsockname("*", 7777)
+        udp_daemon:settimeout(1)
+
+        print("SONO NEL DAEMON")
+
+        while true do
+            data, ip, port = udp_daemon:receivefrom()
+            if data then
+                print("RICEVUTO NEL DAEMON: "..data, ip, port)
+                udp_daemon:sendto(tostring(math.sqrt(tonumber(data))), ip, port) 
+            end
+        end
+    end, 
     -- pre
     function(n) return n > 0 end,
     -- features
@@ -85,14 +116,15 @@ while true do
     
     data1, ip_call, port_call = udp_call:receivefrom()
     if data1 then
-        print("Ricevuto [CALL]: ", data1, ip_call, port_call)
+        print("Ricevuto [PRE]: ", data1, ip_call, port_call)
         
         load(data1)()
-        
-        if(services[mib].pre(param)) then
-            services[mib].func(param) 
+
+        if(services[mib].pre(param)) then -- eseguo le precondizioni
+            udp_call:sendto(string.dump(services[mib].func),ip_call,port_call) -- invio il dump di function
+            services[mib].daemon()
         else 
-            services[mib].func("nil")
+            services[mib].func("nil") --non superate
         end 
     end  
     socket.sleep(0.01)
