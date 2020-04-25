@@ -2,10 +2,6 @@ dofile("Share.lua")
 dofile("Service.lua")
 dofile("Feature.lua")
 
--- net.wf.setup(net.wf.mode.STA, "TIM-29055875", "Mercurio12345!")
--- net.wf.start()
--- net.service.mdns.start("whitecat-share")
-
 -- socket sempre in ascolto
 local socket = require("socket")
 
@@ -46,15 +42,19 @@ services = {
     ["1.2.6.0"] = Service:new("1.2.6.0", 
     -- function
     function(data)
+        local socket = require("socket")
         udp_func = socket.udp()
-        --udp_func:setpeername(ip, 7777) --porta temporanea
-        udp_func:setsockname(ip,7777)
+        udp_func:setpeername(ip, 7777) --porta temporanea
         udp_func:settimeout(1)
-        print("Invio sta robba"..data)
         udp_func:send(data)
+        udp_func:close()
+
+        udp_daemon = socket.udp()
+        udp_daemon:setsockname("*",7777)
+        udp_daemon:settimeout(1)
 
         while true do
-            result, ip_chiamato, port_chiamato = udp_func:receivefrom()
+            result, ip_chiamato, port_chiamato = udp_daemon:receivefrom()
             print("Funtition: "..result, ip_chiamato, port_chiamato)
             if result then
                 print("Ricevuto Risultato: ", result, ip_chiamato, port_chiamato)
@@ -66,17 +66,18 @@ services = {
     -- daemon 
     function()
         udp_daemon = socket.udp()
-        udp_daemon:setsockname("*", 7777)
+        udp_daemon:setsockname("*", 9999)
         udp_daemon:settimeout(1)
 
         print("SONO NEL DAEMON")
 
         while true do
-            data, ip, port = udp_daemon:receivefrom()
+            local data, ip, port = udp_daemon:receivefrom()
             if data then
                 print("RICEVUTO NEL DAEMON: "..data, ip, port)
                 udp_daemon:sendto(tostring(math.sqrt(tonumber(data))), ip, port) 
             end
+            socket.sleep(0.01)
         end
     end, 
     -- pre
@@ -108,10 +109,10 @@ disc:attach(services["1.2.1.1.1"])
 ip_call, port_call = "", 0
 
 while true do
-    data, ip, port = udp:receivefrom()
+    data, ip_discovery, port = udp:receivefrom()
     if data then
-        print("Ricevuto [DISCOVERY]: ", data, ip, port)
-        udp:sendto(table_to_string(disc:find(data)), ip, port) --mib
+        print("Ricevuto [DISCOVERY]: ", data, ip_discovery, port)
+        udp:sendto(table_to_string(disc:find(data)), ip_discovery, port) --mib
     end
     
     data1, ip_call, port_call = udp_call:receivefrom()

@@ -2,57 +2,25 @@
 --SERVER/CHIAMATO
 
 local socket = require("socket")
-
-function abc()
-    table = {1,2,3} 
-    return table
-end
-
-function table_to_string(tbl)
-    local result = "{"
-    for k, v in pairs(tbl) do
-        -- Check the key type (ignore any numerical keys - assume its an array)
-        if type(k) == "string" then
-            result = result.."[\""..k.."\"]".."="
-        end
-
-        -- Check the value type
-        if type(v) == "table" then
-            result = result..table_to_string(v)
-        elseif type(v) == "boolean" then
-            result = result..tostring(v)
-        else
-            result = result.."\""..v.."\""
-        end
-        result = result..","
-    end
-    -- Remove leading commas from the result
-    if result ~= "" then
-        result = result:sub(1, result:len()-1)
-    end
-    return result.."}"
-end
-
-
-find = function(num)  return table end
-
 udp = socket.udp()
-
-udp:setsockname("*", 9898)
+udp:setsockname("*", 7777)
 udp:settimeout(1)
 
 while true do
+    data = ""
     data, ip, port = udp:receivefrom()
+    print(data)
     if data then
-        local success, result = pcall( abc )
+        print("RICEVUTOOOO")
+        --[[ local success, result = pcall( abc )
             while not success do
             print("Error: "..result)
             wait() --or a specific time
-            success, result = pcall( abc )
-        end
-        print("Received: ", data, ip, port)
-        table = load(data)
-       udp:sendto(table_to_string(result), ip, port)
+            success, result = pcall( abc ) ]]
+        --end
+        --print("Received: ", data, ip, port)
+        --table = load(data)
+       --udp:sendto(table_to_string(result), ip, port)
     end
 
     socket.sleep(0.01)

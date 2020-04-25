@@ -25,10 +25,9 @@ function Share:discovery(macroMib)
     local result = {}
     -- Memorizza gli indirizzi ip di tutti i dispositivi
     --results = net.service.mdns.resolvehost("whitecat-share")
-    ip = {"80.211.186.133","192.168.1.9"}
+    ip = {"80.211.186.133"}
     --Vado a popolare set_services con tutti i servizi che trovo in rete
     for k, ip in pairs(ip) do self:open_udp_socket(ip,macroMib,result) end
-
     return result
 end
 
