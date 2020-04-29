@@ -5,7 +5,7 @@ dofile("Feature.lua")
 services = {
     ["1.2.9.0"] = Service:new("1.2.9.0",
      -- function
-    function(data, ip, port) udp_call:sendto(self.daemon(), ip, port) end,
+    'function(data, ip, port) udp_call:sendto(self.daemon(), ip, port) end',
     -- daemon
     function() return math.sqrt(data) end, 
     -- pre

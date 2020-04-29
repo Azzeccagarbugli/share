@@ -13,7 +13,6 @@ udp_call = socket.udp()
 udp_call:setsockname("*", 8888)
 udp_call:settimeout(1)
 
-
 function table_to_string(tbl)
     if not (type(tbl) == "table") then return "{}" end
     local result = "{"
@@ -41,61 +40,49 @@ end
 services = {
     ["1.2.6.0"] = Service:new("1.2.6.0", 
     -- function
-    function(data)
+    [[ 
+    return function(data,ip)
+        local host, port = ip, 7777
         local socket = require("socket")
-        udp_func = socket.udp()
-        udp_func:setpeername(ip, 7777) --porta temporanea
-        udp_func:settimeout(1)
-        udp_func:send(data)
-        udp_func:close()
-
-        udp_daemon = socket.udp()
-        udp_daemon:setsockname("*",7777)
-        udp_daemon:settimeout(1)
-
+        local tcp = assert(socket.tcp())
+        
+        tcp:connect(host, port);
+        tcp:send(data.."\n");
         while true do
-            result, ip_chiamato, port_chiamato = udp_daemon:receivefrom()
-            print("Funtition: "..result, ip_chiamato, port_chiamato)
-            if result then
-                print("Ricevuto Risultato: ", result, ip_chiamato, port_chiamato)
-                return result
-            end
+            local s, status, partial = tcp:receive()
+            print(s or partial)
+            if status == "closed" then break end
+            return s or partial
         end
-     end,    
-
+        tcp:close()
+    end
+    ]],    
     -- daemon 
     function()
-        udp_daemon = socket.udp()
-        udp_daemon:setsockname("*", 9999)
-        udp_daemon:settimeout(1)
+        local socket = require("socket")
+        local server = assert(socket.bind("*", 7777))
+        local ip, port = server:getsockname()
 
-        print("SONO NEL DAEMON")
-
-        while true do
-            local data, ip, port = udp_daemon:receivefrom()
-            if data then
-                print("RICEVUTO NEL DAEMON: "..data, ip, port)
-                udp_daemon:sendto(tostring(math.sqrt(tonumber(data))), ip, port) 
+        while 1 do
+            print("SONO NEL DAEMON")
+            local client = server:accept()
+            client:settimeout()
+            local line, err = client:receive()
+            if not err then 
+                print("RICEVUTO LINE: "..line)
+                client:send(tostring(math.sqrt(tonumber(line))).."\n") 
+                client:close()
+                break
             end
-            socket.sleep(0.01)
         end
+        
+        server:close()
     end, 
     -- pre
     function(n) return n > 0 end,
     -- features
     Feature:new("1.2.*", function(n, m) return n - m * m < 0.1 end)
    ),
-
-   ["1.2.1.1.1"] = Service:new("1.2.1.1.1", 
-    -- function
-    function(data) udp_call:sendto(services["1.2.1.1.1"].daemon(), ip_call, port_call) end,    
-    -- daemon 
-    function() return 1.4142135 end, 
-    -- pre
-    function(n) return n > 0 end,
-    -- features
-    Feature:new("1.2.*", function(n, m) return n - m * m < 0.1 end)
-   )
 }
 
 
@@ -122,7 +109,8 @@ while true do
         load(data1)()
 
         if(services[mib].pre(param)) then -- eseguo le precondizioni
-            udp_call:sendto(string.dump(services[mib].func),ip_call,port_call) -- invio il dump di function
+            --udp_call:sendto(string.dump(services[mib].func),ip_call,port_call) -- invio il dump di function
+            udp_call:sendto(services[mib].func,ip_call,port_call)
             services[mib].daemon()
         else 
             services[mib].func("nil") --non superate

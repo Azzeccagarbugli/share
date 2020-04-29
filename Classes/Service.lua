@@ -2,7 +2,7 @@ Service = {}
 Service.__index = Service
 
 function Service:new(i, f, d, p, ...)
-    if type(i) == "string" and type(f) == "function" and type(d) == "function" and
+    if type(i) == "string" and type(f) == "string" and type(d) == "function" and
         type(p) == "function" then
         return setmetatable({
             name = i,
