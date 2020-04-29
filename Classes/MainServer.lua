@@ -48,6 +48,7 @@ services = {
         
         tcp:connect(host, port);
         tcp:send(data.."\n");
+        tcp:settimeout(2)
         while true do
             local s, status, partial = tcp:receive()
             print(s or partial)
@@ -63,19 +64,17 @@ services = {
         local server = assert(socket.bind("*", 7777))
         local ip, port = server:getsockname()
 
-        while 1 do
-            print("SONO NEL DAEMON")
+        while true do
+            server:settimeout(2)
             local client = server:accept()
-            client:settimeout()
-            local line, err = client:receive()
-            if not err then 
-                print("RICEVUTO LINE: "..line)
+            if client == nil then break end
+              local line, err = client:receive()
+              if not err then 
                 client:send(tostring(math.sqrt(tonumber(line))).."\n") 
                 client:close()
                 break
-            end
+              end
         end
-        
         server:close()
     end, 
     -- pre
@@ -105,15 +104,12 @@ while true do
     data1, ip_call, port_call = udp_call:receivefrom()
     if data1 then
         print("Ricevuto [PRE]: ", data1, ip_call, port_call)
-        
         load(data1)()
-
         if(services[mib].pre(param)) then -- eseguo le precondizioni
-            --udp_call:sendto(string.dump(services[mib].func),ip_call,port_call) -- invio il dump di function
             udp_call:sendto(services[mib].func,ip_call,port_call)
             services[mib].daemon()
         else 
-            services[mib].func("nil") --non superate
+            services[mib].func(nil) --non superate
         end 
     end  
     socket.sleep(0.01)

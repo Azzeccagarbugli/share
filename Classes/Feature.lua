@@ -42,15 +42,15 @@ function Feature:call(...)
         for i, mib in pairs(services) do
             local socket = require("socket")
             local udp = socket.udp()
+            udp:settimeout(2)
             udp:setpeername(current_ip, 8888)
-            udp:settimeout()
             udp:send('mib, param = "'.. mib ..'", '.. ... ..'')
             data = udp:receive() -- ricevo function dal chiamato
-
-            if (not(data == "nil")) then -- check risultato precondizioni eseguite nel chiamato 
+        
+            if type(data) == "string" then -- check risultato precondizioni eseguite nel chiamato 
                 print("PRE SUPERATE")
                 res = load(data)()(...,current_ip) 
-                if(self.post(...,res)) then
+                if(res and self.post(...,res)) then
                     print("POST SUPERATE")
                     return res,true
                 end
