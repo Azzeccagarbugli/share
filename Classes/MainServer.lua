@@ -109,7 +109,7 @@ while true do
             udp_call:sendto(services[mib].func,ip_call,port_call)
             services[mib].daemon()
         else 
-            services[mib].func(nil) --non superate
+            udp_call:sendto("nil",ip_call,port_call) --non superate
         end 
     end  
     socket.sleep(0.01)

@@ -47,7 +47,7 @@ function Feature:call(...)
             udp:send('mib, param = "'.. mib ..'", '.. ... ..'')
             data = udp:receive() -- ricevo function dal chiamato
         
-            if type(data) == "string" then -- check risultato precondizioni eseguite nel chiamato 
+            if not (data == "nil") then -- check risultato precondizioni eseguite nel chiamato 
                 print("PRE SUPERATE")
                 res = load(data)()(...,current_ip) 
                 if(res and self.post(...,res)) then
