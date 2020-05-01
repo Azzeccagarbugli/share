@@ -9,55 +9,32 @@ function Feature:new(i, p)
     end
 end
 
-
-function tprint(tbl, indent)
-    if not indent then indent = 0 end
-    for k, v in pairs(tbl) do
-        formatting = string.rep("  ", indent) .. k .. ": "
-        if type(v) == "table" then
-            print(formatting)
-            tprint(v, indent + 1)
-        else
-            print(formatting .. v)
-        end
-    end
-end
-
-function getTableSize(t)
-    local count = 0
-    for _, __ in pairs(t) do
-        count = count + 1
-    end
-    return count
-end
-
-
 function Feature:call(...)
     local set_services = Share:discovery(self.id)
-    if getTableSize(set_services) == 0 then return {},false end --ritorna table(?)
-    
-    tprint(set_services)
-    
+    if Utilities:get_table_size(set_services) == 0 then return {}, false end -- ritorna table(?)
+
+    Utilities:print_table(set_services)
+
     for current_ip, services in pairs(set_services) do
-        for i, mib in pairs(services) do
+        for _, mib in pairs(services) do
             local socket = require("socket")
-            local udp = socket.udp()
-            udp:settimeout(2)
-            udp:setpeername(current_ip, 8888)
-            udp:send('mib, param = "'.. mib ..'", '.. ... ..'')
-            data = udp:receive() -- ricevo function dal chiamato
-        
-            if not (data == "nil") then -- check risultato precondizioni eseguite nel chiamato 
+            local udp_feature = socket.udp()
+            udp_feature:settimeout(2)
+            udp_feature:setpeername(current_ip, 8888)
+            udp_feature:send('mib, param = "' .. mib .. '", ' .. ... .. '')
+            local data_func = udp_feature:receive() -- ricevo function dal chiamato
+
+            if not (data_func == "nil") then -- check risultato precondizioni eseguite nel chiamato 
                 print("PRE SUPERATE")
-                res = load(data)()(...,current_ip) 
-                if(res and self.post(...,res)) then
+                local res = load(data_func)()(..., current_ip)
+                if (res and self.post(..., res)) then
                     print("POST SUPERATE")
-                    return res,true
+                    return res, true
                 end
             end
         end
     end
 
-    return {},false
+    return {}, false
 end
 
