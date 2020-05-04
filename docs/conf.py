@@ -31,8 +31,8 @@ release = '1.0.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 # extensions = [
-#     'sphinx_lua',
 #     'sphinxcontrib.luadomain',
+#     'sphinx_lua',
 # ]
 
 # Lua source path files
@@ -57,6 +57,9 @@ html_theme = 'sphinx_rtd_theme'
 
 # Logo
 html_logo = "_static/logo.png"
+
+# Favicon
+html_favicon = '_static/logo.png'
 
 # Options
 html_theme_options = {

@@ -19,5 +19,6 @@ while the part of abstract description and idealization of the pattern to the te
    :caption: Contents:
 
    introduction
+   pattern
 
 .. [1] `Johann Sebastian Bach, german composer and musician <https://en.wikipedia.org/wiki/Johann_Sebastian_Bach>`_
