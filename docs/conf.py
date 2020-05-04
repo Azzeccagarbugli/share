@@ -30,13 +30,13 @@ release = '1.0.0'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [
-    'sphinx_lua',
-    'sphinxcontrib.luadomain',
-]
+# extensions = [
+#     'sphinx_lua',
+#     'sphinxcontrib.luadomain',
+# ]
 
 # Lua source path files
-lua_source_path = ['./src/']
+# lua_source_path = ['./src/']
 
 
 # Add any paths that contain templates here, relative to this directory.
@@ -54,6 +54,24 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # a list of builtin themes.
 #
 html_theme = 'sphinx_rtd_theme'
+
+# Logo
+html_logo = "_static/logo.png"
+
+# Options
+html_theme_options = {
+    'canonical_url': '',
+    'logo_only': True,
+    'display_version': True,
+    'prev_next_buttons_location': 'bottom',
+    'style_external_links': True,
+    'collapse_navigation': True,
+    'sticky_navigation': True,
+    'navigation_depth': 4,
+    'includehidden': True,
+    'titles_only': False,
+    'style_nav_header_background': 'white',
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
