@@ -36,7 +36,7 @@ function Utilities:table_to_string(tbl)
 
         -- Check the value type
         if type(v) == "table" then
-            result = result .. table_to_string(v)
+            result = result .. self:table_to_string(v)
         elseif type(v) == "boolean" then
             result = result .. tostring(v)
         else
