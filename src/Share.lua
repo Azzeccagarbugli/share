@@ -27,8 +27,8 @@ end
 
 --- This method search a service from the services table and returns true if it finds an occurrence
 --- @param s Service The service to search
---- @param t Table The table on which doing the search
---- @return Boolean true if the service is present, false otherwise
+--- @param t table The table on which doing the search
+--- @return boolean True if the service is present, false otherwise
 function Share:is_present(s, t)
     for _, k in pairs(t) do if (s == k) then return true end end
     return false
@@ -36,18 +36,16 @@ end
 
 function Share:discovery(macro_mib)
     local result = {}
-    -- Memorizza gli indirizzi ip di tutti i dispositivi
-    -- results = net.service.mdns.resolvehost("whitecat-share")
-    -- ip = {"80.211.186.133"}
+
     local ip = {"10.0.15.228"}
-    -- Vado a popolare set_services con tutti i servizi che trovo in rete
+
     for _, ip in pairs(ip) do self:open_udp_socket(ip, macro_mib, result) end
     return result
 end
 
 --- Internal function that retrieve the set of services with the corresponding prefix 
 --- @param macro_mib string The prefix of the mib to search
---- @return Table the set of corresponding services
+--- @return table The set of corresponding services
 function Share:find(macro_mib)
     if #self.services == 0 then return 0 end
     local saved = {}
@@ -62,8 +60,8 @@ function Share:find(macro_mib)
 end
 
 --- Internal function used to establish a remote connection with udp socket
---- @param ip string Ip of the remote device 
---- @param macro_mib string Mib of the service owned by the remote service
+--- @param ip string The ip of the remote device 
+--- @param macro_mib string MIB of the service owned by the remote service
 --- @param result table The table used to save all results
 function Share:open_udp_socket(ip, macro_mib, result)
     local socket = require("socket")
@@ -72,7 +70,6 @@ function Share:open_udp_socket(ip, macro_mib, result)
     udp_discovery:settimeout()
     udp_discovery:send(macro_mib)
 
-    -- data è la stringa dalla forma {"1.2.4", "1.2.7", ...}
     local data_mib = udp_discovery:receive()
 
     if (data_mib and not (data_mib == "{}")) then

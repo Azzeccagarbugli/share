@@ -1,6 +1,8 @@
 Utilities = {}
 Utilities.__index = Utilities
 
+local log = dofile("Log.lua")
+
 function Utilities:add_new_ip(keyTable, myTable, key, value)
     table.insert(keyTable, key)
     myTable[key] = value
@@ -11,10 +13,10 @@ function Utilities:print_table(tbl, indent)
     for k, v in pairs(tbl) do
         local formatting = string.rep("  ", indent) .. k .. ": "
         if type(v) == "table" then
-            print(formatting)
+            log.ip(formatting)
             self:print_table(v, indent + 1)
         else
-            print(formatting .. v)
+            log.srv(formatting .. v)
         end
     end
 end

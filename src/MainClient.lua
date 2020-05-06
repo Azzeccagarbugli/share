@@ -3,6 +3,8 @@ dofile("Service.lua")
 dofile("Feature.lua")
 dofile("Utilities.lua")
 
+local log = dofile("Log.lua")
+
 local services = {
     ["1.2.9.0"] = Service:new("1.2.9.0", -- function
     'function(data, ip, port) udp_call:sendto(self.daemon(), ip, port) end',
@@ -13,4 +15,4 @@ local services = {
 }
 
 local disc_main = Share:new()
-print(services["1.2.9.0"].features[1]:call(2))
+services["1.2.9.0"].features[1]:call(2)
