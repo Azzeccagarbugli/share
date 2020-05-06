@@ -1,6 +1,12 @@
+--- Define an object Feature.
+--- @class Feature.Feature
 Feature = {}
 Feature.__index = Feature
 
+--- The constructor of the object Feature
+--- @param i string The MIB of the current Feature
+--- @param p function the post-condition necessary to checking
+--- @return Feature.Feature The new Feature just created or nil in case of any issues 
 function Feature:new(i, p)
     if type(i) == "string" and type(p) == "function" then
         return setmetatable({id = i, post = p}, Feature)
@@ -9,6 +15,9 @@ function Feature:new(i, p)
     end
 end
 
+--- A stub that searches, verifies, executes and produces the results related to a remote service
+--- @vararg The parameters that are called are a regular expression and the parameters on which to perform the operation
+--- @return Tuple,Boolean Produces a Boolean indicating whether the operation is successful and a tuple with the values ​​produced by the requested service. 
 function Feature:call(...)
     local set_services = Share:discovery(self.id)
     if Utilities:get_table_size(set_services) == 0 then return {}, false end -- ritorna table(?)
