@@ -30,13 +30,14 @@ release = '1.0.0'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-# extensions = [
-#     'sphinxcontrib.luadomain',
-#     'sphinx_lua',
-# ]
+extensions = [
+    'sphinxcontrib.luadomain',
+    'sphinx_lua',
+    'sphinx.ext.autodoc',
+]
 
 # Lua source path files
-# lua_source_path = ['./src/']
+lua_source_path = ['../src/']
 
 
 # Add any paths that contain templates here, relative to this directory.
