@@ -1,5 +1,5 @@
 --- Define an object Service.
---- @class Service.Service
+--- @class Service
 Service = {}
 Service.__index = Service
 
@@ -9,7 +9,7 @@ Service.__index = Service
 --- @param d function The defined daemon that share data with the function of the same Service
 --- @param p function The pre-condition necessary to checking 
 --- @vararg any The set of features
---- @return Service.Service The new Service just created or nil in case of any issues 
+--- @return Service The new Service just created or nil in case of any issues 
 function Service:new(i, f, d, p, ...)
     if type(i) == "string" and type(f) == "string" and type(d) == "function" and
         type(p) == "function" then

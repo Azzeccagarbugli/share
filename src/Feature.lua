@@ -1,5 +1,5 @@
 --- Define an object Feature.
---- @class Feature.Feature
+--- @class Feature
 Feature = {}
 Feature.__index = Feature
 
@@ -8,7 +8,7 @@ local log = dofile("Log.lua")
 --- The constructor of the object Feature
 --- @param i string The MIB of the current Feature
 --- @param p function The post-condition necessary to checking
---- @return Feature.Feature The new Feature just created or nil in case of any issues 
+--- @return Feature The new Feature just created or nil in case of any issues 
 function Feature:new(i, p)
     if type(i) == "string" and type(p) == "function" then
         return setmetatable({id = i, post = p}, Feature)
@@ -19,7 +19,7 @@ end
 
 --- A stub that searches, verifies, executes and produces the results related to a remote service
 --- @vararg any The parameters that are called are a regular expression and the parameters on which to perform the operation
---- @return table, boolean Produces a boolean indicating whether the operation is successful and a table with the values ​​produced by the requested service. 
+--- @return table, boolean Produces a boolean indicating whether the operation is successful and a table with the values ​​produced by the requested service 
 function Feature:call(...)
     local set_services = Share:discovery(self.id)
     if Utilities:get_table_size(set_services) == 0 then return {}, false end

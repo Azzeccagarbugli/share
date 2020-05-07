@@ -1,10 +1,10 @@
 --- Define an object Share.
---- @class Share.Share
+--- @class Share
 Share = {}
 Share.__index = Share
 
 --- The constructor of the object Share
---- @return Share.Share The new Share just created with the table of available services  
+--- @return Share The new Share just created with the table of available services  
 function Share:new() return setmetatable({services = {}}, Share) end
 
 --- This method inserts a service into the table of available services
