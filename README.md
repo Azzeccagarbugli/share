@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.imgur.com/Kak37vS.png" style="width: 230px !important">
+  <img src="https://i.imgur.com/Kak37vS.png" style="max-height: 200px">
 </p>
 
 ---
@@ -20,7 +20,7 @@
 - [Pattern](#tecno)
 - [Description](#desc)
 - [Sequence diagram](#ss)
-- [Autori](#autori)
+- [Authors](#autori)
 
 ## 📮 Pattern <a name = "tecno"></a>
 
