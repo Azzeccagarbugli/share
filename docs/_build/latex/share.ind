@@ -1,0 +1,43 @@
+\begin{sphinxtheindex}
+\let\bigletter\sphinxstyleindexlettergroup
+\let\spxpagem \sphinxstyleindexpagemain
+\let\spxentry \sphinxstyleindexentry
+\let\spxextra \sphinxstyleindexextra
+
+  \bigletter A
+  \item \spxentry{attach()}\spxextra{Share method}, \hyperpage{7}
+
+  \indexspace
+  \bigletter C
+  \item \spxentry{call()}\spxextra{Feature method}, \hyperpage{9}
+
+  \indexspace
+  \bigletter D
+  \item \spxentry{detach()}\spxextra{Share method}, \hyperpage{7}
+  \item \spxentry{discovery()}\spxextra{Share method}, \hyperpage{8}
+
+  \indexspace
+  \bigletter F
+  \item \spxentry{Feature}\spxextra{built\sphinxhyphen{}in class}, \hyperpage{9}
+  \item \spxentry{find()}\spxextra{Share method}, \hyperpage{8}
+
+  \indexspace
+  \bigletter I
+  \item \spxentry{is\_present()}\spxextra{Share method}, \hyperpage{8}
+
+  \indexspace
+  \bigletter N
+  \item \spxentry{new()}\spxextra{Feature method}, \hyperpage{9}
+  \item \spxentry{new()}\spxextra{Service method}, \hyperpage{8}
+  \item \spxentry{new()}\spxextra{Share method}, \hyperpage{7}
+
+  \indexspace
+  \bigletter O
+  \item \spxentry{open\_udp\_socket()}\spxextra{Share method}, \hyperpage{8}
+
+  \indexspace
+  \bigletter S
+  \item \spxentry{Service}\spxextra{built\sphinxhyphen{}in class}, \hyperpage{8}
+  \item \spxentry{Share}\spxextra{built\sphinxhyphen{}in class}, \hyperpage{7}
+
+\end{sphinxtheindex}

@@ -1,0 +1,15 @@
+\babel@toc {english}{}
+\contentsline {chapter}{Table of contents}{i}{chapter*.1}% 
+\contentsline {chapter}{\numberline {1}Introduction}{2}{chapter.1}% 
+\contentsline {chapter}{\numberline {2}Pattern}{3}{chapter.2}% 
+\contentsline {section}{\numberline {2.1}Description}{3}{section.2.1}% 
+\contentsline {section}{\numberline {2.2}Sequence Diagram}{4}{section.2.2}% 
+\contentsline {chapter}{\numberline {3}Documentation}{6}{chapter.3}% 
+\contentsline {section}{\numberline {3.1}Tools with which it was made}{6}{section.3.1}% 
+\contentsline {section}{\numberline {3.2}Integration with Lua}{6}{section.3.2}% 
+\contentsline {chapter}{\numberline {4}Implementation}{7}{chapter.4}% 
+\contentsline {section}{\numberline {4.1}Share}{7}{section.4.1}% 
+\contentsline {section}{\numberline {4.2}Service}{8}{section.4.2}% 
+\contentsline {section}{\numberline {4.3}Feature}{9}{section.4.3}% 
+\contentsline {chapter}{Index}{10}{section*.16}% 
+\contentsline {chapter}{Index}{10}{section*.16}% 
