@@ -1,0 +1,36 @@
+.. lua:class:: Feature
+    :module:
+
+
+
+
+
+
+
+    .. lua:method:: new(i, p)
+
+
+        The constructor of the object Feature
+
+
+
+        :param i: The MIB of the current Feature
+        :type i: str
+        :param p: The post-condition necessary to checking
+        :type p: function
+        :return: The new Feature just created or nil in case of any issues
+        :rtype: Feature
+
+    .. lua:method:: call(...)
+
+
+        A stub that searches, verifies, executes and produces the results related to a remote service
+
+
+
+        :param vararg: The parameters that are called are a regular expression and the parameters on which to perform the operation
+        :type vararg: any
+        :return: Produces a boolean indicating whether the operation is successful and a table with the values ​​produced by the requested service
+        :rtype: table or boolean
+
+

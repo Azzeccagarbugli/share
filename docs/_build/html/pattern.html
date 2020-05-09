@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pattern &mdash; Share 1.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/logo.png"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Documentation" href="documentation.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pattern</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sequence-diagram">Sequence Diagram</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Implementation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Share</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Pattern</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/pattern.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pattern">
+<h1>Pattern<a class="headerlink" href="#pattern" title="Permalink to this headline">¶</a></h1>
+<p>The design pattern <strong>Share</strong> is made up of three classes:</p>
+<ul class="simple">
+<li><p>Share</p></li>
+<li><p>Service</p></li>
+<li><p>Feature</p></li>
+</ul>
+<p><strong>Share</strong> manages the common space for sharing services and services
+with <strong>Feature</strong> the implementation of the service.</p>
+<p>Each service <strong>must</strong> subscribe to at least one sharing service provider to allow others to use the
+service.</p>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<img alt="_images/pattern.png" src="_images/pattern.png" />
+<p>The share pattern is a <strong>metaprogramming pattern</strong> <a class="footnote-reference brackets" href="#id2" id="id1">1</a> since some parts
+of the service are known only at the time of execution and depend on the state
+of the system</p>
+<p>The definition of a service requires the coding of a function
+<code class="docutils literal notranslate"><span class="pre">function</span></code> and its <code class="docutils literal notranslate"><span class="pre">daemon</span></code> resident component, if any. A <code class="docutils literal notranslate"><span class="pre">pre</span></code> predicate specifies the
+preconditions for function.</p>
+<p>A string attribute identifies service in a unique world. For example an <strong>SNMP MIB</strong> can be
+used to identify a service.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A management information base <strong>(MIB)</strong> is a database used for managing the
+entities in a communication network. Most often associated with the
+Simple Network Management Protocol <strong>(SNMP)</strong>, the term is also used more
+generically in contexts such as in OSI/ISO Network management model.</p>
+</div>
+<p>In <code class="docutils literal notranslate"><span class="pre">function</span></code> coding there may be calls to external services that are specified by implementations of
+<strong>Feature</strong>. The <code class="docutils literal notranslate"><span class="pre">id</span></code> attribute defines a regular expression that describes semantically the service requested. The invocation of a service within <code class="docutils literal notranslate"><span class="pre">function</span></code>
+occurs through the call invocation relating to a specification present in features.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">call</span></code> operation invokes discovery with an id attribute to identify everyone
+the services subscribed to <strong>Share</strong> to which the calling service is subscribed. If he comes
+produced a non-null set of services, the next phase of invocation of services.</p>
+<p>The primitive <code class="docutils literal notranslate"><span class="pre">get</span></code> is used for this phase get code from a service</p>
+</div>
+<div class="section" id="sequence-diagram">
+<h2>Sequence Diagram<a class="headerlink" href="#sequence-diagram" title="Permalink to this headline">¶</a></h2>
+<img alt="_images/ss.png" src="_images/ss.png" />
+<p>The use of the pattern can be achieved by defining a <strong>concrete</strong> Share class and <strong>two abstract</strong> classes Service and Feature.</p>
+<p>So while the Share class can be created directly, the Share pattern specifies the behavior the pattern requires
+basically the implementation of <code class="docutils literal notranslate"><span class="pre">function</span></code>, <code class="docutils literal notranslate"><span class="pre">daemon</span></code>, <code class="docutils literal notranslate"><span class="pre">pre</span></code> and <code class="docutils literal notranslate"><span class="pre">post</span></code> using unchanged the functionality of the
+remaining operations related to the structure of the pattern.</p>
+<p>In the pattern structure, the subscription to the Share service is not
+places no constraints. So you can subscribe to multiple Share or only one.
+Another aspect is the interaction between daemon and function. The code associated with function is received by
+the get operator <strong>immediately</strong> after executed with daemon.</p>
+<p>The interaction between <code class="docutils literal notranslate"><span class="pre">function</span></code> and <code class="docutils literal notranslate"><span class="pre">daemon</span></code> takes place through unforeseen protocols
+from the pattern. For example, the protocol can be used as <strong>0MQ</strong>. There
+correct interaction between function and daemon <strong>is guaranteed by the fact that both they are developed by the same programmer</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>ZeroMQ is a high-performance asynchronous messaging library,
+aimed at use in distributed or concurrent applications. It provides a <strong>message queue</strong>, but
+unlike message-oriented middleware, a <strong>ZeroMQ system can run without a dedicated message broker</strong>.</p>
+</div>
+<p>The attach operation is used to register with a <code class="docutils literal notranslate"><span class="pre">subscriber</span></code>. Any positive can be a subscriber however it is plausible that only a few provide
+this service. The search for a service is done through a descriptive string.
+Could be an ontological descriptor or simply a protocol <strong>MIB</strong> string
+SNMP. The match function was used in the specification and the pattern allows the nested call of services</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><em>Metaprogramming is a programming technique in which computer programs have the ability to treat other programs as their data. It means that a program can be designed to read, generate, analyze or transform other programs, and even modify itself while running.</em></p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="documentation.html" class="btn btn-neutral float-right" title="Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Francesco Coppola, Stefano Perniola
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

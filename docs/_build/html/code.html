@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Implementation &mdash; Share 1.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/logo.png"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Documentation" href="documentation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pattern.html">Pattern</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Implementation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#share">Share</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#service">Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#feature">Feature</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Share</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Implementation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/code.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="implementation">
+<h1>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h1>
+<p>The following page will show what has been <strong>our implementation</strong> of this pattern by providing the documentation of the APIs created.</p>
+<div class="section" id="share">
+<h2>Share<a class="headerlink" href="#share" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Share</strong> class is the beating heart of the pattern of the same name, the <em>raison d’etre</em> of the same and spokesperson for the
+current of thought that characterized the project in its entirety: <strong>elegance is everything</strong>. The class has the list of services
+that a device proudly makes available to all, and offers features to add or remove others. But the main responsibility of this
+class is to perform the <code class="docutils literal notranslate"><span class="pre">discovery</span></code> function, a symbol of an endless adventure, an adventure that begins in the search for the
+services that best lend themselves to the arduous and meticulous work that the calling service requires.</p>
+<p>The function uses the <strong>MDNS protocol</strong> to first calculate the ip address of each device on the network,
+then subsequently examine the table of services available from the same.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In computer networking, the multicast DNS (mDNS) protocol resolves hostnames to IP addresses
+within small networks that do not include a local name server. It is a zero-configuration service,
+using essentially the same programming interfaces, packet formats and operating semantics as the
+unicast Domain Name System (DNS). Although Stuart Cheshire designed mDNS as a stand-alone protocol,
+it can work in concert with standard DNS servers.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">discovery</span></code> function is called by <code class="docutils literal notranslate"><span class="pre">call</span></code>, a function that finds an origin but perhaps does not find an end, a very long path that
+only the best services can undertake to the end. And so it is that from these services the transfer of <strong>knowledge</strong> takes place between the
+calling device and the called device, a knowledge obtained in a transversal, unorthodox way, based on the code and not on the network.
+The caller does not get knowledge directly, if he has to conquer it by executing the code that was provided to him by the caller.</p>
+<p>Share doesn’t give you fish, but it can help you fish. Elegance is everything.</p>
+<dl class="lua class">
+<dt id="Share">
+<em class="property">class </em><code class="sig-name descname">Share</code><a class="headerlink" href="#Share" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="lua method">
+<dt id="Share.new">
+<em class="property"> </em><code class="sig-name descname">new</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Share.new" title="Permalink to this definition">¶</a></dt>
+<dd><p>The constructor of the object Share</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The new Share just created with the table of available services</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#Share" title="Share">Share</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="lua method">
+<dt id="Share.attach">
+<em class="property"> </em><code class="sig-name descname">attach</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#Share.attach" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method inserts a service into the table of available services</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<a class="reference internal" href="#Service" title="Service"><em>Service</em></a>) – The service to add</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="lua method">
+<dt id="Share.detach">
+<em class="property"> </em><code class="sig-name descname">detach</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="headerlink" href="#Share.detach" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method removes a service from the table of available services</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<a class="reference internal" href="#Service" title="Service"><em>Service</em></a>) – The service to remove</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="lua method">
+<dt id="Share.is_present">
+<em class="property"> </em><code class="sig-name descname">is_present</code><span class="sig-paren">(</span><em class="sig-param">s</em>, <em class="sig-param">t</em><span class="sig-paren">)</span><a class="headerlink" href="#Share.is_present" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method search a service from the services table and returns true if it finds an occurrence</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<a class="reference internal" href="#Service" title="Service"><em>Service</em></a>) – The service to search</p></li>
+<li><p><strong>t</strong> (<em>table</em>) – The table on which doing the search</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if the service is present, false otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="lua method">
+<dt id="Share.discovery">
+<em class="property"> </em><code class="sig-name descname">discovery</code><span class="sig-paren">(</span><em class="sig-param">macro_mib</em><span class="sig-paren">)</span><a class="headerlink" href="#Share.discovery" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>macro_mib</strong> (<em>any</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="lua method">
+<dt id="Share.find">
+<em class="property"> </em><code class="sig-name descname">find</code><span class="sig-paren">(</span><em class="sig-param">macro_mib</em><span class="sig-paren">)</span><a class="headerlink" href="#Share.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal function that retrieve the set of services with the corresponding prefix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>macro_mib</strong> (<em>str</em>) – The prefix of the mib to search</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The set of corresponding services</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>table</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="lua method">
+<dt id="Share.open_udp_socket">
+<em class="property"> </em><code class="sig-name descname">open_udp_socket</code><span class="sig-paren">(</span><em class="sig-param">ip</em>, <em class="sig-param">macro_mib</em>, <em class="sig-param">result</em><span class="sig-paren">)</span><a class="headerlink" href="#Share.open_udp_socket" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal function used to establish a remote connection with udp socket</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ip</strong> (<em>str</em>) – The ip of the remote device</p></li>
+<li><p><strong>macro_mib</strong> (<em>str</em>) – MIB of the service owned by the remote service</p></li>
+<li><p><strong>result</strong> (<em>table</em>) – The table used to save all results</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="service">
+<h2>Service<a class="headerlink" href="#service" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Service</strong> class represents any functionality made available by the device that owns it.</p>
+<p>The responsibility of this class, in addition to providing the result of the computation with the parameters
+requested by the caller through the <code class="docutils literal notranslate"><span class="pre">daemon</span></code> function, is to establish a safe and reliable communication protocol with the same.</p>
+<p>Each Service has a personal <strong>MIB</strong> which makes it <strong>unique</strong> in the environment in which it operates.</p>
+<dl class="lua class">
+<dt id="Service">
+<em class="property">class </em><code class="sig-name descname">Service</code><a class="headerlink" href="#Service" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="lua method">
+<dt id="Service.new">
+<em class="property"> </em><code class="sig-name descname">new</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">f</em>, <em class="sig-param">d</em>, <em class="sig-param">p</em>, <em class="sig-param">...</em><span class="sig-paren">)</span><a class="headerlink" href="#Service.new" title="Permalink to this definition">¶</a></dt>
+<dd><p>The constructor of the object Service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<em>str</em>) – The MIB of the current Service</p></li>
+<li><p><strong>f</strong> (<em>str</em>) – The function wrapped in a string that allows the communication with the inner protcol</p></li>
+<li><p><strong>d</strong> (<em>function</em>) – The defined daemon that share data with the function of the same Service</p></li>
+<li><p><strong>p</strong> (<em>function</em>) – The pre-condition necessary to checking</p></li>
+<li><p><strong>vararg</strong> (<em>any</em>) – The set of features</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The new Service just created or nil in case of any issues</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#Service" title="Service">Service</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="feature">
+<h2>Feature<a class="headerlink" href="#feature" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Feature</strong> class represents the entity that contains the complete set of services that perform the same function.</p>
+<p>In fact, this class has a <strong>MIB</strong> that identifies a macro category within its environment. Each Feature has a feature called <code class="docutils literal notranslate"><span class="pre">post</span></code> which
+checks the postconditions of each result received.</p>
+<p>The responsibility of this class is also to identify the list of desired services that share the same network through the <code class="docutils literal notranslate"><span class="pre">call</span></code> function.</p>
+<dl class="lua class">
+<dt id="Feature">
+<em class="property">class </em><code class="sig-name descname">Feature</code><a class="headerlink" href="#Feature" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="lua method">
+<dt id="Feature.new">
+<em class="property"> </em><code class="sig-name descname">new</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">p</em><span class="sig-paren">)</span><a class="headerlink" href="#Feature.new" title="Permalink to this definition">¶</a></dt>
+<dd><p>The constructor of the object Feature</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<em>str</em>) – The MIB of the current Feature</p></li>
+<li><p><strong>p</strong> (<em>function</em>) – The post-condition necessary to checking</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The new Feature just created or nil in case of any issues</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#Feature" title="Feature">Feature</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="lua method">
+<dt id="Feature.call">
+<em class="property"> </em><code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param">...</em><span class="sig-paren">)</span><a class="headerlink" href="#Feature.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>A stub that searches, verifies, executes and produces the results related to a remote service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vararg</strong> (<em>any</em>) – The parameters that are called are a regular expression and the parameters on which to perform the operation</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Produces a boolean indicating whether the operation is successful and a table with the values ​​produced by the requested service</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>table or boolean</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="documentation.html" class="btn btn-neutral float-left" title="Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Francesco Coppola, Stefano Perniola
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

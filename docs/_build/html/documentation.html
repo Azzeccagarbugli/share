@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Documentation &mdash; Share 1.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/logo.png"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Implementation" href="code.html" />
+    <link rel="prev" title="Pattern" href="pattern.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pattern.html">Pattern</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tools-with-which-it-was-made">Tools with which it was made</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#integration-with-lua">Integration with Lua</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Implementation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Share</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/documentation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p><em>One documentation to rule them all,
+one documentation to find them,
+One documentation to bring them all
+and in the darkness bind them.</em> <a class="footnote-reference brackets" href="#id4" id="id1">1</a></p>
+</div></blockquote>
+<p>The entire generated documentation that is being used is the result of the union between <strong>Sphinx</strong> and <code class="docutils literal notranslate"><span class="pre">sphinx-lua</span></code>,
+two tools dedicated to the generation of texts starting from mere and pure code.</p>
+<div class="section" id="tools-with-which-it-was-made">
+<h2>Tools with which it was made<a class="headerlink" href="#tools-with-which-it-was-made" title="Permalink to this headline">¶</a></h2>
+<p>Usually the part of the code documentation in Lua is somewhat <strong>boring</strong> and <strong>stylistically questionable</strong>.</p>
+<p>From this premise comes the integration of Sphinx <a class="footnote-reference brackets" href="#id5" id="id2">2</a> within the project which has made the entire software
+park a <em>pleasant</em> and <em>clear</em> product in <strong>understanding its API</strong>.</p>
+</div>
+<div class="section" id="integration-with-lua">
+<h2>Integration with Lua<a class="headerlink" href="#integration-with-lua" title="Permalink to this headline">¶</a></h2>
+<p>For the documentation of the classes created, therefore, we relied on a tool that puts <strong>Python</strong> <em>(given the nature of Sphinx)</em> and <strong>Lua</strong> in symbiosis.</p>
+<p>This tool is called <code class="docutils literal notranslate"><span class="pre">sphinx-lua</span></code> <a class="footnote-reference brackets" href="#id6" id="id3">3</a>.</p>
+<p>It can be easily installed using the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">sphinx</span><span class="o">-</span><span class="n">lua</span>
+</pre></div>
+</div>
+<p>Once that you installed this on your machine your could simply start to document your class in this way:</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">--- Define a car.</span>
+<span class="c1">--- @class MyOrg.Car</span>
+<span class="kd">local</span> <span class="n">cls</span> <span class="o">=</span> <span class="n">class</span><span class="p">()</span>
+
+<span class="c1">--- @param foo number</span>
+<span class="kr">function</span> <span class="nc">cls</span><span class="p">:</span><span class="nf">test</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+</div>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><em>Modified version of The One Ring, the central plot element in J. R. R. Tolkien’s The Lord of the Rings (1954–55). It first appeared in the earlier story The Hobbit (1937) as a magic ring that grants the wearer invisibility</em></p>
+</dd>
+<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p><em>Sphinx is a documentation generator written and used by the Python community. It is written in Python, and also used in other environments.</em></p>
+</dd>
+<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p><a class="reference external" href="https://github.com/boolangery/sphinx-lua">GitHub page of the project sphinx-lua</a></p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="code.html" class="btn btn-neutral float-right" title="Implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pattern.html" class="btn btn-neutral float-left" title="Pattern" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Francesco Coppola, Stefano Perniola
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
