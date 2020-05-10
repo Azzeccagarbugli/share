@@ -67,11 +67,9 @@ function Share:open_udp_socket(ip, macro_mib, result)
     local socket = require("socket")
     local udp_discovery = socket.udp()
     udp_discovery:setpeername(ip, 9898)
-    udp_discovery:settimeout()
+    udp_discovery:settimeout(1)
     udp_discovery:send(macro_mib)
-
     local data_mib = udp_discovery:receive()
-
     if (data_mib and not (data_mib == "{}")) then
         pcall(load("mib_tab = " .. data_mib))
         local ip_tab = {}

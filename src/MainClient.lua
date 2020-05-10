@@ -25,7 +25,6 @@ local services = {
         tcp:settimeout(2)
         while true do
             local s, status, partial = tcp:receive()
-            print(s or partial)
             if status == "closed" then break end
             return s or partial
         end
