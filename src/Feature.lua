@@ -52,7 +52,6 @@ function Feature:call(...)
             end
         end
     end
-
     log.fatal("[NO SERVICES FOUND]")
     return {}, false
 end
