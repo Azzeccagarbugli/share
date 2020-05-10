@@ -62,13 +62,13 @@ local services = {
 
     ["2.1.1.0"] = Service:new("2.1.1.0", -- function
     [[ 
-    return function(data,ip)
+    return function(ip)
         local host, port = ip, 7777
         local socket = require("socket")
         local tcp = assert(socket.tcp())
         
         tcp:connect(host, port);
-        tcp:send(data.."\n");
+        tcp:send(1 .."\n");
         tcp:settimeout(2)
         while true do
             local s, status, partial = tcp:receive()
@@ -97,7 +97,7 @@ local services = {
         end
         server:close()
     end, -- pre
-    function(n) return n > 0 end, -- features
+    function(n) return true end, -- features
     Feature:new("2.1.*", function(n, m) return m > -10 and m < 45 end))
 }
 
