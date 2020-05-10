@@ -8,7 +8,7 @@
 <img src="https://forthebadge.com/images/badges/built-with-love.svg"/>
 <img src="https://forthebadge.com/images/badges/uses-git.svg"/>
 <img src="https://forthebadge.com/images/badges/cc-0.svg"/><br><br>
-    There are millions of home automation devices in the world and billions in the future. <br>Many of these interact with difficulty due to the absence of a standard. <br>In this project, we suggest a vision of how we can overcome the problems of interaction in pear-to-pear way.
+    There are <b>millions of home automation devices</b> in the world and billions in the future. <br>Many of these <b>interact with difficulty due to the absence of a standard</b>. <br>In this project, we suggest a vision of how we can <b>overcome the problems</b> of interaction in pear-to-pear way.
     <br><br><b>
 <a href="https://www.unicam.it/">• Unicam</a>
 <a href="http://francescocoppola.me/share/">• Documentation</a>
@@ -85,11 +85,6 @@ the get operator **immediately** after executed with daemon.
 The interaction between `function` and `daemon` takes place through unforeseen protocols
 from the pattern. For example, the protocol can be used as **0MQ**. There
 correct interaction between function and daemon **is guaranteed by the fact that both they are developed by the same programmer**.
-
-.. note::
-ZeroMQ is a high-performance asynchronous messaging library,
-aimed at use in distributed or concurrent applications. It provides a **message queue**, but
-unlike message-oriented middleware, a **ZeroMQ system can run without a dedicated message broker**.
 
 The attach operation is used to register with a `subscriber`. Any positive can be a subscriber however it is plausible that only a few provide
 this service. The search for a service is done through a descriptive string.
