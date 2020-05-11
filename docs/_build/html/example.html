@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Example &mdash; Share 1.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/logo.png"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Future works" href="future.html" />
+    <link rel="prev" title="Implementation" href="code.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pattern.html">Pattern</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">Implementation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#abstract">Abstract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#calculation-of-the-square-root">Calculation of the square root</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#temperature-measurement">Temperature measurement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="future.html">Future works</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Share</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Example</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/example.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="example">
+<h1>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h1>
+<p>In the following section some examples will be shown that have the purpose of making
+the substance of the pattern <strong>more concretely</strong> understood and what some uses of this pattern may be.</p>
+<div class="section" id="abstract">
+<h2>Abstract<a class="headerlink" href="#abstract" title="Permalink to this headline">¶</a></h2>
+<p>The concept of service management is of significant importance, as is the dynamism of the
+same, which plays an important role in the <strong>reliability</strong>, <strong>stability</strong> and <strong>correctness</strong> of the services provided.</p>
+<p>In this context, <strong>Share</strong> allows you to change the semantics of a service according to the
+devices available at a given moment, thus leaving <strong>complete freedom</strong> on the low-level
+interaction model, preferring the modularity and composition of the services.</p>
+<p>In order to correctly verify the constraints defined by the communicating devices,
+we have relied on an approach based on the design <em>by contract</em>, which defines <code class="docutils literal notranslate"><span class="pre">pre-conditions</span></code> and
+post-conditions on the values ​​provided respectively by the caller and the called party. In this
+way you have a guarantee on the validity and consistency of the data obtained.</p>
+</div>
+<div class="section" id="calculation-of-the-square-root">
+<h2>Calculation of the square root<a class="headerlink" href="#calculation-of-the-square-root" title="Permalink to this headline">¶</a></h2>
+<p>For simplicity, assume that the service requested is the mere calculation of the
+square root on a set parameter. First of all, the device requesting the service must know the
+<code class="docutils literal notranslate"><span class="pre">MIB</span></code>, that is a regular expression that uniquely identifies a class of semantically equivalent functionality.</p>
+<dl>
+<dt>First step</dt><dd><p>For example, if the category <strong>“Mathematics”</strong> had the number <code class="docutils literal notranslate"><span class="pre">1</span></code>
+as specific <code class="docutils literal notranslate"><span class="pre">MIB</span></code> and the square root had the number <code class="docutils literal notranslate"><span class="pre">2</span></code>,
+the mib on which to make the call would be <code class="docutils literal notranslate"><span class="pre">1.2.*</span></code>.
+In this way the device is able to search, and eventually
+<strong>discover</strong>, all the devices that provide services that at that
+moment calculate the square root.</p>
+<dl>
+<dt>Client side</dt><dd><div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- 2 is the number on which we calculate the square root</span>
+<span class="n">services</span><span class="p">[</span><span class="s2">&quot;1.2.1.0&quot;</span><span class="p">].</span><span class="n">features</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">call</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt>Server side</dt><dd><div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">udp_discovery</span><span class="p">:</span><span class="n">sendto</span><span class="p">(</span><span class="n">Utilities</span><span class="p">:</span><span class="n">table_to_string</span><span class="p">(</span><span class="n">disc</span><span class="p">:</span><span class="n">find</span><span class="p">(</span><span class="n">data_discovery</span><span class="p">)),</span> <span class="n">ip_discovery</span><span class="p">,</span> <span class="n">port_discovery</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt>Second step</dt><dd><p>Once the table of available services has been obtained, the
+calling device interrogates these services <strong>one by one</strong> by
+sending them the parameter on which to perform the calculation
+<em>(in this case the pre-conditions must verify that this parameter
+is greater than zero)</em>.</p>
+<dl>
+<dt>Client side</dt><dd><div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">check_param</span><span class="p">(</span><span class="n">mib</span><span class="p">,</span> <span class="p">...,</span> <span class="n">udp_feature</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt>Server side</dt><dd><div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">if</span> <span class="p">(</span><span class="n">services</span><span class="p">[</span><span class="n">mib</span><span class="p">].</span><span class="n">pre</span><span class="p">(</span><span class="n">param</span><span class="p">))</span> <span class="kr">then</span>
+    <span class="n">udp_call</span><span class="p">:</span><span class="n">sendto</span><span class="p">(</span><span class="n">services</span><span class="p">[</span><span class="n">mib</span><span class="p">].</span><span class="n">func</span><span class="p">,</span> <span class="n">ip_call</span><span class="p">,</span> <span class="n">port_call</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt>Third step</dt><dd><p>In this phase, a <strong>unicast communication</strong> is initiated between the
+devices (managed by the function and daemon functions) <strong>which
+guarantees confidentiality between the parties</strong>, and in which the
+calling device receives the function to be performed locally to
+obtain the desired result.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In computer networking, <strong>unicast</strong> refers to a one-to-one
+transmission from one point in the network to another point;
+that is, <strong>one sender and one receiver</strong>, each identified by a
+network address.</p>
+</div>
+<dl>
+<dt>Client side</dt><dd><div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="p">.</span>
+<span class="p">.</span>
+<span class="n">tcp</span><span class="p">:</span><span class="n">connect</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">);</span>
+<span class="n">tcp</span><span class="p">:</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="o">..</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+<span class="p">.</span>
+<span class="p">.</span>
+<span class="kd">local</span> <span class="n">s</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">partial</span> <span class="o">=</span> <span class="n">tcp</span><span class="p">:</span><span class="n">receive</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd>
+<dt>Server side</dt><dd><div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">services</span><span class="p">[</span><span class="n">mib</span><span class="p">].</span><span class="n">daemon</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt>Fourth step</dt><dd><p>Once the result is obtained, the calling device can decide
+whether to validate this result <em>(checking it in the post-conditions)</em>
+or whether to move on to the next service. As soon as one of these
+services is able to meet the established <code class="docutils literal notranslate"><span class="pre">post-conditions</span></code>, the
+<strong>workflow</strong> will end.</p>
+<dl>
+<dt>Client side</dt><dd><div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">if</span> <span class="p">(</span><span class="n">res</span> <span class="ow">and</span> <span class="n">self</span><span class="p">.</span><span class="n">post</span><span class="p">(...,</span> <span class="n">res</span><span class="p">))</span> <span class="kr">then</span>
+    <span class="n">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;[POST-CONDITION SUCCESSFUL]&quot;</span><span class="p">)</span>
+    <span class="kr">return</span> <span class="n">res</span><span class="p">,</span> <span class="kc">true</span>
+<span class="kr">end</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+<div class="section" id="temperature-measurement">
+<h2>Temperature measurement<a class="headerlink" href="#temperature-measurement" title="Permalink to this headline">¶</a></h2>
+<p>The pattern also provides for the possibility of requesting services that
+<strong>do not provide parameters</strong> from the calling device. For example, we
+admit that a device needs to know the atmospheric room temperature to
+perform a certain task. This request does not include any parameter
+as the calculation of the temperature is a procedure that <strong>does not involve
+any operation on the data</strong>, but simply makes a measurement and query a
+possible thermometer.</p>
+<dl>
+<dt>First step</dt><dd><p>The calling device will therefore simply need to invoke the <code class="docutils literal notranslate"><span class="pre">MIB</span></code>
+that identifies any service that has a thermometer, in this case
+for purely demonstrative purposes it is assumed to be <code class="docutils literal notranslate"><span class="pre">2.1.*</span></code></p>
+<dl>
+<dt>Client side</dt><dd><div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="c1">-- the call function has no parameter as you can see</span>
+<span class="n">services</span><span class="p">[</span><span class="s2">&quot;2.1.1.0&quot;</span><span class="p">].</span><span class="n">features</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">call</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd>
+<dt>Server side</dt><dd><div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">udp_discovery</span><span class="p">:</span><span class="n">sendto</span><span class="p">(</span><span class="n">Utilities</span><span class="p">:</span><span class="n">table_to_string</span><span class="p">(</span><span class="n">disc</span><span class="p">:</span><span class="n">find</span><span class="p">(</span><span class="n">data_discovery</span><span class="p">)),</span> <span class="n">ip_discovery</span><span class="p">,</span> <span class="n">port_discovery</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+<dt>Second step</dt><dd><p>Once the table of available services is obtained, the calling device
+<strong>interrogates</strong> these services one by one (in this case the <code class="docutils literal notranslate"><span class="pre">pre-conditions</span></code>
+are always exceeded as no parameters are received).</p>
+<dl>
+<dt>Client side</dt><dd><div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">check_param</span><span class="p">(</span><span class="n">mib</span><span class="p">,</span> <span class="p">...,</span> <span class="n">udp_feature</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+<dt>Server side</dt><dd><div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="kr">if</span> <span class="p">(</span><span class="n">services</span><span class="p">[</span><span class="n">mib</span><span class="p">].</span><span class="n">pre</span><span class="p">(</span><span class="n">param</span><span class="p">))</span> <span class="kr">then</span>
+    <span class="n">udp_call</span><span class="p">:</span><span class="n">sendto</span><span class="p">(</span><span class="n">services</span><span class="p">[</span><span class="n">mib</span><span class="p">].</span><span class="n">func</span><span class="p">,</span> <span class="n">ip_call</span><span class="p">,</span> <span class="n">port_call</span><span class="p">)</span>
+<span class="kr">end</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>The third and fourth steps correspond exactly to the example shown above.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="future.html" class="btn btn-neutral float-right" title="Future works" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="code.html" class="btn btn-neutral float-left" title="Implementation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Francesco Coppola, Stefano Perniola
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

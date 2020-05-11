@@ -130,7 +130,7 @@
     
 
 \title{Share}
-\date{May 09, 2020}
+\date{May 12, 2020}
 \release{1.0.0}
 \author{Francesco Coppola, Stefano Perniola}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
@@ -632,6 +632,196 @@ table or boolean
 
 \end{fulllineitems}
 
+
+
+\chapter{Example}
+\label{\detokenize{example:example}}\label{\detokenize{example::doc}}
+In the following section some examples will be shown that have the purpose of making
+the substance of the pattern \sphinxstylestrong{more concretely} understood and what some uses of this pattern may be.
+
+
+\section{Abstract}
+\label{\detokenize{example:abstract}}
+The concept of service management is of significant importance, as is the dynamism of the
+same, which plays an important role in the \sphinxstylestrong{reliability}, \sphinxstylestrong{stability} and \sphinxstylestrong{correctness} of the services provided.
+
+In this context, \sphinxstylestrong{Share} allows you to change the semantics of a service according to the
+devices available at a given moment, thus leaving \sphinxstylestrong{complete freedom} on the low\sphinxhyphen{}level
+interaction model, preferring the modularity and composition of the services.
+
+In order to correctly verify the constraints defined by the communicating devices,
+we have relied on an approach based on the design \sphinxstyleemphasis{by contract}, which defines \sphinxcode{\sphinxupquote{pre\sphinxhyphen{}conditions}} and
+post\sphinxhyphen{}conditions on the values ​​provided respectively by the caller and the called party. In this
+way you have a guarantee on the validity and consistency of the data obtained.
+
+
+\section{Calculation of the square root}
+\label{\detokenize{example:calculation-of-the-square-root}}
+For simplicity, assume that the service requested is the mere calculation of the
+square root on a set parameter. First of all, the device requesting the service must know the
+\sphinxcode{\sphinxupquote{MIB}}, that is a regular expression that uniquely identifies a class of semantically equivalent functionality.
+\begin{description}
+\item[{First step}] \leavevmode
+For example, if the category \sphinxstylestrong{“Mathematics”} had the number \sphinxcode{\sphinxupquote{1}}
+as specific \sphinxcode{\sphinxupquote{MIB}} and the square root had the number \sphinxcode{\sphinxupquote{2}},
+the mib on which to make the call would be \sphinxcode{\sphinxupquote{1.2.*}}.
+In this way the device is able to search, and eventually
+\sphinxstylestrong{discover}, all the devices that provide services that at that
+moment calculate the square root.
+\begin{description}
+\item[{Client side}] \leavevmode
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} 2 is the number on which we calculate the square root}
+\PYG{n}{services}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{1.2.1.0}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{.}\PYG{n}{features}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{:}\PYG{n}{call}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\item[{Server side}] \leavevmode
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{udp\PYGZus{}discovery}\PYG{p}{:}\PYG{n}{sendto}\PYG{p}{(}\PYG{n}{Utilities}\PYG{p}{:}\PYG{n}{table\PYGZus{}to\PYGZus{}string}\PYG{p}{(}\PYG{n}{disc}\PYG{p}{:}\PYG{n}{find}\PYG{p}{(}\PYG{n}{data\PYGZus{}discovery}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{ip\PYGZus{}discovery}\PYG{p}{,} \PYG{n}{port\PYGZus{}discovery}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\end{description}
+
+\item[{Second step}] \leavevmode
+Once the table of available services has been obtained, the
+calling device interrogates these services \sphinxstylestrong{one by one} by
+sending them the parameter on which to perform the calculation
+\sphinxstyleemphasis{(in this case the pre\sphinxhyphen{}conditions must verify that this parameter
+is greater than zero)}.
+\begin{description}
+\item[{Client side}] \leavevmode
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{check\PYGZus{}param}\PYG{p}{(}\PYG{n}{mib}\PYG{p}{,} \PYG{p}{...}\PYG{p}{,} \PYG{n}{udp\PYGZus{}feature}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\item[{Server side}] \leavevmode
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kr}{if} \PYG{p}{(}\PYG{n}{services}\PYG{p}{[}\PYG{n}{mib}\PYG{p}{]}\PYG{p}{.}\PYG{n}{pre}\PYG{p}{(}\PYG{n}{param}\PYG{p}{)}\PYG{p}{)} \PYG{k+kr}{then}
+    \PYG{n}{udp\PYGZus{}call}\PYG{p}{:}\PYG{n}{sendto}\PYG{p}{(}\PYG{n}{services}\PYG{p}{[}\PYG{n}{mib}\PYG{p}{]}\PYG{p}{.}\PYG{n}{func}\PYG{p}{,} \PYG{n}{ip\PYGZus{}call}\PYG{p}{,} \PYG{n}{port\PYGZus{}call}\PYG{p}{)}
+\PYG{k+kr}{end}
+\end{sphinxVerbatim}
+
+\end{description}
+
+\item[{Third step}] \leavevmode
+In this phase, a \sphinxstylestrong{unicast communication} is initiated between the
+devices (managed by the function and daemon functions) \sphinxstylestrong{which
+guarantees confidentiality between the parties}, and in which the
+calling device receives the function to be performed locally to
+obtain the desired result.
+
+\begin{sphinxadmonition}{note}{Note:}
+In computer networking, \sphinxstylestrong{unicast} refers to a one\sphinxhyphen{}to\sphinxhyphen{}one
+transmission from one point in the network to another point;
+that is, \sphinxstylestrong{one sender and one receiver}, each identified by a
+network address.
+\end{sphinxadmonition}
+\begin{description}
+\item[{Client side}] \leavevmode
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{p}{.}
+\PYG{p}{.}
+\PYG{n}{tcp}\PYG{p}{:}\PYG{n}{connect}\PYG{p}{(}\PYG{n}{host}\PYG{p}{,} \PYG{n}{port}\PYG{p}{)}\PYG{p}{;}
+\PYG{n}{tcp}\PYG{p}{:}\PYG{n}{send}\PYG{p}{(}\PYG{n}{data}\PYG{o}{..}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{.}
+\PYG{p}{.}
+\PYG{k+kd}{local} \PYG{n}{s}\PYG{p}{,} \PYG{n}{status}\PYG{p}{,} \PYG{n}{partial} \PYG{o}{=} \PYG{n}{tcp}\PYG{p}{:}\PYG{n}{receive}\PYG{p}{(}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\item[{Server side}] \leavevmode
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{services}\PYG{p}{[}\PYG{n}{mib}\PYG{p}{]}\PYG{p}{.}\PYG{n}{daemon}\PYG{p}{(}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\end{description}
+
+\item[{Fourth step}] \leavevmode
+Once the result is obtained, the calling device can decide
+whether to validate this result \sphinxstyleemphasis{(checking it in the post\sphinxhyphen{}conditions)}
+or whether to move on to the next service. As soon as one of these
+services is able to meet the established \sphinxcode{\sphinxupquote{post\sphinxhyphen{}conditions}}, the
+\sphinxstylestrong{workflow} will end.
+\begin{description}
+\item[{Client side}] \leavevmode
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kr}{if} \PYG{p}{(}\PYG{n}{res} \PYG{o+ow}{and} \PYG{n}{self}\PYG{p}{.}\PYG{n}{post}\PYG{p}{(}\PYG{p}{...}\PYG{p}{,} \PYG{n}{res}\PYG{p}{)}\PYG{p}{)} \PYG{k+kr}{then}
+    \PYG{n}{log}\PYG{p}{.}\PYG{n}{info}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{[POST\PYGZhy{}CONDITION SUCCESSFUL]}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{)}
+    \PYG{k+kr}{return} \PYG{n}{res}\PYG{p}{,} \PYG{k+kc}{true}
+\PYG{k+kr}{end}
+\end{sphinxVerbatim}
+
+\end{description}
+
+\end{description}
+
+
+\section{Temperature measurement}
+\label{\detokenize{example:temperature-measurement}}
+The pattern also provides for the possibility of requesting services that
+\sphinxstylestrong{do not provide parameters} from the calling device. For example, we
+admit that a device needs to know the atmospheric room temperature to
+perform a certain task. This request does not include any parameter
+as the calculation of the temperature is a procedure that \sphinxstylestrong{does not involve
+any operation on the data}, but simply makes a measurement and query a
+possible thermometer.
+\begin{description}
+\item[{First step}] \leavevmode
+The calling device will therefore simply need to invoke the \sphinxcode{\sphinxupquote{MIB}}
+that identifies any service that has a thermometer, in this case
+for purely demonstrative purposes it is assumed to be \sphinxcode{\sphinxupquote{2.1.*}}
+\begin{description}
+\item[{Client side}] \leavevmode
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} the call function has no parameter as you can see}
+\PYG{n}{services}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+s2}{2.1.1.0}\PYG{l+s+s2}{\PYGZdq{}}\PYG{p}{]}\PYG{p}{.}\PYG{n}{features}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{p}{:}\PYG{n}{call}\PYG{p}{(}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\item[{Server side}] \leavevmode
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{udp\PYGZus{}discovery}\PYG{p}{:}\PYG{n}{sendto}\PYG{p}{(}\PYG{n}{Utilities}\PYG{p}{:}\PYG{n}{table\PYGZus{}to\PYGZus{}string}\PYG{p}{(}\PYG{n}{disc}\PYG{p}{:}\PYG{n}{find}\PYG{p}{(}\PYG{n}{data\PYGZus{}discovery}\PYG{p}{)}\PYG{p}{)}\PYG{p}{,} \PYG{n}{ip\PYGZus{}discovery}\PYG{p}{,} \PYG{n}{port\PYGZus{}discovery}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\end{description}
+
+\item[{Second step}] \leavevmode
+Once the table of available services is obtained, the calling device
+\sphinxstylestrong{interrogates} these services one by one (in this case the \sphinxcode{\sphinxupquote{pre\sphinxhyphen{}conditions}}
+are always exceeded as no parameters are received).
+\begin{description}
+\item[{Client side}] \leavevmode
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{n}{check\PYGZus{}param}\PYG{p}{(}\PYG{n}{mib}\PYG{p}{,} \PYG{p}{...}\PYG{p}{,} \PYG{n}{udp\PYGZus{}feature}\PYG{p}{)}
+\end{sphinxVerbatim}
+
+\item[{Server side}] \leavevmode
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYG{k+kr}{if} \PYG{p}{(}\PYG{n}{services}\PYG{p}{[}\PYG{n}{mib}\PYG{p}{]}\PYG{p}{.}\PYG{n}{pre}\PYG{p}{(}\PYG{n}{param}\PYG{p}{)}\PYG{p}{)} \PYG{k+kr}{then}
+    \PYG{n}{udp\PYGZus{}call}\PYG{p}{:}\PYG{n}{sendto}\PYG{p}{(}\PYG{n}{services}\PYG{p}{[}\PYG{n}{mib}\PYG{p}{]}\PYG{p}{.}\PYG{n}{func}\PYG{p}{,} \PYG{n}{ip\PYGZus{}call}\PYG{p}{,} \PYG{n}{port\PYGZus{}call}\PYG{p}{)}
+\PYG{k+kr}{end}
+\end{sphinxVerbatim}
+
+\end{description}
+
+\end{description}
+
+The third and fourth steps correspond exactly to the example shown above.
+
+
+\chapter{Future works}
+\label{\detokenize{future:future-works}}\label{\detokenize{future::doc}}
+In the near future it would certainly be interesting to implement
+features like these:
+\begin{itemize}
+\item {} 
+Creation of a domain language for \sphinxstylestrong{IoT} systems
+
+\item {} 
+Static analysis of the system performances
+
+\item {} 
+Integration with data cloud
+
+\end{itemize}
 
 
 
