@@ -31,12 +31,10 @@ function Utilities:table_to_string(tbl)
     if not (type(tbl) == "table") then return "{}" end
     local result = "{"
     for k, v in pairs(tbl) do
-        -- Check the key type (ignore any numerical keys - assume its an array)
         if type(k) == "string" then
             result = result .. "[\"" .. k .. "\"]" .. "="
         end
 
-        -- Check the value type
         if type(v) == "table" then
             result = result .. self:table_to_string(v)
         elseif type(v) == "boolean" then
@@ -46,7 +44,22 @@ function Utilities:table_to_string(tbl)
         end
         result = result .. ","
     end
-    -- Remove leading commas from the result
+
     if result ~= "" then result = result:sub(1, result:len() - 1) end
     return result .. "}"
+end
+
+function Utilities:search(mib, services)
+    if self:get_table_size(services) == 0 then return false end
+
+    for key, k in pairs(services) do if (key == mib) then return true end end
+
+    log.fatal("[NO SERVICES MATCHED WITH THE SAME MIB]")
+    return false
+end
+
+function Utilities:call(mib, table, param_feat, ...)
+    if (self:search(mib, table)) then
+        _G.services[mib].features[param_feat]:call(...)
+    end
 end
