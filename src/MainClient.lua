@@ -5,7 +5,11 @@ dofile("Utilities.lua")
 dofile("Services.lua")
 
 -- Square root
-Utilities:call("1.2.6.0", _G.services, 1, 3)
+ --Utilities:call("2.1.1.0", _G.services, 2)
 
 -- Temperature
-Utilities:call("2.1.1.0", _G.services, 1)
+_G.services["1.2.6.0"].features[2]:call()
+
+
+--print(type(_G.services["3.5.8"]))
+--_G.services["3.5.8"]:daemon()

@@ -22,7 +22,10 @@ end
 --- @return table, boolean Produces a boolean indicating whether the operation is successful and a table with the values ​​produced by the requested service 
 function Feature:call(...)
     local set_services = Share:discovery(self.id)
-    if Utilities:get_table_size(set_services) == 0 then return {}, false end
+    if Utilities:get_table_size(set_services) == 0 then 
+         log.fatal("[NO SERVICES MATCHED WITH THE SAME MIB]") 
+         return {}, false
+    end
 
     log.trace("[" .. Utilities:get_table_size(set_services) .. " DEVICE FOUND]")
     Utilities:print_table(set_services)
