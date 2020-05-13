@@ -2,7 +2,7 @@ _G.services = {
     ["3.5.8"] = Service:new("3.5.8", [[ 
     return function(ip)
         local log = dofile("Log.lua")
-
+        
         local host, port = ip, 7777
         local socket = require("socket")
         local tcp = assert(socket.tcp())
@@ -20,22 +20,15 @@ _G.services = {
         tcp:close()
     end
     ]], function()
-        local log = dofile("Log.lua")
-
-        local temp = _G.services["3.5.8"].features[1]:call()
-        log.info("[DISPLAY IS SHOWING: ".. temp .."]")
-
         local socket = require("socket")
         local server = assert(socket.bind("*", 7777))
-
         while true do
             server:settimeout(2)
             local client = server:accept()
             if client == nil then break end
             local line, err = client:receive()
             if not err then
-                print("RICEVUTO")
-                client:send(temp .. "\n")
+                client:send(_G.services["3.5.8"].features[1]:call() .. "\n")
                 client:close()
                 break
             end
@@ -89,8 +82,6 @@ _G.services = {
 
     ["2.1.1.0"] = Service:new("2.1.1.0", [[ 
     return function(ip)
-        local log = dofile("Log.lua")
-
         local host, port = ip, 7777
         local socket = require("socket")
         local tcp = assert(socket.tcp())
@@ -111,7 +102,6 @@ _G.services = {
         local server = assert(socket.bind("*", 7777))
 
         math.randomseed(os.time())
-
         local temp = math.random(0, 45)
 
         while true do
