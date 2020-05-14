@@ -10,28 +10,9 @@ function Share:new() return setmetatable({services = {}}, Share) end
 --- This method inserts a service into the table of available services
 --- @param s Service The service to add
 function Share:attach(s)
-    count = 1
     if (getmetatable(s) == Service) and (not self:is_present(s, self.services)) then
         table.insert(self.services, s)
-        
---         local path_to_a_file = "running_services/"..s.name:gsub( "%.","_")..".lua"
-        
---         -- Creo un file di testo nella sottodirectory apposita
---         file = io.open(path_to_a_file, "w")
-        
---         -- Scrivo sul file di testo il codice lua
---         file:write(
--- [[
--- dofile("Share.lua")
--- dofile("Service.lua")
--- dofile("Feature.lua")
--- dofile("Utilities.lua")
--- dofile("Services.lua")
--- --_G.services["]]..s.name..[["]:daemon()
--- ]])
---         file:close()
---         os.execute("lua "..path_to_a_file)
---end
+    end
 end
 
 --- This method removes a service from the table of available services

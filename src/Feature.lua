@@ -24,7 +24,7 @@ function Feature:call(...)
     local set_services = Share:discovery(self.id)
     if Utilities:get_table_size(set_services) == 0 then 
          log.fatal("[NO SERVICES MATCHED WITH THE SAME MIB]") 
-         return {}, false
+         return "nil"
     end
 
     log.trace("[" .. Utilities:get_table_size(set_services) .. " DEVICE FOUND]")
@@ -60,17 +60,16 @@ function Feature:call(...)
                 local res = check_result(..., current_ip, data_func)
                 if (res and self.post(..., res)) then
                     log.info("[POST-CONDITION SUCCESSFUL]")
-                    log.info("[MSG REDCEIVED: " .. res .. "] [COMPUTATION: " ..
-                                 tostring(true) .. "]")
-
-                    return res, true
+                    log.info("[MSG REDCEIVED: " .. res .. "]")
+                    return res
                 else
                     log.fatal("[POST-CONDITION NOT OVERCOME]")
                 end
+            else log.fatal("[PRE-CONDITION NOT SUCCESSFUL]")
             end
         end
     end
     log.fatal("[NO SERVICES FOUND]")
-    return {}, false
+    return "nil"
 end
 
