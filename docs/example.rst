@@ -153,3 +153,49 @@ Second step
                 end
 
 The third and fourth steps correspond exactly to the example shown above.
+
+Nested call
+-----------------
+
+A ``nested call`` is defined as any context in which the device called, **to fulfill the
+result of the local computation**, it needs to in turn make a call to another service.
+
+In-depth explanation 
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Home automation devices, smart industry, smart city, smart energy or any other type of device
+they are installed over time and vary in number and type **without** a pre-arranged installation plan.
+
+Providing services that include **their collaboration** is difficult because interconnection
+and service interaction protocols are different and could vary over time.
+
+In this context, the adaptive and very flexible nature of the pattern allows the 
+possibility **to perform nested calls between devices**, so as to further enhance the concept 
+of interoperability between the themselves and take full advantage of the 
+dynamism that distinguishes them.
+
+
+Concrete demonstration
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Let's consider a sporting event, where racing bikes compete. Suppose it 
+is necessary calculate the speed of the bikes and compare them to 
+each other to understand which is the **best** rider.
+
+The devices available are:
+
+- A **big screen**, which shows a general ranking to the fans based on the average speed of the drivers
+
+- **Speed detectors** scattered across the track, which could be of different brands and calculate speeds with different measurement systems *(km/h, m/s, mph)*
+
+- A **classification device**, which sorts the set of all speeds detected in descending order and ensures uniformity between data *(converts m/s to km/ h or vice versa)*
+
+In this context, the maxi-screen, in order to update the 
+data shown in the table, **makes a call to the classification device, 
+which in turn makes a call to the speed detectors to first receive 
+any updates on the drivers' speeds**.
+
+All these logics can be developed on the individual devices that have 
+competence on the actions they undertake according to the different 
+configurations that are detected allowing ``flexibility``, ``adaptation`` 
+and ``fault tolerance`` to the system.
