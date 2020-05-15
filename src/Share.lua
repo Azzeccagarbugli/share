@@ -37,9 +37,11 @@ end
 function Share:discovery(macro_mib)
     local result = {}
 
-    local ip = {"192.168.1.10","80.211.186.133"}
+    local ip_list = {"192.168.1.10", "80.211.186.133"}
 
-    for _, ip in pairs(ip) do self:open_udp_socket(ip, macro_mib, result) end
+    for _, ip in pairs(ip_list) do
+        self:open_udp_socket(ip, macro_mib, result)
+    end
     return result
 end
 

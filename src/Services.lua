@@ -1,22 +1,19 @@
 _G.services = {
-    ["3.5.8"] = Service:new("3.5.8", [[]],
-     function()
+    ["3.5.8"] = Service:new("3.5.8", [[]], function()
         local log = dofile("Log.lua")
         local socket = require("socket")
-        
+
         while true do
-        
+
             local temp = _G.services["3.5.8"].features[1]:call()
-            if not(temp == "nil") then
-                log.info("[TEMPERATURE IS EQUAL TO: ".. temp.."]")
+            if not (temp == "nil") then
+                log.info("[TEMPERATURE IS EQUAL TO: " .. temp .. "]")
             end
             socket.sleep(0.1)
         end
-    end, 
-    function(n) return false end, Feature:new("2.1.*", function(n, m)
+    end, function(n) return false end, Feature:new("2.1.*", function(n, m)
         return m > -10 and m < 45
-    end))
-    ,
+    end)),
     ["1.2.6.0"] = Service:new("1.2.6.0", [[ 
     return function(data, ip)
         local log = dofile("Log.lua")
@@ -54,13 +51,10 @@ _G.services = {
         server:close()
     end, function(n) return n > 0 end, Feature:new("1.2.*", function(n, m)
         return n - m * m < 0.1
-    end),Feature:new("3.5.*", function(n, m)
+    end), Feature:new("3.5.*", function(n, m) return m > -10 and m < 45 end),
+                              Feature:new("2.1.*", function(n, m)
         return m > -10 and m < 45
-    end
-    ), Feature:new("2.1.*", function(n, m)
-        return m > -10 and m < 45
-    end)
-    ),
+    end)),
 
     ["2.1.1.0"] = Service:new("2.1.1.0", [[ 
     return function(ip)
@@ -98,13 +92,7 @@ _G.services = {
             end
         end
         server:close()
-    end, function(n) return true end, 
-     Feature:new("2.1.*", function(n, m)
+    end, function(n) return true end, Feature:new("2.1.*", function(n, m)
         return m > -10 and m < 45
-    end),
-    Feature:new("3.5.*", function(n, m)
-        return m > -10 and m < 45
-    end)
-    
-  )
+    end), Feature:new("3.5.*", function(n, m) return m > -10 and m < 45 end))
 }
