@@ -35,10 +35,14 @@ function Share:is_present(s, t)
 end
 
 function Share:discovery(macro_mib)
-    result = {}
-    --ip = net.service.mdns.resolvehost("whitecat-share")
-    ip_list = {"80.211.186.133","192.168.1.10"}
-    for _, ip in pairs(ip_list) do self:open_udp_socket(ip, macro_mib, result) end
+    local result = {}
+
+    -- ip = net.service.mdns.resolvehost("whitecat-share")
+    local ip_list = {"80.211.186.133", "127.0.0.1"}
+
+    for _, ip in pairs(ip_list) do
+        self:open_udp_socket(ip, macro_mib, result)
+    end
     return result
 end
 
