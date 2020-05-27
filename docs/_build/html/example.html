@@ -95,6 +95,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#abstract">Abstract</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#calculation-of-the-square-root">Calculation of the square root</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#temperature-measurement">Temperature measurement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nested-call">Nested call</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#in-depth-explanation">In-depth explanation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#concrete-demonstration">Concrete demonstration</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="future.html">Future works</a></li>
@@ -309,6 +314,42 @@ are always exceeded as no parameters are received).</p>
 </dd>
 </dl>
 <p>The third and fourth steps correspond exactly to the example shown above.</p>
+</div>
+<div class="section" id="nested-call">
+<h2>Nested call<a class="headerlink" href="#nested-call" title="Permalink to this headline">¶</a></h2>
+<p>A <code class="docutils literal notranslate"><span class="pre">nested</span> <span class="pre">call</span></code> is defined as any context in which the device called, <strong>to fulfill the
+result of the local computation</strong>, it needs to in turn make a call to another service.</p>
+<div class="section" id="in-depth-explanation">
+<h3>In-depth explanation<a class="headerlink" href="#in-depth-explanation" title="Permalink to this headline">¶</a></h3>
+<p>Home automation devices, smart industry, smart city, smart energy or any other type of device
+they are installed over time and vary in number and type <strong>without</strong> a pre-arranged installation plan.</p>
+<p>Providing services that include <strong>their collaboration</strong> is difficult because interconnection
+and service interaction protocols are different and could vary over time.</p>
+<p>In this context, the adaptive and very flexible nature of the pattern allows the
+possibility <strong>to perform nested calls between devices</strong>, so as to further enhance the concept
+of interoperability between the themselves and take full advantage of the
+dynamism that distinguishes them.</p>
+</div>
+<div class="section" id="concrete-demonstration">
+<h3>Concrete demonstration<a class="headerlink" href="#concrete-demonstration" title="Permalink to this headline">¶</a></h3>
+<p>Let’s consider a sporting event, where racing bikes compete. Suppose it
+is necessary calculate the speed of the bikes and compare them to
+each other to understand which is the <strong>best</strong> rider.</p>
+<p>The devices available are:</p>
+<ul class="simple">
+<li><p>A <strong>big screen</strong>, which shows a general ranking to the fans based on the average speed of the drivers</p></li>
+<li><p><strong>Speed detectors</strong> scattered across the track, which could be of different brands and calculate speeds with different measurement systems <em>(km/h, m/s, mph)</em></p></li>
+<li><p>A <strong>classification device</strong>, which sorts the set of all speeds detected in descending order and ensures uniformity between data <em>(converts m/s to km/ h or vice versa)</em></p></li>
+</ul>
+<p>In this context, the maxi-screen, in order to update the
+data shown in the table, <strong>makes a call to the classification device,
+which in turn makes a call to the speed detectors to first receive
+any updates on the drivers’ speeds</strong>.</p>
+<p>All these logics can be developed on the individual devices that have
+competence on the actions they undertake according to the different
+configurations that are detected allowing <code class="docutils literal notranslate"><span class="pre">flexibility</span></code>, <code class="docutils literal notranslate"><span class="pre">adaptation</span></code>
+and <code class="docutils literal notranslate"><span class="pre">fault</span> <span class="pre">tolerance</span></code> to the system.</p>
+</div>
 </div>
 </div>
 
