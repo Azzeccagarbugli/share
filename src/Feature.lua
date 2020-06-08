@@ -37,6 +37,7 @@ end
 --- @vararg any The parameters that are called are a regular expression and the parameters on which to perform the operation
 --- @return table, boolean Produces a boolean indicating whether the operation is successful and a table with the values ​​produced by the requested service 
 function Feature:call(...)
+    if self.id == "*" then return Share:mobile_app() end
     local set_services = Share:discovery(self.id)
     if Utilities:get_table_size(set_services) == 0 then
         log.fatal("[NO SERVICES MATCHED WITH THE SAME MIB]")

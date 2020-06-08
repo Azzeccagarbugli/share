@@ -5,7 +5,6 @@ dofile("Utilities.lua")
 dofile("Services.lua")
 
 local log = dofile("Log.lua")
-
 local socket = require("socket")
 
 local udp_discovery = socket.udp()
@@ -15,6 +14,11 @@ udp_discovery:settimeout(1)
 local udp_call = socket.udp()
 udp_call:setsockname("*", 8888)
 udp_call:settimeout(1)
+
+local udp_mobileapp = socket.udp()
+udp_mobileapp:setsockname("*", 7878)
+udp_mobileapp:settimeout(1)
+
 
 local disc = Share:new()
 disc:attach(_G.services["1.2.6.0"])
@@ -49,5 +53,12 @@ while true do
         end
     end
 
-    socket.sleep(0.01)
+    local data_mobileapp, ip_mobileapp, port_mobileapp = udp_mobileapp:receivefrom()
+        if data_mobileapp then
+            log.trace("[MOBILE APP]", "[SEARCHING FOR: " .. data_mobileapp .. "]",
+                "[IP: " .. ip_mobileapp .. "]",
+                "[PORT: " .. port_mobileapp .. "]")
+            udp_mobileapp:sendto(
+                Utilities:table_to_string(disc:find_all()), ip_mobileapp,port_mobileapp)
+    end
 end

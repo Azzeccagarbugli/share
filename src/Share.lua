@@ -34,8 +34,17 @@ function Share:is_present(s, t)
     return false
 end
 
+function Share:mobile_app()
+    local result = {}
+    --ip = net.service.mdns.resolvehost("whitecat-share")
+    ip_list = {"192.168.1.10"}
+    for _, ip in pairs(ip_list) do self:open_udp_mobile(ip, result) end
+    return result
+end
+
+
 function Share:discovery(macro_mib)
-    result = {}
+    local result = {}
     --ip = net.service.mdns.resolvehost("whitecat-share")
     ip_list = {"80.211.186.133","192.168.1.10"}
     for _, ip in pairs(ip_list) do self:open_udp_socket(ip, macro_mib, result) end
@@ -48,14 +57,39 @@ end
 function Share:find(macro_mib)
     if #self.services == 0 then return 0 end
     local saved = {}
+
     for _, k in pairs(self.services) do
         if (k.name:match(macro_mib)) then table.insert(saved, k.name) end
     end
+    
     if #saved == 0 then
         return 0
     else
         return saved
     end
+end
+
+function Share:find_all()
+    if #self.services == 0 then return "{}" end
+    local tab = {}
+    for i,k in pairs(self.services) do table.insert(tab,k.name) end  
+    return tab
+end
+
+function Share:open_udp_mobile(ip,result)
+    local socket = require("socket")
+    local udp_mobile = socket.udp()
+    udp_mobile:setpeername(ip, 7878)
+    udp_mobile:settimeout(1)
+    udp_mobile:send("\n")
+    local data_mib = udp_mobile:receive()
+    if (data_mib and not (data_mib == "{}")) then     
+        pcall(load("mib_tab = " .. data_mib))
+        local ip_tab = {}
+        table.insert(ip_tab, ip)
+        Utilities:add_new_ip(ip_tab, result, ip, mib_tab)
+    end
+    udp_mobile:close()
 end
 
 --- Internal function used to establish a remote connection with udp socket
