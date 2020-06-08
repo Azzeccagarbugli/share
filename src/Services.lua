@@ -1,8 +1,6 @@
 _G.services = {
     ["3.5.8"] = Service:new("3.5.8", [[
         return function(data, ip)
-            local log = dofile("Log.lua")
-    
             local host, port = ip, 7777
             local socket = require("socket")
             local tcp = assert(socket.tcp())
@@ -17,8 +15,7 @@ _G.services = {
             end
             tcp:close()
         end
-    ]],
-     function()
+    ]], function()
         local log = dofile("Log.lua")
         local socket = require("socket")
 
@@ -33,10 +30,9 @@ _G.services = {
     end, function(n) return false end, Feature:new("2.1.*", function(n, m)
         return m > -10 and m < 45
     end)),
+
     ["1.2.6.0"] = Service:new("1.2.6.0", [[ 
     return function(data, ip)
-        local log = dofile("Log.lua")
-
         local host, port = ip, 7777
         local socket = require("socket")
         local tcp = assert(socket.tcp())
@@ -46,7 +42,6 @@ _G.services = {
         tcp:settimeout(2)
         while true do
             local s, status, partial = tcp:receive()
-            log.debug("[VALUE COMPUTED IN FUNCTION: ".. s .."]")
             if status == "closed" then break end
             return s or partial
         end
@@ -91,11 +86,10 @@ _G.services = {
         end
         tcp:close()
     end
-    ]],
-    function()
+    ]], function()
         local socket = require("socket")
         local server = assert(socket.bind("*", 7777))
-        
+
         -- lettura analogica del sensore temperatura
         -- channel = adc.attach(adc.ADC1, pio.GPIO34)
         -- raw, millivolts = channel:read()
@@ -104,8 +98,8 @@ _G.services = {
         -- R = R0*R;
         -- temp = (1.0/(math.log(R/R0)/4275+1/298.15)-273.15)-17.31
         math.randomseed(os.time())
-        local temp = math.random(16,17) + math.random()
-        
+        local temp = math.random(16, 17) + math.random()
+
         while true do
             server:settimeout(2)
             local client = server:accept()
@@ -118,16 +112,11 @@ _G.services = {
                 break
             end
         end
-    end, function(n) return true end, 
-     Feature:new("2.1.*", function(n, m)
+    end, function(n) return true end, Feature:new("2.1.*", function(n, m)
         return m > -10 and m < 45
-    end),
-    Feature:new("3.5.*", function(n, m)
-        return m > -10 and m < 45
-    end)
-    
-  ),
-  ["4.1.7"] = Service:new("4.1.7", [[
+    end), Feature:new("3.5.*", function(n, m) return m > -10 and m < 45 end)),
+
+    ["4.1.7"] = Service:new("4.1.7", [[
     return function(ip)
         local host, port = ip, 7777
         local socket = require("socket")
@@ -142,25 +131,23 @@ _G.services = {
         end
         tcp:close()
     end
-]],
- function()
-    local socket = require("socket")
-    local server = assert(socket.bind("*", 7777))
+    ]], function()
+        local socket = require("socket")
+        local server = assert(socket.bind("*", 7777))
 
-    while true do
-        server:settimeout(4)
-        local client = server:accept()
-        if client == nil then break end
-        local line, err = client:receive()
-        if not err then
-            client:send(_G.services["4.1.7"].features[1]:call() .. "\n")
-            client:close()
-            break
+        while true do
+            server:settimeout(4)
+            local client = server:accept()
+            if client == nil then break end
+            local line, err = client:receive()
+            if not err then
+                client:send(_G.services["4.1.7"].features[1]:call() .. "\n")
+                client:close()
+                break
+            end
         end
-    end
-    server:close()
-end, 
-function(n) return true end, 
-Feature:new("2.1.*", function(n, m) return m > -10 and m < 45 end)
-)
+        server:close()
+    end, function(n) return true end, Feature:new("2.1.*", function(n, m)
+        return m > -10 and m < 45
+    end))
 }
