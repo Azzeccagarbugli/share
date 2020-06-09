@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:Share/widgets/effects/shadow.dart';
 import 'package:flutter/material.dart';
@@ -17,20 +19,6 @@ class _HomePageViewState extends State<HomePageView>
   AnimationController _animationController;
   Animation<double> _animation;
   CurvedAnimation _curve;
-
-  Socket socket;
-
-  void dataHandler(data) {
-    print(new String.fromCharCodes(data).trim());
-  }
-
-  void errorHandler(error, StackTrace trace) {
-    print(error);
-  }
-
-  void doneHandler() {
-    socket.destroy();
-  }
 
   @override
   void initState() {
@@ -92,26 +80,21 @@ class _HomePageViewState extends State<HomePageView>
             Icons.filter_tilt_shift,
             color: Colors.white,
           ),
-          onPressed: () async {
-            Socket.connect("80.211.186.133", 7878).then((Socket sock) {
-              socket = sock;
-              socket.listen(
-                dataHandler,
-                onError: errorHandler,
-                onDone: doneHandler,
-                cancelOnError: false,
-              );
-            }).catchError((AsyncError e) {
-              print("Unable to connect: $e");
+          onPressed: () {
+            var DESTINATION_ADDRESS = InternetAddress("10.0.2.2");
+
+            RawDatagramSocket.bind(InternetAddress.anyIPv4, 7878)
+                .then((RawDatagramSocket udpSocket) {
+              udpSocket.broadcastEnabled = true;
+              udpSocket.listen((e) {
+                Datagram dg = udpSocket.receive();
+                if (dg != null) {
+                  print("received ${String.fromCharCodes(dg.data)}");
+                }
+              });
+              List<int> data = utf8.encode('TEST');
+              udpSocket.send(data, DESTINATION_ADDRESS, 7878);
             });
-
-            stdin.listen(
-              (data) => socket.write(
-                new String.fromCharCodes(data).trim() + '\n',
-              ),
-            );
-
-            print("ciao");
           },
         ),
       ),
