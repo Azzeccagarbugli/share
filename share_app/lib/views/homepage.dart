@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:Share/widgets/effects/shadow.dart';
 import 'package:flutter/material.dart';
 import 'package:Share/widgets/bottombar/bottombar.dart';
@@ -15,9 +18,24 @@ class _HomePageViewState extends State<HomePageView>
   Animation<double> _animation;
   CurvedAnimation _curve;
 
+  Socket socket;
+
+  void dataHandler(data) {
+    print(new String.fromCharCodes(data).trim());
+  }
+
+  void errorHandler(error, StackTrace trace) {
+    print(error);
+  }
+
+  void doneHandler() {
+    socket.destroy();
+  }
+
   @override
   void initState() {
     super.initState();
+
     _animationController = AnimationController(
       duration: Duration(seconds: 1),
       vsync: this,
@@ -74,7 +92,27 @@ class _HomePageViewState extends State<HomePageView>
             Icons.filter_tilt_shift,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () async {
+            Socket.connect("80.211.186.133", 7878).then((Socket sock) {
+              socket = sock;
+              socket.listen(
+                dataHandler,
+                onError: errorHandler,
+                onDone: doneHandler,
+                cancelOnError: false,
+              );
+            }).catchError((AsyncError e) {
+              print("Unable to connect: $e");
+            });
+
+            stdin.listen(
+              (data) => socket.write(
+                new String.fromCharCodes(data).trim() + '\n',
+              ),
+            );
+
+            print("ciao");
+          },
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
