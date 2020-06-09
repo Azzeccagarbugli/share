@@ -63,12 +63,12 @@ _G.services = {
             end
         end
         server:close()
-    end, function(n) return n > 0 end, Feature:new("4.1.*", function(n, m)
-        return true
-    end), Feature:new("1.2.*", function(n, m) return n - m * m < 0.1 end),
-                              Feature:new("3.5.*", function(n, m)
-        return m > -10 and m < 45
-    end), Feature:new("2.1.*", function(n, m) return m > -10 and m < 45 end)),
+    end, function(n) return n > 0 end,
+    Feature:new("4.1.*", function(n,m) return true end),
+    Feature:new("1.2.*", function(n, m) return n - m * m < 0.1 end),
+    Feature:new("3.5.*", function(n, m) return m > -10 and m < 45 end),
+    Feature:new("*", function(n, m) return true end)
+    ),
 
     ["2.1.1.0"] = Service:new("2.1.1.0", [[ 
     return function(ip)
