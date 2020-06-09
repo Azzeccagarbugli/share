@@ -19,7 +19,6 @@ local udp_mobileapp = socket.udp()
 udp_mobileapp:setsockname("*", 7878)
 udp_mobileapp:settimeout(1)
 
-
 local disc = Share:new()
 disc:attach(_G.services["1.2.6.0"])
 -- disc:detach(_G.services["1.2.6.0"])
@@ -53,12 +52,13 @@ while true do
         end
     end
 
-    local data_mobileapp, ip_mobileapp, port_mobileapp = udp_mobileapp:receivefrom()
-        if data_mobileapp then
-            log.trace("[MOBILE APP]", "[SEARCHING FOR: " .. data_mobileapp .. "]",
-                "[IP: " .. ip_mobileapp .. "]",
-                "[PORT: " .. port_mobileapp .. "]")
-            udp_mobileapp:sendto(
-                Utilities:table_to_string(disc:find_all()), ip_mobileapp,port_mobileapp)
+    local data_mobileapp, ip_mobileapp, port_mobileapp =
+        udp_mobileapp:receivefrom()
+    if data_mobileapp then
+        log.trace("[MOBILE APP]", "[SEARCHING FOR MOBILE APP]",
+                  "[IP: " .. ip_mobileapp .. "]",
+                  "[PORT: " .. port_mobileapp .. "]")
+        udp_mobileapp:sendto(Utilities:table_to_string(disc:find_all()),
+                             ip_mobileapp, port_mobileapp)
     end
 end

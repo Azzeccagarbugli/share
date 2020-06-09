@@ -61,7 +61,8 @@ function Feature:call(...)
                 local res = check_result(..., current_ip, data_func)
                 if (res and self.post(..., res)) then
                     log.info("[POST-CONDITION SUCCESSFUL]")
-                    log.info("[MSG REDCEIVED: " .. res .. "] [FROM: " ..current_ip .. "]")
+                    log.info("[MSG REDCEIVED: " .. res .. "] [FROM: " ..
+                                 current_ip .. "]")
                     return res
                 else
                     log.fatal("[POST-CONDITION NOT OVERCOME]")
