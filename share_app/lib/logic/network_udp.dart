@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 class NetworkController {
-  final InternetAddress ip;
+  final List<InternetAddress> ip;
   final int port;
 
   NetworkController({
@@ -26,12 +26,15 @@ class NetworkController {
             buildStr(String.fromCharCodes(dg.data));
           }
         });
-        List<int> data = utf8.encode('TEST');
-        udpSocket.send(
-          data,
-          this.ip,
-          this.port,
-        );
+        List<int> data = utf8.encode('\n');
+
+        this.ip.forEach((ip) {
+          udpSocket.send(
+            data,
+            ip,
+            this.port,
+          );
+        });
       },
     );
   }
@@ -41,10 +44,12 @@ class NetworkController {
   }
 
   void buildStr(String data) {
-    _str.putIfAbsent(
-      this.ip,
-      () => setUpMib(data),
-    );
+    this.ip.forEach((ip) {
+      _str.putIfAbsent(
+        ip,
+        () => setUpMib(data),
+      );
+    });
   }
 
   List<String> setUpMib(String mib) {

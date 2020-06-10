@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:Share/views/homepage.dart';
+import 'package:Share/views/seed.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
