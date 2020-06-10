@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:Share/logic/network_udp.dart';
 import 'package:Share/widgets/effects/shadow.dart';
 import 'package:flutter/material.dart';
 import 'package:Share/widgets/bottombar/bottombar.dart';
+import 'package:spring_button/spring_button.dart';
 
 class HomePageView extends StatefulWidget {
   @override
@@ -14,16 +16,19 @@ class HomePageView extends StatefulWidget {
 
 class _HomePageViewState extends State<HomePageView>
     with SingleTickerProviderStateMixin {
-  var _bottomNavIndex = 0;
+  var _bottomNavIndex = -1;
 
   AnimationController _animationController;
   Animation<double> _animation;
   CurvedAnimation _curve;
 
+  NetworkController _networkController = new NetworkController(
+    ip: InternetAddress("10.0.2.2"),
+  );
+
   @override
   void initState() {
     super.initState();
-
     _animationController = AnimationController(
       duration: Duration(seconds: 1),
       vsync: this,
@@ -44,6 +49,7 @@ class _HomePageViewState extends State<HomePageView>
       Duration(milliseconds: 400),
       () => _animationController.forward(),
     );
+    _networkController.setUpUDP();
   }
 
   @override
@@ -63,7 +69,10 @@ class _HomePageViewState extends State<HomePageView>
       case 3:
         return TempWidget(context: context, bottomNavIndex: _bottomNavIndex);
       default:
-        return null;
+        return BuildCardInfoDevicesMib(
+          context: context,
+          map: _networkController.getStructure(),
+        );
     }
   }
 
@@ -73,28 +82,13 @@ class _HomePageViewState extends State<HomePageView>
       extendBody: true,
       floatingActionButton: ScaleTransition(
         scale: _animation,
-        child: FloatingActionButton(
-          elevation: 8,
-          backgroundColor: Theme.of(context).buttonColor,
-          child: Icon(
-            Icons.filter_tilt_shift,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            var DESTINATION_ADDRESS = InternetAddress("10.0.2.2");
-
-            RawDatagramSocket.bind(InternetAddress.anyIPv4, 7878)
-                .then((RawDatagramSocket udpSocket) {
-              udpSocket.broadcastEnabled = true;
-              udpSocket.listen((e) {
-                Datagram dg = udpSocket.receive();
-                if (dg != null) {
-                  print("received ${String.fromCharCodes(dg.data)}");
-                }
-              });
-              List<int> data = utf8.encode('TEST');
-              udpSocket.send(data, DESTINATION_ADDRESS, 7878);
+        child: MainButtonNavBar(
+          onTap: () {
+            setState(() {
+              _bottomNavIndex = -1;
             });
+
+            _networkController.setUpUDP();
           },
         ),
       ),
@@ -105,6 +99,80 @@ class _HomePageViewState extends State<HomePageView>
         onTap: (index) => setState(() => _bottomNavIndex = index),
       ),
       body: _buildScreen(_bottomNavIndex),
+    );
+  }
+}
+
+class BuildCardInfoDevicesMib extends StatelessWidget {
+  const BuildCardInfoDevicesMib({
+    Key key,
+    @required this.context,
+    @required this.map,
+  }) : super(key: key);
+
+  final BuildContext context;
+  final Map<InternetAddress, List<String>> map;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: ListView.builder(
+          itemCount: map.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              margin: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 14,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: Neumorphism.boxShadow(context),
+                color: Colors.white,
+              ),
+              child: ListTile(
+                title: Text(
+                  map.keys.toList()[index].address,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Text(
+                  map.values.toList()[index].toList().toString(),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class MainButtonNavBar extends StatelessWidget {
+  final Function onTap;
+
+  const MainButtonNavBar({Key key, this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SpringButton(
+      SpringButtonType.OnlyScale,
+      Container(
+        padding: EdgeInsets.all(
+          16.0,
+        ),
+        decoration: BoxDecoration(
+          color: Theme.of(context).buttonColor,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          Icons.filter_tilt_shift,
+          color: Colors.white,
+          size: 28,
+        ),
+      ),
+      onTap: onTap,
     );
   }
 }
