@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:io';
+
+import 'package:Share/logic/network_udp.dart';
 import 'package:Share/views/discovery.dart';
 import 'package:Share/widgets/bottombar/central_button.dart';
 import 'package:Share/widgets/temp_widget.dart';
@@ -16,6 +20,13 @@ class _HomePageViewState extends State<HomePageView>
   AnimationController _animationController;
   Animation<double> _animation;
   CurvedAnimation _curve;
+
+  NetworkController _networkController = new NetworkController(
+    listIp: [
+      InternetAddress("10.0.2.2"),
+      InternetAddress("80.211.186.133"),
+    ],
+  );
 
   @override
   void initState() {
@@ -40,6 +51,12 @@ class _HomePageViewState extends State<HomePageView>
       Duration(milliseconds: 400),
       () => _animationController.forward(),
     );
+
+    Timer.periodic(Duration(seconds: 2), (Timer t) {
+      setState(() {
+        _networkController.setUpUDP();
+      });
+    });
   }
 
   @override
@@ -51,7 +68,9 @@ class _HomePageViewState extends State<HomePageView>
   Widget _buildScreen(int x) {
     switch (x) {
       case -1:
-        return DiscoveryView();
+        return DiscoveryView(
+          str: _networkController.str,
+        );
       case 0:
         return TempWidget(context: context, bottomNavIndex: _bottomNavIndex);
       case 1:
@@ -61,7 +80,7 @@ class _HomePageViewState extends State<HomePageView>
       case 3:
         return TempWidget(context: context, bottomNavIndex: _bottomNavIndex);
       default:
-        return DiscoveryView();
+        return null;
     }
   }
 
@@ -75,6 +94,7 @@ class _HomePageViewState extends State<HomePageView>
           onTap: () {
             setState(() {
               _bottomNavIndex = -1;
+              _networkController.setUpUDP();
             });
           },
         ),
@@ -83,9 +103,13 @@ class _HomePageViewState extends State<HomePageView>
       bottomNavigationBar: BottomBarApp(
         animation: _animation,
         bottomNavIndex: _bottomNavIndex,
-        onTap: (index) => setState(() => _bottomNavIndex = index),
+        onTap: (index) => setState(
+          () => _bottomNavIndex = index,
+        ),
       ),
-      body: _buildScreen(_bottomNavIndex),
+      body: _buildScreen(
+        _bottomNavIndex,
+      ),
     );
   }
 }

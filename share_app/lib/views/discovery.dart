@@ -1,51 +1,40 @@
 import 'dart:io';
 
-import 'package:Share/logic/network_udp.dart';
 import 'package:Share/widgets/effects/shadow.dart';
 import 'package:Share/widgets/temp_widget.dart';
 import 'package:flutter/material.dart';
 
 class DiscoveryView extends StatefulWidget {
+  final Map<InternetAddress, List<String>> str;
+
+  const DiscoveryView({
+    Key key,
+    this.str,
+  }) : super(key: key);
+
   @override
   _DiscoveryViewState createState() => _DiscoveryViewState();
 }
 
 class _DiscoveryViewState extends State<DiscoveryView> {
-  NetworkController _networkController = new NetworkController(
-    ip: [
-      InternetAddress("10.0.2.2"),
-    ],
-  );
-
-  Map<InternetAddress, List<String>> _devices =
-      new Map<InternetAddress, List<String>>();
-
-  @override
-  void initState() {
-    super.initState();
-    _networkController.setUpUDP();
-    _devices = _networkController.getStructure();
-  }
-
   @override
   Widget build(BuildContext context) {
-    print(_devices.length);
-
+    print(widget.str.toString());
     return Scaffold(
       body: Center(
-        child: _devices.isNotEmpty
+        child: widget.str.isNotEmpty
             ? ListView.builder(
-                itemCount: _devices.length,
+                itemCount: widget.str.length,
                 itemBuilder: (BuildContext context, int index) {
                   return CardIpMib(
-                    ip: _devices.keys.toList()[index],
-                    mibs: _devices.values.toList()[index],
+                    ip: widget.str.keys.toList()[index],
+                    mibs: widget.str.values.toList()[index],
                   );
                 },
               )
             : TempWidget(
                 context: context,
-                bottomNavIndex: -1,
+                bottomNavIndex: -98,
               ),
       ),
     );
