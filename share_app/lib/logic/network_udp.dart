@@ -52,8 +52,12 @@ class NetworkController {
     print(String.fromCharCodes(datagram.data));
 
     if (datagram != null) {
-      str.putIfAbsent(datagram.address,
-          () => _setUpMib(String.fromCharCodes(datagram.data)));
+      str.putIfAbsent(
+        datagram.address,
+        () => _setUpMib(
+          String.fromCharCodes(datagram.data),
+        ),
+      );
     }
   }
 

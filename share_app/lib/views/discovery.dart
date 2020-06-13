@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:Share/widgets/effects/shadow.dart';
+import 'package:Share/widgets/card_homepage_ip_mib.dart';
 import 'package:Share/widgets/temp_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -36,39 +36,6 @@ class _DiscoveryViewState extends State<DiscoveryView> {
                 context: context,
                 bottomNavIndex: -98,
               ),
-      ),
-    );
-  }
-}
-
-class CardIpMib extends StatelessWidget {
-  final InternetAddress ip;
-  final List<String> mibs;
-
-  const CardIpMib({Key key, this.ip, this.mibs}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 14,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: Neumorphism.boxShadow(context),
-        color: Colors.white,
-      ),
-      child: ListTile(
-        title: Text(
-          ip.address,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        subtitle: Text(
-          mibs.toString(),
-        ),
       ),
     );
   }
