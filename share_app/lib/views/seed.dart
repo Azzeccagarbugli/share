@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:Share/logic/network_udp.dart';
+import 'package:Share/views/category.dart';
 import 'package:Share/views/discovery.dart';
 import 'package:Share/widgets/bottombar/central_button.dart';
 import 'package:Share/widgets/temp_widget.dart';
@@ -23,8 +24,8 @@ class _HomePageViewState extends State<HomePageView>
 
   NetworkController _networkController = new NetworkController(
     listIp: [
-      InternetAddress("10.0.2.2"),
       InternetAddress("80.211.186.133"),
+      InternetAddress("10.0.2.2"),
     ],
   );
 
@@ -72,7 +73,9 @@ class _HomePageViewState extends State<HomePageView>
           str: _networkController.str,
         );
       case 0:
-        return TempWidget(context: context, bottomNavIndex: _bottomNavIndex);
+        return CategoriesView(
+          str: _networkController.str,
+        );
       case 1:
         return TempWidget(context: context, bottomNavIndex: _bottomNavIndex);
       case 2:

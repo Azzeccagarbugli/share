@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:Share/models/mib.dart';
+
 class NetworkController {
   final List<InternetAddress> listIp;
   final int port;
@@ -12,8 +14,7 @@ class NetworkController {
 
   RawDatagramSocket _udpSocket;
 
-  Map<InternetAddress, List<String>> str =
-      new Map<InternetAddress, List<String>>();
+  Map<InternetAddress, List<Mib>> str = new Map<InternetAddress, List<Mib>>();
 
   Future setUpUDP() async {
     this.listIp.forEach((element) async {
@@ -23,7 +24,6 @@ class NetworkController {
       ).then(
         (RawDatagramSocket udpSocket) {
           _udpSocket = udpSocket;
-          udpSocket.broadcastEnabled = true;
           udpSocket.listen((e) {
             switch (e) {
               case RawSocketEvent.read:
@@ -55,20 +55,28 @@ class NetworkController {
       str.putIfAbsent(
         datagram.address,
         () => _setUpMib(
+          datagram.address,
           String.fromCharCodes(datagram.data),
         ),
       );
     }
   }
 
-  List<String> _setUpMib(String mib) {
-    List<String> _listOfMib = new List<String>();
+  List<Mib> _setUpMib(InternetAddress ip, String rawString) {
+    List<Mib> _listOfMib = new List<Mib>();
     RegExp _exp = new RegExp(r'(?<=")[^"]+(?=")');
 
-    for (Match match in _exp.allMatches(mib.replaceAll(",", ""))) {
-      _listOfMib.add(match.group(0));
+    for (Match match in _exp.allMatches(rawString.replaceAll(",", ""))) {
+      _listOfMib.add(
+        new Mib(
+          ip: ip,
+          identify: match.group(0),
+        ),
+      );
     }
 
     return _listOfMib;
   }
+
+  String call(InternetAddress ip, String mib, List<String> list) {}
 }

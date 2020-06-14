@@ -1,16 +1,17 @@
 import 'dart:io';
 
+import 'package:Share/models/mib.dart';
 import 'package:Share/widgets/effects/shadow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class CardIpMib extends StatelessWidget {
   final InternetAddress ip;
-  final List<String> mibs;
+  final List<Mib> mibs;
 
   const CardIpMib({Key key, this.ip, this.mibs}) : super(key: key);
 
-  List<Widget> buildCard(List<String> list, BuildContext context) {
+  List<Widget> _buildCard(List<Mib> list, BuildContext context) {
     List<Widget> temp = new List<Widget>();
     list.forEach((element) {
       temp.add(
@@ -39,9 +40,9 @@ class CardIpMib extends StatelessWidget {
                     height: 52,
                     child: Center(
                       child: Text(
-                        element,
+                        element.identify,
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           color: Colors.grey[800],
                           fontWeight: FontWeight.w600,
                         ),
@@ -111,12 +112,10 @@ class CardIpMib extends StatelessWidget {
                       backgroundColor: Theme.of(context).buttonColor,
                       avatar: CircleAvatar(
                         backgroundColor: Colors.white,
-                        child: Text(
-                          "IP",
-                          style: TextStyle(
-                            color: Theme.of(context).buttonColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        child: Icon(
+                          Icons.settings_input_antenna,
+                          color: Theme.of(context).buttonColor,
+                          size: 16,
                         ),
                       ),
                       label: Text(
@@ -155,7 +154,7 @@ class CardIpMib extends StatelessWidget {
                   ],
                 ),
                 Column(
-                  children: buildCard(mibs, context),
+                  children: _buildCard(mibs, context),
                 ),
                 SizedBox(
                   height: 8,

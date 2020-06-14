@@ -17,7 +17,7 @@ function Feature:new(i, p)
     end
 end
 
-function check_param(mib, param, udp_feature)
+local function check_param(mib, param, udp_feature)
     if (param == nil) then
         udp_feature:send('mib = "' .. mib .. '"')
     else
@@ -25,7 +25,7 @@ function check_param(mib, param, udp_feature)
     end
 end
 
-function check_result(param, current_ip, data_func)
+local function check_result(param, current_ip, data_func)
     if (param == nil) then
         return load(data_func)()(current_ip)
     else

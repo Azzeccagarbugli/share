@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
         disabledColor: Colors.purple[100],
         brightness: Brightness.light,
         buttonColor: Colors.grey[900],
+        dividerColor: Colors.transparent,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: GoogleFonts.rubikTextTheme(
           Theme.of(context).textTheme,

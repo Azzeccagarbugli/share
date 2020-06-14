@@ -1,11 +1,12 @@
 import 'dart:io';
 
+import 'package:Share/models/mib.dart';
 import 'package:Share/widgets/card_homepage_ip_mib.dart';
 import 'package:Share/widgets/temp_widget.dart';
 import 'package:flutter/material.dart';
 
 class DiscoveryView extends StatefulWidget {
-  final Map<InternetAddress, List<String>> str;
+  final Map<InternetAddress, List<Mib>> str;
 
   const DiscoveryView({
     Key key,
@@ -23,7 +24,10 @@ class _DiscoveryViewState extends State<DiscoveryView> {
     return Scaffold(
       body: Center(
         child: widget.str.isNotEmpty
-            ? ListView.builder(
+            ? ListView.separated(
+                separatorBuilder: (_, __) => Divider(
+                  height: 0,
+                ),
                 itemCount: widget.str.length,
                 itemBuilder: (BuildContext context, int index) {
                   return CardIpMib(
