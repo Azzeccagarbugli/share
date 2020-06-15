@@ -129,12 +129,12 @@ class CardIpMib extends StatelessWidget {
                       width: 8,
                     ),
                     Chip(
-                      backgroundColor: Colors.purple[300],
+                      backgroundColor: Colors.grey[400],
                       avatar: CircleAvatar(
                         backgroundColor: Colors.white,
                         child: Icon(
                           Icons.search,
-                          color: Colors.purple[300],
+                          color: Colors.grey[400],
                           size: 16,
                         ),
                       ),

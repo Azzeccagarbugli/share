@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spring_button/spring_button.dart';
 
 class CategoryCard extends StatelessWidget {
-  final Mib mib;
+  final Mibs mib;
 
   const CategoryCard({
     Key key,
@@ -84,7 +84,7 @@ class CategoryCard extends StatelessWidget {
             bottom: -18,
             left: 0,
             right: 0,
-            child: _buildImgFromMib(mib.category),
+            child: _buildImgFromMib(mib),
           ),
           Positioned(
             top: 58,
@@ -113,7 +113,7 @@ class CategoryCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  _stringFromMib(mib.category),
+                  _stringFromMib(mib),
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
@@ -121,7 +121,7 @@ class CategoryCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  _subtitileFromMib(mib.category),
+                  _subtitileFromMib(mib),
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.grey[300],

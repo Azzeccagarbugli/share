@@ -38,17 +38,26 @@ class Mib {
     this.category = currentCategory;
   }
 
-  Mib putInCategory() {
-    Mib newMib = new Mib(ip: this.ip, identify: this.identify);
-
+  Mibs checkCategory() {
     if (this.identify.startsWith("1.2.")) {
-      newMib.setCategory(Mibs.MATHEMATICS);
+      return Mibs.MATHEMATICS;
     } else if (this.identify.startsWith("2.1.")) {
-      newMib.setCategory(Mibs.TEMPERATURE);
+      return Mibs.TEMPERATURE;
     } else {
-      newMib.setCategory(Mibs.UNKNOWN);
+      return Mibs.UNKNOWN;
     }
+  }
 
-    return newMib;
+  Mib putInCategory() {
+    return new Mib(
+      ip: this.ip,
+      identify: this.identify,
+      category: checkCategory(),
+    );
+  }
+
+  @override
+  String toString() {
+    return "[CATEGORY: ${this.category}][IP: ${this.ip.address}][MIB: ${this.identify}]\n";
   }
 }
