@@ -32,9 +32,11 @@ class _CategoriesViewState extends State<CategoriesView> {
     widget.str.values.forEach((listMibs) {
       listMibs.forEach((currentMib) {
         mibs.putIfAbsent(
-          currentMib.checkCategory(),
-          () => tempMibs,
-        );
+            currentMib.checkCategory(),
+            () => tempMibs
+                .where(
+                    (element) => element.category == currentMib.checkCategory())
+                .toList());
       });
     });
 
