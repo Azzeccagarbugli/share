@@ -2,9 +2,12 @@ import 'dart:io';
 
 import 'package:Share/models/mib.dart';
 import 'package:Share/models/mib_enum.dart';
+import 'package:Share/widgets/alert_homepage.dart';
 import 'package:Share/widgets/card_category.dart';
 import 'package:Share/widgets/effects/shadow.dart';
+import 'package:Share/widgets/no_device.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CategoriesView extends StatefulWidget {
   final Map<InternetAddress, List<Mib>> str;
@@ -43,13 +46,12 @@ class _CategoriesViewState extends State<CategoriesView> {
     return mibs;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    print(_buildCategory());
-
-    return Scaffold(
-      body: Center(
-        child: ListView.separated(
+  Widget _buildView(int lenght) {
+    switch (lenght) {
+      case 0:
+        return NoDeviceFound();
+      default:
+        return ListView.separated(
           separatorBuilder: (_, __) => Divider(
             height: 0,
           ),
@@ -63,7 +65,7 @@ class _CategoriesViewState extends State<CategoriesView> {
                   barrierDismissible: true,
                   builder: (BuildContext context) {
                     return BuildAlertCategories(
-                      stuff: key,
+                      mibAlert: key,
                       list: _buildCategory().values.elementAt(index),
                     );
                   },
@@ -71,100 +73,24 @@ class _CategoriesViewState extends State<CategoriesView> {
               },
               child: CategoryCard(
                 mib: key,
+                devices: _buildCategory()
+                    .values
+                    .elementAt(index)
+                    .where((element) => element.category == key)
+                    .length,
               ),
             );
           },
-        ),
-      ),
-    );
-  }
-}
-
-class BuildAlertCategories extends StatelessWidget {
-  const BuildAlertCategories({
-    Key key,
-    @required this.stuff,
-    this.list,
-  }) : super(key: key);
-
-  final Mibs stuff;
-  final List<Mib> list;
-
-  List<Widget> sub(List<Mib> temp, Mibs lvl) {
-    List<Widget> sub = new List<Widget>();
-
-    temp.where((element) => element.category == lvl).forEach((element) {
-      sub.add(
-        Text(
-          element.identify +
-              " - " +
-              element.ip.address +
-              " - " +
-              element.category.toString() +
-              "\n",
-        ),
-      );
-    });
-
-    return sub;
-  }
-
-  String titleCatMib(Mibs mib) {
-    switch (mib) {
-      case Mibs.MATHEMATICS:
-        return "Mathematics";
-      case Mibs.TEMPERATURE:
-        return "Temperature";
-      case Mibs.UNKNOWN:
-        return "Unkown";
-      default:
-        return null;
+        );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(16.0),
-        ),
+    return Scaffold(
+      body: Center(
+        child: _buildView(_buildCategory().length),
       ),
-      title: Row(
-        children: <Widget>[
-          Text(
-            titleCatMib(stuff),
-          ),
-          Spacer(),
-          Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: Neumorphism.boxShadow(context),
-              color: Colors.white,
-            ),
-            child: Icon(
-              Icons.close,
-            ),
-          ),
-        ],
-      ),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: sub(
-            list,
-            stuff,
-          ),
-        ),
-      ),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('OK'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
     );
   }
 }

@@ -77,6 +77,4 @@ class NetworkController {
 
     return _listOfMib;
   }
-
-  String call(InternetAddress ip, String mib, List<String> list) {}
 }

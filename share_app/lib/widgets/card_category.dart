@@ -1,17 +1,17 @@
-import 'package:Share/models/mib.dart';
 import 'package:Share/models/mib_enum.dart';
 import 'package:Share/widgets/effects/shadow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:spring_button/spring_button.dart';
 
 class CategoryCard extends StatelessWidget {
   final Mibs mib;
+  final int devices;
 
   const CategoryCard({
     Key key,
     this.mib,
+    this.devices,
   }) : super(key: key);
 
   String _stringFromMib(Mibs mib) {
@@ -133,27 +133,36 @@ class CategoryCard extends StatelessWidget {
           Positioned(
             bottom: 24,
             right: 36,
-            child: SpringButton(
-              SpringButtonType.OnlyScale,
-              CircleAvatar(
-                backgroundColor: Colors.purple[200],
-                radius: 24,
-                child: Icon(
-                  Icons.chevron_right,
-                  size: 24,
-                  color: Colors.white,
-                ),
+            child: CircleAvatar(
+              backgroundColor: Colors.purple[200],
+              radius: 24,
+              child: Icon(
+                Icons.chevron_right,
+                size: 24,
+                color: Colors.white,
               ),
-              onTap: () {},
             ),
           ),
           Positioned(
-            top: 14,
-            left: 14,
-            child: Icon(
-              Icons.info_outline,
-              size: 24,
-              color: Colors.grey,
+            top: 4,
+            left: 8,
+            child: Chip(
+              elevation: 6,
+              backgroundColor: Theme.of(context).disabledColor,
+              label: Text(
+                devices != 1 ? "Devices" : "Device",
+                style: TextStyle(
+                  color: Theme.of(context).buttonColor,
+                ),
+              ),
+              avatar: CircleAvatar(
+                child: Text(
+                  devices.toString(),
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+              ),
             ),
           ),
         ],

@@ -37,6 +37,7 @@ class BottomBarApp extends StatelessWidget {
       gapLocation: GapLocation.center,
       leftCornerRadius: 22,
       rightCornerRadius: 22,
+      elevation: 22,
       onTap: onTap,
     );
   }

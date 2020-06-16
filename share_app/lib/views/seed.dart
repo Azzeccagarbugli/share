@@ -69,11 +69,11 @@ class _HomePageViewState extends State<HomePageView>
   Widget _buildScreen(int x) {
     switch (x) {
       case -1:
-        return DiscoveryView(
+        return CategoriesView(
           str: _networkController.str,
         );
       case 0:
-        return CategoriesView(
+        return DiscoveryView(
           str: _networkController.str,
         );
       case 1:
