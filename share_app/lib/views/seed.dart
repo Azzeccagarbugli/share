@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:Share/logic/network_udp.dart';
 import 'package:Share/views/category.dart';
 import 'package:Share/views/discovery.dart';
+import 'package:Share/views/settings.dart';
 import 'package:Share/widgets/bottombar/central_button.dart';
 import 'package:Share/widgets/temp_widget.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +82,7 @@ class _HomePageViewState extends State<HomePageView>
       case 2:
         return TempWidget(context: context, bottomNavIndex: _bottomNavIndex);
       case 3:
-        return TempWidget(context: context, bottomNavIndex: _bottomNavIndex);
+        return SettingsView();
       default:
         return null;
     }
