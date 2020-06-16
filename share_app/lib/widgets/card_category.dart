@@ -69,7 +69,7 @@ class CategoryCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: 12,
-        vertical: 14,
+        vertical: 10,
       ),
       height: MediaQuery.of(context).size.height / 5,
       decoration: BoxDecoration(
@@ -148,11 +148,11 @@ class CategoryCard extends StatelessWidget {
             left: 8,
             child: Chip(
               elevation: 6,
-              backgroundColor: Theme.of(context).disabledColor,
+              backgroundColor: Colors.white,
               label: Text(
                 devices != 1 ? "Devices" : "Device",
                 style: TextStyle(
-                  color: Theme.of(context).buttonColor,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               avatar: CircleAvatar(
