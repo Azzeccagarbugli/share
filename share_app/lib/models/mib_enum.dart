@@ -1,5 +1,5 @@
 enum Mibs {
+  UNKNOWN,
   MATHEMATICS,
   TEMPERATURE,
-  UNKNOWN,
 }

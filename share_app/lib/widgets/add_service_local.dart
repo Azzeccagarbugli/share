@@ -4,9 +4,18 @@ import 'package:wave/wave.dart';
 
 import 'effects/shadow.dart';
 
-class AddLocalService extends StatelessWidget {
-  const AddLocalService({
+class MiniCard extends StatelessWidget {
+  final String text;
+  final Icon icon;
+  final Function onTap;
+  final bool boolWaves;
+
+  const MiniCard({
     Key key,
+    this.text,
+    this.icon,
+    this.onTap,
+    this.boolWaves,
   }) : super(key: key);
 
   @override
@@ -20,30 +29,32 @@ class AddLocalService extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         boxShadow: Neumorphism.boxShadow(context),
-        color: Colors.purple[900],
+        color: boolWaves ? Colors.purple[900] : Colors.pink[400],
       ),
       child: Stack(
         children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(16),
-            child: WaveWidget(
-              config: CustomConfig(
-                colors: [
-                  Colors.purple[800],
-                  Colors.purple[700],
-                  Colors.purple[600],
-                  Colors.purple[500],
-                ],
-                durations: [35000, 19440, 10800, 6000],
-                heightPercentages: [0.0, 0.6, 0.7, 0.80],
-              ),
-              waveAmplitude: 0,
-              size: Size(
-                double.infinity,
-                double.infinity,
-              ),
-            ),
-          ),
+          boolWaves
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: WaveWidget(
+                    config: CustomConfig(
+                      colors: [
+                        Colors.purple[800],
+                        Colors.purple[700],
+                        Colors.purple[600],
+                        Colors.purple[500],
+                      ],
+                      durations: [35000, 19440, 10800, 6000],
+                      heightPercentages: [0.0, 0.6, 0.7, 0.80],
+                    ),
+                    waveAmplitude: 0,
+                    size: Size(
+                      double.infinity,
+                      double.infinity,
+                    ),
+                  ),
+                )
+              : SizedBox(),
           Positioned(
             bottom: 0,
             top: 0,
@@ -59,7 +70,9 @@ class AddLocalService extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Use the sensors of this device and share them to the local network",
+                      text,
+                      maxLines: 2,
+                      overflow: TextOverflow.fade,
                       style: TextStyle(
                         color: Colors.grey[200],
                         fontWeight: FontWeight.bold,
@@ -75,18 +88,23 @@ class AddLocalService extends StatelessWidget {
             bottom: 12,
             right: 12,
             top: 12,
-            child: FloatingActionButton(
-              elevation: 4,
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.add,
-                color: Theme.of(context).buttonColor,
-              ),
-              onPressed: () {
-                print("Aggiunto service (da implemetare)");
-              },
-            ),
-          )
+            child: boolWaves
+                ? FloatingActionButton(
+                    elevation: 4,
+                    backgroundColor: Colors.white,
+                    child: icon,
+                    onPressed: onTap,
+                  )
+                : CircleAvatar(
+                    backgroundColor: Colors.pink,
+                    radius: 26,
+                    child: Icon(
+                      Icons.chevron_right,
+                      size: 24,
+                      color: Colors.white,
+                    ),
+                  ),
+          ),
         ],
       ),
     );

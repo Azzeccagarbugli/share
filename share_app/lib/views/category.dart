@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:Share/models/mib.dart';
@@ -5,12 +6,8 @@ import 'package:Share/models/mib_enum.dart';
 import 'package:Share/widgets/add_service_local.dart';
 import 'package:Share/widgets/alert_homepage.dart';
 import 'package:Share/widgets/card_category.dart';
-import 'package:Share/widgets/effects/shadow.dart';
 import 'package:Share/widgets/no_device.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
 
 class CategoriesView extends StatefulWidget {
   final Map<InternetAddress, List<Mib>> str;
@@ -46,7 +43,12 @@ class _CategoriesViewState extends State<CategoriesView> {
       });
     });
 
-    return mibs;
+    return LinkedHashMap.fromEntries(
+      mibs.entries.toList()
+        ..sort(
+          (a, _) => a.key.index,
+        ),
+    );
   }
 
   Widget _buildView(int lenght) {
@@ -56,7 +58,16 @@ class _CategoriesViewState extends State<CategoriesView> {
       default:
         return ListView(
           children: <Widget>[
-            AddLocalService(),
+            MiniCard(
+              text:
+                  "Use the sensors of this device and share them to the local network",
+              icon: Icon(
+                Icons.add,
+                color: Theme.of(context).buttonColor,
+              ),
+              boolWaves: true,
+              onTap: () {},
+            ),
             Container(
               height: 8,
               margin: const EdgeInsets.symmetric(
@@ -68,12 +79,9 @@ class _CategoriesViewState extends State<CategoriesView> {
                 color: Colors.grey[200],
               ),
             ),
-            ListView.separated(
+            ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              separatorBuilder: (_, __) => Divider(
-                height: 0,
-              ),
               itemCount: _buildCategory().length,
               itemBuilder: (context, index) {
                 Mibs key = _buildCategory().keys.elementAt(index);
