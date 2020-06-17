@@ -68,8 +68,8 @@ while true do
 
     local data_result, ip_result, port_result = udp_result:receivefrom()
     if data_result then
-       log.trace("[MOBILE APP]", "[SEARCHING FOR MOBILE APP]","[IP: " .. ip_result .. "]","[PORT: " .. port_result .. "]")
-       load(data_call)()
+       log.trace("[SEND RESULT]", "[SENDING RESULT TO]","[IP: " .. ip_result .. "]","[PORT: " .. port_result .. "]")
+       load(data_result)()
         if (_G.services[mib].pre(param)) then
             udp_result:sendto(_G.services[mib].result(param), ip_result, port_result)
             _G.services[mib].daemon()
