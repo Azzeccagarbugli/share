@@ -90,6 +90,7 @@ function Share:open_udp_mobile(ip, result)
         table.insert(ip_tab, ip)
         Utilities:add_new_ip(ip_tab, result, ip, mib_tab)
     end
+
     udp_mobile:close()
 end
 

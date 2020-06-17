@@ -68,10 +68,12 @@ while true do
 
     local data_result, ip_result, port_result = udp_result:receivefrom()
     if data_result then
-       log.trace("[SEND RESULT]", "[SENDING RESULT TO]","[IP: " .. ip_result .. "]","[PORT: " .. port_result .. "]")
-       load(data_result)()
+        log.trace("[SEND RESULT]", "[SENDING RESULT TO]",
+                  "[IP: " .. ip_result .. "]", "[PORT: " .. port_result .. "]")
+        load(data_result)()
         if (_G.services[mib].pre(param)) then
-            udp_result:sendto(_G.services[mib].result(param), ip_result, port_result)
+            udp_result:sendto(_G.services[mib].result(param), ip_result,
+                              port_result)
             _G.services[mib].daemon()
         else
             udp_result:sendto("nil", ip_result, port_result)
