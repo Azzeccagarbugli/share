@@ -19,11 +19,15 @@ local udp_mobileapp = socket.udp()
 udp_mobileapp:setsockname("*", 7878)
 udp_mobileapp:settimeout(1)
 
+local udp_result = socket.udp()
+udp_result:setsockname("*", 9999)
+udp_result:settimeout(1)
+
 local disc = Share:new()
 disc:attach(_G.services["1.2.6.0"])
 -- disc:detach(_G.services["1.2.6.0"])
 
--- disc:attach(_G.services["2.1.1.0"])
+disc:attach(_G.services["2.1.1.0"])
 disc:attach(_G.services["3.5.8"])
 -- disc:attach(_G.services["4.1.7"])
 
@@ -60,5 +64,17 @@ while true do
                   "[PORT: " .. port_mobileapp .. "]")
         udp_mobileapp:sendto(Utilities:table_to_string(disc:find_all()),
                              ip_mobileapp, port_mobileapp)
+    end
+
+    local data_result, ip_result, port_result = udp_result:receivefrom()
+    if data_result then
+       log.trace("[MOBILE APP]", "[SEARCHING FOR MOBILE APP]","[IP: " .. ip_result .. "]","[PORT: " .. port_result .. "]")
+       load(data_call)()
+        if (_G.services[mib].pre(param)) then
+            udp_result:sendto(_G.services[mib].result(param), ip_result, port_result)
+            _G.services[mib].daemon()
+        else
+            udp_result:sendto("nil", ip_result, port_result)
+        end
     end
 end

@@ -1,5 +1,6 @@
 _G.services = {
-    ["3.5.8"] = Service:new("3.5.8", [[
+    ["3.5.8"] = Service:new("3.5.8",
+        [[
         return function(data, ip)
             local host, port = ip, 7777
             local socket = require("socket")
@@ -20,14 +21,15 @@ _G.services = {
         local socket = require("socket")
 
         while true do
-
             local temp = _G.services["3.5.8"].features[1]:call()
             if not (temp == "nil") then
                 log.info("[TEMPERATURE IS EQUAL TO: " .. temp .. "]")
             end
             socket.sleep(2)
         end
-    end, function(n) return false end, Feature:new("2.1.*", function(n, m)
+    end, function(n) return false end,
+    function(p) return p end,
+    Feature:new("2.1.*", function(n, m)
         return m > -10 and m < 45
     end)),
 
@@ -63,7 +65,9 @@ _G.services = {
             end
         end
         server:close()
-    end, function(n) return n > 0 end, Feature:new("4.1.*", function(n, m)
+    end, function(n) return n > 0 end,
+    function(p) return tostring(math.sqrt(tonumber(p))) end,
+    Feature:new("4.1.*", function(n, m)
         return true
     end), Feature:new("1.2.*", function(n, m) return n - m * m < 0.1 end),
                               Feature:new("3.5.*", function(n, m)
@@ -112,7 +116,11 @@ _G.services = {
                 break
             end
         end
-    end, function(n) return true end, Feature:new("2.1.*", function(n, m)
+    end, function(n) return true end,
+    function(p) math.randomseed(os.time())
+        return tostring(math.random(16, 17) + math.random())
+    end,
+    Feature:new("2.1.*", function(n, m)
         return m > -10 and m < 45
     end), Feature:new("3.5.*", function(n, m) return m > -10 and m < 45 end)),
 
@@ -147,7 +155,9 @@ _G.services = {
             end
         end
         server:close()
-    end, function(n) return true end, Feature:new("2.1.*", function(n, m)
+    end, function(n) return true end,
+    function(p) return _G.services["4.1.7"].features[1]:call() end,
+    Feature:new("2.1.*", function(n, m)
         return m > -10 and m < 45
     end))
 }
