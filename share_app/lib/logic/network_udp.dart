@@ -78,10 +78,11 @@ class NetworkController {
     return _listOfMib;
   }
 
-  static Future<String> call(
-      InternetAddress ipDevice, String mib, String param) async {
-    String _value;
+  String ciao(String a) {
+    return a;
+  }
 
+  static Future call(InternetAddress ipDevice, String mib, String param) async {
     await RawDatagramSocket.bind(
       InternetAddress.anyIPv4,
       9999,
@@ -92,11 +93,11 @@ class NetworkController {
             case RawSocketEvent.read:
               print("CALL");
               print(String.fromCharCodes(udpSocket.receive().data));
-
-              // _value = String.fromCharCodes(udpSocket.receive().data);
+              // return String.fromCharCodes(udpSocket.receive().data);
               break;
             case RawSocketEvent.readClosed:
             case RawSocketEvent.closed:
+            default:
               break;
           }
         });
@@ -108,7 +109,5 @@ class NetworkController {
         );
       },
     );
-
-    return _value;
   }
 }

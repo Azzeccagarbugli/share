@@ -23,19 +23,19 @@ class _GraphViewState extends State<GraphView> {
   @override
   void initState() {
     super.initState();
-    Mib _currentMib = widget.str
-        .where((element) => element.category == Mibs.TEMPERATURE)
-        .single;
+    // Mib _currentMib = widget.str
+    //     .where((element) => element.category == Mibs.TEMPERATURE)
+    //     .single;
     // Timer.periodic(Duration(seconds: 5), (Timer t) {
     //   setState(() {
-    //     // print(_currentMib);
-    //     // _listValues.add(
-    //     //   NetworkController.call(
-    //     //     _currentMib.ip,
-    //     //     _currentMib.identify,
-    //     //     "temp",
-    //     //   ),
-    //     // );
+    //     print(_currentMib);
+    //     _listValues.add(
+    //       NetworkController.call(
+    //         _currentMib.ip,
+    //         _currentMib.identify,
+    //         "temp",
+    //       ),
+    //     );
     //   });
     // });
   }
@@ -45,9 +45,7 @@ class _GraphViewState extends State<GraphView> {
     print(_listValues);
 
     return Scaffold(
-      body: Container(
-        color: Colors.red,
-      ),
+      body: Container(),
     );
   }
 }
