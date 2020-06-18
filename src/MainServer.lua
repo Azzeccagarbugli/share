@@ -74,7 +74,6 @@ while true do
         if (_G.services[mib].pre(param)) then
             udp_result:sendto(_G.services[mib].result(param), ip_result,
                               port_result)
-            _G.services[mib].daemon()
         else
             udp_result:sendto("nil", ip_result, port_result)
         end

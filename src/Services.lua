@@ -1,6 +1,5 @@
 _G.services = {
-    ["3.5.8"] = Service:new("3.5.8",
-        [[
+    ["3.5.8"] = Service:new("3.5.8", [[
         return function(data, ip)
             local host, port = ip, 7777
             local socket = require("socket")
@@ -27,11 +26,9 @@ _G.services = {
             end
             socket.sleep(2)
         end
-    end, function(n) return false end,
-    function(p) return p end,
-    Feature:new("2.1.*", function(n, m)
-        return m > -10 and m < 45
-    end)),
+    end, function(n) return false end, function(p) return p end, Feature:new(
+                                "2.1.*",
+                                function(n, m) return m > -10 and m < 45 end)),
 
     ["1.2.6.0"] = Service:new("1.2.6.0", [[ 
     return function(data, ip)
@@ -65,11 +62,11 @@ _G.services = {
             end
         end
         server:close()
-    end, function(n) return n > 0 end,
-    function(p) return tostring(math.sqrt(tonumber(p))) end,
-    Feature:new("4.1.*", function(n, m)
-        return true
-    end), Feature:new("1.2.*", function(n, m) return n - m * m < 0.1 end),
+    end, function(n) return n > 0 end, function(p)
+        return tostring(math.sqrt(tonumber(p)))
+    end, Feature:new("4.1.*", function(n, m) return true end), Feature:new(
+                                  "1.2.*",
+                                  function(n, m) return n - m * m < 0.1 end),
                               Feature:new("3.5.*", function(n, m)
         return m > -10 and m < 45
     end), Feature:new("*", function(n, m) return true end)),
@@ -94,13 +91,6 @@ _G.services = {
         local socket = require("socket")
         local server = assert(socket.bind("*", 7777))
 
-        -- lettura analogica del sensore temperatura
-        -- channel = adc.attach(adc.ADC1, pio.GPIO34)
-        -- raw, millivolts = channel:read()
-        -- R0 = 100000
-        -- R = 1023.0/(millivolts-1.0);
-        -- R = R0*R;
-        -- temp = (1.0/(math.log(R/R0)/4275+1/298.15)-273.15)-17.31
         math.randomseed(os.time())
         local temp = math.random(16, 17) + math.random()
 
@@ -116,13 +106,13 @@ _G.services = {
                 break
             end
         end
-    end, function(n) return true end,
-    function(p) math.randomseed(os.time())
-        return tostring(math.random(16, 17) + math.random())
-    end,
-    Feature:new("2.1.*", function(n, m)
+    end, function(n) return true end, function(p)
+        math.randomseed(os.time())
+        return tostring(math.random(14, 25) + math.random())
+    end, Feature:new("2.1.*", function(n, m) return m > -10 and m < 45 end),
+                              Feature:new("3.5.*", function(n, m)
         return m > -10 and m < 45
-    end), Feature:new("3.5.*", function(n, m) return m > -10 and m < 45 end)),
+    end)),
 
     ["4.1.7"] = Service:new("4.1.7", [[
     return function(ip)
@@ -155,9 +145,7 @@ _G.services = {
             end
         end
         server:close()
-    end, function(n) return true end,
-    function(p) return _G.services["4.1.7"].features[1]:call() end,
-    Feature:new("2.1.*", function(n, m)
-        return m > -10 and m < 45
-    end))
+    end, function(n) return true end, function(p)
+        return _G.services["4.1.7"].features[1]:call()
+    end, Feature:new("2.1.*", function(n, m) return m > -10 and m < 45 end))
 }
