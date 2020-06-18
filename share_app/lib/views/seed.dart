@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:Share/logic/network_udp.dart';
+import 'package:Share/models/mib.dart';
 import 'package:Share/views/category.dart';
 import 'package:Share/views/discovery.dart';
 import 'package:Share/views/settings.dart';
@@ -9,6 +10,8 @@ import 'package:Share/widgets/bottombar/central_button.dart';
 import 'package:Share/widgets/temp_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:Share/widgets/bottombar/bottombar.dart';
+
+import 'graph.dart';
 
 class HomePageView extends StatefulWidget {
   @override
@@ -67,6 +70,18 @@ class _HomePageViewState extends State<HomePageView>
     _animationController.dispose();
   }
 
+  List<Mib> _buildListMib(Map<InternetAddress, List<Mib>> map) {
+    List<Mib> _temp = new List<Mib>();
+
+    map.values.forEach((list) {
+      list.forEach((mib) {
+        _temp.add(mib.putInCategory());
+      });
+    });
+
+    return _temp;
+  }
+
   Widget _buildScreen(int x) {
     switch (x) {
       case -1:
@@ -78,7 +93,9 @@ class _HomePageViewState extends State<HomePageView>
           str: _networkController.str,
         );
       case 1:
-        return TempWidget(context: context, bottomNavIndex: _bottomNavIndex);
+        return GraphView(
+          str: _buildListMib(_networkController.str),
+        );
       case 2:
         return TempWidget(context: context, bottomNavIndex: _bottomNavIndex);
       case 3:

@@ -77,4 +77,38 @@ class NetworkController {
 
     return _listOfMib;
   }
+
+  static Future<String> call(
+      InternetAddress ipDevice, String mib, String param) async {
+    String _value;
+
+    await RawDatagramSocket.bind(
+      InternetAddress.anyIPv4,
+      9999,
+    ).then(
+      (RawDatagramSocket udpSocket) {
+        udpSocket.listen((e) {
+          switch (e) {
+            case RawSocketEvent.read:
+              print("CALL");
+              print(String.fromCharCodes(udpSocket.receive().data));
+
+              // _value = String.fromCharCodes(udpSocket.receive().data);
+              break;
+            case RawSocketEvent.readClosed:
+            case RawSocketEvent.closed:
+              break;
+          }
+        });
+
+        udpSocket.send(
+          utf8.encode('mib, param = "$mib", "$param"'),
+          ipDevice,
+          9999,
+        );
+      },
+    );
+
+    return _value;
+  }
 }

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:Share/models/mib.dart';
 import 'package:Share/widgets/card_homepage_ip_mib.dart';
 import 'package:Share/widgets/no_device.dart';
-import 'package:Share/widgets/temp_widget.dart';
 import 'package:flutter/material.dart';
 
 class DiscoveryView extends StatefulWidget {

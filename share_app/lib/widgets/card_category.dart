@@ -70,7 +70,7 @@ class CategoryCard extends StatelessWidget {
     return mib == Mibs.UNKNOWN
         ? MiniCard(
             text:
-                "Touch here to discover the services that don't belong to any known category",
+                "Discover the services that do not belong to any known category",
             icon: Icon(
               Icons.chevron_right,
               color: Theme.of(context).buttonColor,
