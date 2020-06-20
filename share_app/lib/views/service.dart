@@ -34,7 +34,7 @@ class _ServiceViewState extends State<ServiceView> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          NetworkController.call(widget.mib.ip, widget.mib.identify, a);
+          print(NetworkController.call(widget.mib.ip, widget.mib.identify, a));
         },
         child: Icon(
           Icons.category,

@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:Share/logic/network_udp.dart';
 import 'package:Share/models/mib.dart';
@@ -18,34 +20,74 @@ class GraphView extends StatefulWidget {
 }
 
 class _GraphViewState extends State<GraphView> {
+  Timer _timer;
   List<String> _listValues = new List<String>();
+
+  Mib _currentMib;
+
+  // Future<List<String>> _netValue(Mib mib, List<String> list) async {
+  //   String value = await NetworkController.call(mib.ip, mib.identify, "temp");
+  //   list.add(value);
+  //   return list;
+  // }
+
+  // Future _setUp(Mib mib) async {
+  //   _socket = await RawDatagramSocket.bind(
+  //     InternetAddress.anyIPv4,
+  //     9999,
+  //   );
+
+  // }
 
   @override
   void initState() {
     super.initState();
-    // Mib _currentMib = widget.str
-    //     .where((element) => element.category == Mibs.TEMPERATURE)
-    //     .single;
-    // Timer.periodic(Duration(seconds: 5), (Timer t) {
-    //   setState(() {
-    //     print(_currentMib);
-    //     _listValues.add(
-    //       NetworkController.call(
-    //         _currentMib.ip,
-    //         _currentMib.identify,
-    //         "temp",
-    //       ),
-    //     );
-    //   });
-    // });
+    _currentMib = widget.str
+        .where((element) => element.category == Mibs.TEMPERATURE)
+        .single;
+
+    // _setUp(_currentMib);
+    _timer = new Timer.periodic(Duration(seconds: 2), (Timer t) {
+      setState(() {
+        // print(_currentMib);
+        // _listValues.add(await _netValue(_currentMib));
+        NetworkController.call(_currentMib.ip, _currentMib.identify, "temp");
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(_listValues);
+    print(NetworkController.values.toString());
 
     return Scaffold(
-      body: Container(),
+      body: Center(
+        child: Text(
+          NetworkController.values.toString(),
+        ),
+        // child: FutureBuilder(
+        //   future: NetworkController.call(
+        //     _currentMib.ip,
+        //     _currentMib.identify,
+        //     "temp",
+        //   ),
+        //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+        //     if (snapshot.data == null) {
+        //       return CircularProgressIndicator();
+        //     }
+
+        //     _listValues.add(snapshot.data.toString());
+
+        //     return Text(_listValues.toString());
+        //   },
+        // ),
+      ),
     );
   }
 }

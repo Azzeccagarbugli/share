@@ -16,6 +16,8 @@ class NetworkController {
 
   Map<InternetAddress, List<Mib>> str = new Map<InternetAddress, List<Mib>>();
 
+  static List<String> values = new List<String>();
+
   Future setUpUDP() async {
     this.listIp.forEach((element) async {
       await RawDatagramSocket.bind(
@@ -78,30 +80,22 @@ class NetworkController {
     return _listOfMib;
   }
 
-  String ciao(String a) {
-    return a;
-  }
-
-  static Future call(InternetAddress ipDevice, String mib, String param) async {
+  static Future<dynamic> call(
+      InternetAddress ipDevice, String mib, String param) async {
     await RawDatagramSocket.bind(
       InternetAddress.anyIPv4,
       9999,
     ).then(
       (RawDatagramSocket udpSocket) {
         udpSocket.listen((e) {
-          switch (e) {
-            case RawSocketEvent.read:
-              print("CALL");
-              print(String.fromCharCodes(udpSocket.receive().data));
-              // return String.fromCharCodes(udpSocket.receive().data);
-              break;
-            case RawSocketEvent.readClosed:
-            case RawSocketEvent.closed:
-            default:
-              break;
+          Datagram dg = udpSocket.receive();
+
+          if (dg == null) {
+            return;
+          } else {
+            values.add(String.fromCharCodes(dg.data));
           }
         });
-
         udpSocket.send(
           utf8.encode('mib, param = "$mib", "$param"'),
           ipDevice,
@@ -109,5 +103,31 @@ class NetworkController {
         );
       },
     );
+
+    // final RawDatagramSocket udpSocket =
+    //     await RawDatagramSocket.bind(InternetAddress.anyIPv4, 9999);
+
+    // final subscription = udpSocket.listen(
+    //   (e) {
+    //     Datagram dg = udpSocket.receive();
+
+    //     if (dg == null)
+    //       return;
+    //     else
+    //       String.fromCharCodes(dg.data);
+    //   },
+    //   cancelOnError: true,
+    //   onDone: () {
+    //     return "ciao";
+    //   },
+    // );
+
+    // udpSocket.send(
+    //   utf8.encode('mib, param = "$mib", "$param"'),
+    //   ipDevice,
+    //   9999,
+    // );
+
+    // return subscription;
   }
 }
