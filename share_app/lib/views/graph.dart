@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:Share/logic/network_udp.dart';
 import 'package:Share/models/mib.dart';
 import 'package:Share/models/mib_enum.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class GraphView extends StatefulWidget {
@@ -21,9 +22,13 @@ class GraphView extends StatefulWidget {
 
 class _GraphViewState extends State<GraphView> {
   Timer _timer;
-  List<String> _listValues = new List<String>();
 
   Mib _currentMib;
+
+  List<Color> gradientColors = [
+    const Color(0xff23b6e6),
+    const Color(0xff02d39a),
+  ];
 
   // Future<List<String>> _netValue(Mib mib, List<String> list) async {
   //   String value = await NetworkController.call(mib.ip, mib.identify, "temp");
@@ -51,7 +56,7 @@ class _GraphViewState extends State<GraphView> {
       setState(() {
         // print(_currentMib);
         // _listValues.add(await _netValue(_currentMib));
-        NetworkController.call(_currentMib.ip, _currentMib.identify, "temp");
+        NetworkController.call(_currentMib, "temp");
       });
     });
   }
@@ -68,8 +73,12 @@ class _GraphViewState extends State<GraphView> {
 
     return Scaffold(
       body: Center(
-        child: Text(
-          NetworkController.values.toString(),
+        child: Column(
+          children: <Widget>[
+            Text(
+              NetworkController.values.toString(),
+            ),
+          ],
         ),
         // child: FutureBuilder(
         //   future: NetworkController.call(

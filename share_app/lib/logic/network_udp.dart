@@ -16,7 +16,7 @@ class NetworkController {
 
   Map<InternetAddress, List<Mib>> str = new Map<InternetAddress, List<Mib>>();
 
-  static List<String> values = new List<String>();
+  static Map<Mib, List<String>> values = new Map<Mib, List<String>>();
 
   Future setUpUDP() async {
     this.listIp.forEach((element) async {
@@ -80,8 +80,7 @@ class NetworkController {
     return _listOfMib;
   }
 
-  static Future<dynamic> call(
-      InternetAddress ipDevice, String mib, String param) async {
+  static Future<dynamic> call(Mib mib, String param) async {
     await RawDatagramSocket.bind(
       InternetAddress.anyIPv4,
       9999,
@@ -93,12 +92,17 @@ class NetworkController {
           if (dg == null) {
             return;
           } else {
-            values.add(String.fromCharCodes(dg.data));
+            values.putIfAbsent(mib, () => [String.fromCharCodes(dg.data)]);
           }
+
+          values.update(mib, (value) {
+            value.add(String.fromCharCodes(dg.data));
+            return value;
+          });
         });
         udpSocket.send(
-          utf8.encode('mib, param = "$mib", "$param"'),
-          ipDevice,
+          utf8.encode('mib, param = "${mib.identify}", "$param"'),
+          mib.ip,
           9999,
         );
       },
