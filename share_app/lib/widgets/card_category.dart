@@ -73,7 +73,8 @@ class CategoryCard extends StatelessWidget {
                 "Discover the services that do not belong to any known category",
             icon: Icon(
               Icons.chevron_right,
-              color: Theme.of(context).buttonColor,
+              size: 24,
+              color: Colors.white,
             ),
             boolWaves: false,
             onTap: () {},

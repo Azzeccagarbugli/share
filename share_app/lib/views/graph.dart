@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:Share/logic/network_udp.dart';
 import 'package:Share/models/mib.dart';
 import 'package:Share/models/mib_enum.dart';
+import 'package:Share/widgets/add_service_local.dart';
+import 'package:Share/widgets/card_graph.dart';
+import 'package:Share/widgets/no_device.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -25,27 +28,30 @@ class _GraphViewState extends State<GraphView> {
 
   double _index = 5;
 
-  Map<Mib, List<String>> _map;
+  Map<Mib, List<String>> _map = new Map();
 
   List<Color> gradientColors = [
-    const Color(0xffec407a),
-    const Color(0xffe9163a),
+    const Color(0xff9c27b0),
   ];
+
+  ScrollController _scrollController = new ScrollController(
+    initialScrollOffset: 50.0,
+  );
 
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
-        show: false,
+        show: true,
         drawVerticalLine: true,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: const Color(0xff37434d),
+            color: Colors.grey[100],
             strokeWidth: 1,
           );
         },
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: const Color(0xff37434d),
+            color: Colors.grey[100],
             strokeWidth: 1,
           );
         },
@@ -56,48 +62,8 @@ class _GraphViewState extends State<GraphView> {
       titlesData: FlTitlesData(
         show: false,
       ),
-      // extraLinesData: ExtraLinesData(
-      //   horizontalLines: [
-      //     HorizontalLine(
-      //       y: 15,
-      //       color: Colors.grey,
-      //       dashArray: [2, 6],
-      //       label: HorizontalLineLabel(
-      //         labelResolver: (_) => "15 °",
-      //         show: true,
-      //         alignment: Alignment.center,
-      //         style: TextStyle(
-      //           color: Colors.grey[800],
-      //           fontWeight: FontWeight.bold,
-      //           fontSize: 22,
-      //         ),
-      //       ),
-      //       strokeWidth: 0.8,
-      //     ),
-      //     HorizontalLine(
-      //       y: 20,
-      //       color: Colors.grey,
-      //       dashArray: [2, 6],
-      //       label: HorizontalLineLabel(
-      //         labelResolver: (_) => "20 °",
-      //         show: true,
-      //         alignment: Alignment.center,
-      //         style: TextStyle(
-      //           color: Colors.grey[800],
-      //           fontWeight: FontWeight.bold,
-      //           fontSize: 22,
-      //         ),
-      //       ),
-      //       strokeWidth: 0.8,
-      //     ),
-      //   ],
-      // ),
       borderData: FlBorderData(
-        show: true,
-        border: Border.all(
-          color: const Color(0xff37434d),
-          width: 1,
-        ),
+        show: false,
       ),
       minX: 0,
       maxX: _index,
@@ -130,12 +96,12 @@ class _GraphViewState extends State<GraphView> {
     _currentMib = widget.str
         .where((element) => element.category == Mibs.TEMPERATURE)
         .single;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToEnd());
     _timer = new Timer.periodic(Duration(seconds: 2), (Timer t) {
       setState(() {
         NetworkController.call(_currentMib, "temp");
         _map = NetworkController.values;
         _index++;
-        _scrollToEnd();
       });
     });
   }
@@ -143,8 +109,8 @@ class _GraphViewState extends State<GraphView> {
   @override
   void dispose() {
     _timer.cancel();
-    _map.clear();
     _scrollController.dispose();
+    _map.clear();
     super.dispose();
   }
 
@@ -162,13 +128,8 @@ class _GraphViewState extends State<GraphView> {
     return _list;
   }
 
-  ScrollController _scrollController = new ScrollController();
-
   _scrollToEnd() async {
-    Future.delayed(
-        const Duration(
-          seconds: 4,
-        ), () {
+    if (_scrollController.hasClients) {
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent -
             (_scrollController.position.maxScrollExtent / 1.5),
@@ -177,37 +138,32 @@ class _GraphViewState extends State<GraphView> {
         ),
         curve: Curves.ease,
       );
-    });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // print(NetworkController.values.toString());
-
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Text(
-                NetworkController.values.toString(),
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                controller: _scrollController,
-                child: Container(
-                  width: 1000,
-                  child: LineChart(
-                    mainData(),
+      body: _map.isNotEmpty
+          ? ListView(
+              children: <Widget>[
+                MiniCard(
+                  boolWaves: false,
+                  text:
+                      "Cloud means easy configuration, watch your devices helping you!",
+                  icon: Icon(
+                    Icons.cloud_queue,
+                    color: Colors.white,
                   ),
+                  onTap: () {},
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
+                CardGraph(
+                  scrollController: _scrollController,
+                  lineChartData: mainData(),
+                ),
+              ],
+            )
+          : NoDeviceFound(),
     );
   }
 }

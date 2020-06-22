@@ -22,7 +22,6 @@ class _DiscoveryViewState extends State<DiscoveryView> {
     switch (lenght) {
       case 0:
         return NoDeviceFound();
-
       default:
         return ListView.separated(
           separatorBuilder: (_, __) => Divider(

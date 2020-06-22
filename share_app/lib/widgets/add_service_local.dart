@@ -98,11 +98,7 @@ class MiniCard extends StatelessWidget {
                 : CircleAvatar(
                     backgroundColor: Colors.pink,
                     radius: 26,
-                    child: Icon(
-                      Icons.chevron_right,
-                      size: 24,
-                      color: Colors.white,
-                    ),
+                    child: icon,
                   ),
           ),
         ],
