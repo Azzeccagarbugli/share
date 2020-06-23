@@ -66,8 +66,8 @@ class _HomePageViewState extends State<HomePageView>
 
   @override
   void dispose() {
-    super.dispose();
     _animationController.dispose();
+    super.dispose();
   }
 
   List<Mib> _buildListMib(Map<InternetAddress, List<Mib>> map) {

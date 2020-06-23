@@ -126,11 +126,10 @@ class CardGraph extends StatelessWidget {
               left: 280,
               right: 0,
               top: 180,
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                ),
+              child: FloatingActionButton(
+                onPressed: () {},
+                elevation: 6,
+                backgroundColor: Colors.white,
                 child: Icon(
                   Icons.share,
                   color: Colors.purple[900],

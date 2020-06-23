@@ -93,24 +93,28 @@ class _GraphViewState extends State<GraphView> {
   @override
   void initState() {
     super.initState();
-    _currentMib = widget.str
-        .where((element) => element.category == Mibs.TEMPERATURE)
-        .single;
-    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToEnd());
     _timer = new Timer.periodic(Duration(seconds: 2), (Timer t) {
-      setState(() {
-        NetworkController.call(_currentMib, "temp");
-        _map = NetworkController.values;
-        _index++;
-      });
+      if (widget.str.isNotEmpty) {
+        _currentMib = widget.str
+            .where((element) => element.category == Mibs.TEMPERATURE)
+            .single;
+        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToEnd());
+        setState(() {
+          NetworkController.call(_currentMib, "temp");
+          _map = NetworkController.values;
+          _index++;
+        });
+      }
     });
   }
 
   @override
   void dispose() {
     _timer.cancel();
-    _scrollController.dispose();
     _map.clear();
+    if (widget.str.isNotEmpty) {
+      _scrollController.dispose();
+    }
     super.dispose();
   }
 
