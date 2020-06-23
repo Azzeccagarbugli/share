@@ -66,7 +66,9 @@ class _CategoriesViewState extends State<CategoriesView> {
                 color: Theme.of(context).buttonColor,
               ),
               boolWaves: true,
-              onTap: () {},
+              onTap: () {
+                print("hey");
+              },
             ),
             Container(
               height: 8,

@@ -28,6 +28,8 @@ end
 local function check_result(param, current_ip, data_func)
     if (param == nil) then
         return load(data_func)()(current_ip)
+    elseif (param == nil and current_ip == nil) then
+        return load(data_func)()
     else
         return load(data_func)()(param, current_ip)
     end

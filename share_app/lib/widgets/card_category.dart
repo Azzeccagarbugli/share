@@ -109,7 +109,7 @@ class CategoryCard extends StatelessWidget {
                       bottom: Radius.circular(16),
                     ),
                     child: ClipPath(
-                      clipper: WaveClipperOne(
+                      clipper: WaveClipperTwo(
                         reverse: true,
                       ),
                       child: Container(

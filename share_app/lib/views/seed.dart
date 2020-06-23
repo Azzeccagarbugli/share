@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:Share/logic/network_udp.dart';
 import 'package:Share/models/mib.dart';
+import 'package:Share/models/service.dart';
+import 'package:Share/models/share.dart';
 import 'package:Share/views/category.dart';
 import 'package:Share/views/discovery.dart';
 import 'package:Share/views/settings.dart';
@@ -26,6 +28,10 @@ class _HomePageViewState extends State<HomePageView>
   Animation<double> _animation;
   CurvedAnimation _curve;
 
+  Share _share;
+
+  Service _service = new Service("9.9.9", "calcolo = 10", () => true);
+
   NetworkController _networkController = new NetworkController(
     listIp: [
       InternetAddress("80.211.186.133"),
@@ -36,6 +42,7 @@ class _HomePageViewState extends State<HomePageView>
   @override
   void initState() {
     super.initState();
+
     _animationController = AnimationController(
       duration: Duration(seconds: 1),
       vsync: this,
@@ -55,6 +62,12 @@ class _HomePageViewState extends State<HomePageView>
     Future.delayed(
       Duration(milliseconds: 400),
       () => _animationController.forward(),
+    );
+
+    _share = new Share(
+      <Service>[
+        _service,
+      ],
     );
 
     Timer.periodic(Duration(seconds: 2), (Timer t) {
@@ -107,6 +120,8 @@ class _HomePageViewState extends State<HomePageView>
 
   @override
   Widget build(BuildContext context) {
+    // NetworkController.openPortUdp();
+
     return Scaffold(
       extendBody: true,
       floatingActionButton: ScaleTransition(

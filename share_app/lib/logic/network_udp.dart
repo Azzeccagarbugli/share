@@ -48,6 +48,34 @@ class NetworkController {
     });
   }
 
+  static Future openPortUdp() async {
+    print("APRO");
+    await RawDatagramSocket.bind(
+      InternetAddress.anyIPv4,
+      9999,
+    ).then(
+      (RawDatagramSocket udpSocket) {
+        udpSocket.listen((e) {
+          switch (e) {
+            case RawSocketEvent.read:
+              print(String.fromCharCodes(udpSocket.receive().data));
+              break;
+            case RawSocketEvent.readClosed:
+            case RawSocketEvent.closed:
+              break;
+          }
+        });
+        List<int> data = utf8.encode('calcolo = 7');
+
+        udpSocket.send(
+          data,
+          InternetAddress("10.0.15.228"),
+          9999,
+        );
+      },
+    );
+  }
+
   void _readDatagram() {
     Datagram datagram = _udpSocket.receive();
 
@@ -107,31 +135,5 @@ class NetworkController {
         );
       },
     );
-
-    // final RawDatagramSocket udpSocket =
-    //     await RawDatagramSocket.bind(InternetAddress.anyIPv4, 9999);
-
-    // final subscription = udpSocket.listen(
-    //   (e) {
-    //     Datagram dg = udpSocket.receive();
-
-    //     if (dg == null)
-    //       return;
-    //     else
-    //       String.fromCharCodes(dg.data);
-    //   },
-    //   cancelOnError: true,
-    //   onDone: () {
-    //     return "ciao";
-    //   },
-    // );
-
-    // udpSocket.send(
-    //   utf8.encode('mib, param = "$mib", "$param"'),
-    //   ipDevice,
-    //   9999,
-    // );
-
-    // return subscription;
   }
 }
