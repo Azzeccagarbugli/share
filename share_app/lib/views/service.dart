@@ -32,6 +32,36 @@ class _ServiceViewState extends State<ServiceView> {
     super.initState();
   }
 
+  Future<void> _showMyDialog(
+    String ciao,
+  ) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Computation'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('The value is:'),
+                Text(ciao),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Exit'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     print(a);
@@ -40,6 +70,12 @@ class _ServiceViewState extends State<ServiceView> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await NetworkController.callSingleValue(widget.mib, a);
+          Future.delayed(
+            Duration(seconds: 2),
+            () => _showMyDialog(
+              NetworkController.singleCalls,
+            ),
+          );
         },
         child: Icon(
           Icons.category,
@@ -50,11 +86,7 @@ class _ServiceViewState extends State<ServiceView> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
-            widget.mib.ip.address +
-                "\n" +
-                widget.mib.identify +
-                "\n" +
-                NetworkController.singleCalls,
+            widget.mib.ip.address + "\n" + widget.mib.identify + "\n",
           ),
           Padding(
             padding: const EdgeInsets.all(14.0),

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:Share/models/mib.dart';
+import 'package:Share/models/share.dart';
 
 class NetworkController {
   final List<InternetAddress> listIp;
@@ -50,30 +51,41 @@ class NetworkController {
     });
   }
 
-  static Future openPortUdp() async {
+  static Future openPortUdp(Share share) async {
     print("APRO");
     await RawDatagramSocket.bind(
       InternetAddress.anyIPv4,
-      9999,
+      2222,
     ).then(
       (RawDatagramSocket udpSocket) {
         udpSocket.listen((e) {
           switch (e) {
             case RawSocketEvent.read:
-              print(String.fromCharCodes(udpSocket.receive().data));
+              if (udpSocket.receive().data == null) {
+                return;
+              }
+
+              if (String.fromCharCodes(udpSocket.receive().data)
+                  .contains(",")) {
+                // Presenza parametro
+              } else {
+                List<int> data = utf8.encode(share
+                    .find(String.fromCharCodes(udpSocket.receive().data)
+                        .substring(6))
+                    .function);
+
+                udpSocket.send(
+                  data,
+                  InternetAddress("10.0.15.228"),
+                  2222,
+                );
+              }
               break;
             case RawSocketEvent.readClosed:
             case RawSocketEvent.closed:
               break;
           }
         });
-        List<int> data = utf8.encode('calcolo = 7');
-
-        udpSocket.send(
-          data,
-          InternetAddress("10.0.15.228"),
-          9999,
-        );
       },
     );
   }
@@ -147,13 +159,11 @@ class NetworkController {
       (RawDatagramSocket udpSocket) {
         udpSocket.listen((e) {
           Datagram dg = udpSocket.receive();
-
           if (dg == null) {
             return;
-          } else {
-            print(String.fromCharCodes(dg.data));
-            singleCalls = String.fromCharCodes(dg.data);
           }
+          print(String.fromCharCodes(dg.data));
+          singleCalls = new String.fromCharCodes(dg.data);
         });
         udpSocket.send(
           utf8.encode('mib, param = "${mib.identify}", $param'),

@@ -30,7 +30,11 @@ class _HomePageViewState extends State<HomePageView>
 
   Share _share;
 
-  Service _service = new Service("9.9.9", "calcolo = 10", () => true);
+  Service _service = new Service(
+    "9.9.9",
+    "calcolo = 10",
+    () => true,
+  );
 
   NetworkController _networkController = new NetworkController(
     listIp: [
@@ -120,7 +124,7 @@ class _HomePageViewState extends State<HomePageView>
 
   @override
   Widget build(BuildContext context) {
-    // NetworkController.openPortUdp();
+    NetworkController.openPortUdp(_share);
 
     return Scaffold(
       extendBody: true,

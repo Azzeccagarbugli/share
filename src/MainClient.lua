@@ -16,13 +16,16 @@ dofile("Services.lua")
 -- udp_mobile:close() 
 
 while true do
+    print("INVIOOO")
     local socket = require("socket")
     local udp_mobile = socket.udp()
-    udp_mobile:setpeername("10.0.2.2", 9999)
+    udp_mobile:setpeername("10.0.2.2", 2222)
     udp_mobile:settimeout(5)
-    udp_mobile:send("mib, param = " .. '"9.9.9", 2')
+    -- udp_mobile:send("mib, param = " .. '"9.9.9", 2')
+    udp_mobile:send('mib = "9.9.9"')
+
     local data_mib = udp_mobile:receive()
-    if (data_mib and not (data_mib == "{}")) then print(data_mib) end
+    if (data_mib) then print(data_mib) end
     udp_mobile:close()
 end
 
