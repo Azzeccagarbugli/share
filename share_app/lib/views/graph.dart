@@ -5,8 +5,10 @@ import 'package:Share/models/mib.dart';
 import 'package:Share/models/mib_enum.dart';
 import 'package:Share/widgets/add_service_local.dart';
 import 'package:Share/widgets/card_graph.dart';
+import 'package:Share/widgets/effects/shadow.dart';
 import 'package:Share/widgets/no_device.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 
 class GraphView extends StatefulWidget {
@@ -97,7 +99,7 @@ class _GraphViewState extends State<GraphView> {
       if (widget.str.isNotEmpty) {
         _currentMib = widget.str
             .where((element) => element.category == Mibs.TEMPERATURE)
-            .single;
+            .first;
         WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToEnd());
         setState(() {
           NetworkController.call(_currentMib, "temp");
@@ -161,13 +163,48 @@ class _GraphViewState extends State<GraphView> {
                   ),
                   onTap: () {},
                 ),
-                CardGraph(
-                  scrollController: _scrollController,
-                  lineChartData: mainData(),
+                FlipCard(
+                  direction: FlipDirection.VERTICAL,
+                  front: CardGraphFront(
+                    scrollController: _scrollController,
+                    lineChartData: mainData(),
+                    device: _currentMib,
+                  ),
+                  back: CardGraphBack(),
                 ),
               ],
             )
           : NoDeviceFound(),
+    );
+  }
+}
+
+class CardGraphBack extends StatelessWidget {
+  const CardGraphBack({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: 12,
+        vertical: 10,
+      ),
+      height: MediaQuery.of(context).size.height / 3,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: Neumorphism.boxShadow(context),
+        color: Colors.white,
+      ),
+      child: Center(
+        child: Text(
+          "Share",
+          style: TextStyle(
+            fontSize: 52,
+          ),
+        ),
+      ),
     );
   }
 }

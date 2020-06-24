@@ -114,6 +114,49 @@ _G.services = {
         return m > -10 and m < 45
     end)),
 
+    ["2.1.4.0"] = Service:new("2.1.4.0", [[ 
+    return function(ip)
+        local host, port = ip, 7777
+        local socket = require("socket")
+        local tcp = assert(socket.tcp())
+        
+        tcp:connect(host, port);
+        tcp:send("\n");
+        tcp:settimeout(2)
+        while true do
+            local s, status, partial = tcp:receive()
+            if status == "closed" then break end
+            return tonumber(s) or tonumber(partial)
+        end
+        tcp:close()
+    end
+    ]], function()
+        local socket = require("socket")
+        local server = assert(socket.bind("*", 7777))
+
+        math.randomseed(os.time())
+        local temp = math.random(16, 17) + math.random()
+
+        while true do
+            server:settimeout(2)
+            local client = server:accept()
+            if client == nil then break end
+            local line, err = client:receive()
+            if not err then
+                client:send(temp .. "\n")
+                server:close()
+                client:close()
+                break
+            end
+        end
+    end, function(n) return true end, function(p)
+        math.randomseed(os.time())
+        return tostring(math.random(22, 23) + math.random())
+    end, Feature:new("2.1.*", function(n, m) return m > -10 and m < 45 end),
+                              Feature:new("3.5.*", function(n, m)
+        return m > -10 and m < 45
+    end)),
+
     ["4.1.7"] = Service:new("4.1.7", [[
     return function(ip)
         local host, port = ip, 7777

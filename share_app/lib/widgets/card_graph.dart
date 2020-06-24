@@ -1,20 +1,23 @@
+import 'package:Share/models/mib.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 import 'effects/shadow.dart';
 
-class CardGraph extends StatelessWidget {
-  const CardGraph({
+class CardGraphFront extends StatelessWidget {
+  const CardGraphFront({
     Key key,
     @required ScrollController scrollController,
     @required LineChartData lineChartData,
+    this.device,
   })  : _scrollController = scrollController,
         _lineChartData = lineChartData,
         super(key: key);
 
   final ScrollController _scrollController;
   final LineChartData _lineChartData;
+  final Mib device;
 
   List<Widget> _buildLateralList() {
     List<Widget> _list = new List<Widget>();
@@ -109,7 +112,7 @@ class CardGraph extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Real time chart",
+                          "Chart from ${device.identify}",
                           style: TextStyle(
                             fontSize: 22,
                             color: Colors.grey[300],
