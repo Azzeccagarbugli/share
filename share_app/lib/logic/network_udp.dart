@@ -16,7 +16,9 @@ class NetworkController {
 
   Map<InternetAddress, List<Mib>> str = new Map<InternetAddress, List<Mib>>();
 
-  static Map<Mib, List<String>> values = new Map<Mib, List<String>>();
+  static Map<Mib, List<String>> graph = new Map<Mib, List<String>>();
+
+  static String singleCalls;
 
   Future setUpUDP() async {
     this.listIp.forEach((element) async {
@@ -108,7 +110,7 @@ class NetworkController {
     return _listOfMib;
   }
 
-  static Future<dynamic> call(Mib mib, String param) async {
+  static Future<dynamic> callGraph(Mib mib, String param) async {
     await RawDatagramSocket.bind(
       InternetAddress.anyIPv4,
       9999,
@@ -120,16 +122,41 @@ class NetworkController {
           if (dg == null) {
             return;
           } else {
-            values.putIfAbsent(mib, () => [String.fromCharCodes(dg.data)]);
+            graph.putIfAbsent(mib, () => [String.fromCharCodes(dg.data)]);
           }
 
-          values.update(mib, (value) {
+          graph.update(mib, (value) {
             value.add(String.fromCharCodes(dg.data));
             return value;
           });
         });
         udpSocket.send(
           utf8.encode('mib, param = "${mib.identify}", "$param"'),
+          mib.ip,
+          9999,
+        );
+      },
+    );
+  }
+
+  static Future<dynamic> callSingleValue(Mib mib, String param) async {
+    await RawDatagramSocket.bind(
+      InternetAddress.anyIPv4,
+      9999,
+    ).then(
+      (RawDatagramSocket udpSocket) {
+        udpSocket.listen((e) {
+          Datagram dg = udpSocket.receive();
+
+          if (dg == null) {
+            return;
+          } else {
+            print(String.fromCharCodes(dg.data));
+            singleCalls = String.fromCharCodes(dg.data);
+          }
+        });
+        udpSocket.send(
+          utf8.encode('mib, param = "${mib.identify}", $param'),
           mib.ip,
           9999,
         );

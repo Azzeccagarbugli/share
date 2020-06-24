@@ -12,7 +12,7 @@ class ServiceView extends StatefulWidget {
 }
 
 class _ServiceViewState extends State<ServiceView> {
-  String a;
+  String a = "3";
 
   // Future<List<dynamic>> setUpLua(String func) async {
   //   await Luavm.open("call");
@@ -28,13 +28,18 @@ class _ServiceViewState extends State<ServiceView> {
   // }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     print(a);
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print(NetworkController.call(widget.mib, a));
+        onPressed: () async {
+          await NetworkController.callSingleValue(widget.mib, a);
         },
         child: Icon(
           Icons.category,
@@ -45,7 +50,11 @@ class _ServiceViewState extends State<ServiceView> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
-            widget.mib.ip.address + "\n" + widget.mib.identify,
+            widget.mib.ip.address +
+                "\n" +
+                widget.mib.identify +
+                "\n" +
+                NetworkController.singleCalls,
           ),
           Padding(
             padding: const EdgeInsets.all(14.0),

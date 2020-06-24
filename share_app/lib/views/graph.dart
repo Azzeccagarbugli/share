@@ -4,8 +4,8 @@ import 'package:Share/logic/network_udp.dart';
 import 'package:Share/models/mib.dart';
 import 'package:Share/models/mib_enum.dart';
 import 'package:Share/widgets/add_service_local.dart';
-import 'package:Share/widgets/card_graph.dart';
-import 'package:Share/widgets/effects/shadow.dart';
+import 'package:Share/widgets/card_graph_back.dart';
+import 'package:Share/widgets/card_graph_front.dart';
 import 'package:Share/widgets/no_device.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flip_card/flip_card.dart';
@@ -73,7 +73,7 @@ class _GraphViewState extends State<GraphView> {
       maxY: 30,
       lineBarsData: [
         LineChartBarData(
-          spots: _buildDouble(_map),
+          spots: _buildDouble(),
           isCurved: true,
           colors: gradientColors,
           barWidth: 3,
@@ -102,8 +102,8 @@ class _GraphViewState extends State<GraphView> {
             .first;
         WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToEnd());
         setState(() {
-          NetworkController.call(_currentMib, "temp");
-          _map = NetworkController.values;
+          NetworkController.callGraph(_currentMib, "temp");
+          _map = NetworkController.graph;
           _index++;
         });
       }
@@ -120,14 +120,26 @@ class _GraphViewState extends State<GraphView> {
     super.dispose();
   }
 
-  List<FlSpot> _buildDouble(Map<Mib, List<String>> temp) {
+  List<FlSpot> _buildDouble() {
     List<FlSpot> _list = new List<FlSpot>();
 
     double i = 0;
-    temp.values.forEach((l) {
+    _map.values.forEach((l) {
       l.forEach((element) {
         _list.add(FlSpot(i, double.parse(element)));
         i++;
+      });
+    });
+
+    return _list;
+  }
+
+  List<double> _buildValuesDouble() {
+    List<double> _list = new List<double>();
+
+    _map.values.forEach((l) {
+      l.forEach((element) {
+        _list.add(double.parse(element));
       });
     });
 
@@ -170,41 +182,14 @@ class _GraphViewState extends State<GraphView> {
                     lineChartData: mainData(),
                     device: _currentMib,
                   ),
-                  back: CardGraphBack(),
+                  back: CardGraphBack(
+                    list: _buildValuesDouble(),
+                    mib: _currentMib,
+                  ),
                 ),
               ],
             )
           : NoDeviceFound(),
-    );
-  }
-}
-
-class CardGraphBack extends StatelessWidget {
-  const CardGraphBack({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 10,
-      ),
-      height: MediaQuery.of(context).size.height / 3,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: Neumorphism.boxShadow(context),
-        color: Colors.white,
-      ),
-      child: Center(
-        child: Text(
-          "Share",
-          style: TextStyle(
-            fontSize: 52,
-          ),
-        ),
-      ),
     );
   }
 }
