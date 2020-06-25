@@ -1,7 +1,5 @@
 import 'package:Share/models/service.dart';
 
-import 'mib.dart';
-
 class Share {
   final List<Service> services;
 

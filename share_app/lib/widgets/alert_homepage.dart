@@ -76,7 +76,7 @@ class BuildAlertCategories extends StatelessWidget {
             ),
             color: Theme.of(context).accentColor,
             child: Text(
-              "Make a call to all",
+              "About this category",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 14,

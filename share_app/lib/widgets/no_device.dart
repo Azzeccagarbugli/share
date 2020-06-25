@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class NoDeviceFound extends StatelessWidget {
+  final String msg;
+  final Icon icon;
+
+  const NoDeviceFound({Key key, this.msg, this.icon}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,12 +33,9 @@ class NoDeviceFound extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Icon(
-                  Icons.do_not_disturb_on,
-                  color: Colors.grey[800],
-                ),
+                icon,
                 Text(
-                  "No devices still found, be sure to connect them",
+                  msg,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.grey[800],

@@ -40,9 +40,6 @@ class _HomePageViewState extends State<HomePageView>
     listIp: [
       InternetAddress("80.211.186.133"),
       InternetAddress("10.0.2.2"),
-      InternetAddress("127.0.0.1"),
-      InternetAddress("10.0.2.16"),
-      InternetAddress("192.168.1.64")
     ],
   );
 
@@ -117,7 +114,10 @@ class _HomePageViewState extends State<HomePageView>
           str: _buildListMib(_networkController.str),
         );
       case 2:
-        return TempWidget(context: context, bottomNavIndex: _bottomNavIndex);
+        return TempWidget(
+          context: context,
+          bottomNavIndex: _bottomNavIndex,
+        );
       case 3:
         return SettingsView();
       default:
@@ -127,7 +127,7 @@ class _HomePageViewState extends State<HomePageView>
 
   @override
   Widget build(BuildContext context) {
-     NetworkController.openPortUdp(_share);
+    // NetworkController.openPortUdp(_share);
     return Scaffold(
       extendBody: true,
       floatingActionButton: ScaleTransition(

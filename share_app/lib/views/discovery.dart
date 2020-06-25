@@ -21,7 +21,13 @@ class _DiscoveryViewState extends State<DiscoveryView> {
   Widget _buildView(int lenght) {
     switch (lenght) {
       case 0:
-        return NoDeviceFound();
+        return NoDeviceFound(
+          icon: Icon(
+            Icons.do_not_disturb_on,
+            color: Colors.grey[800],
+          ),
+          msg: "No device still found, be sure to connect them",
+        );
       default:
         return ListView.separated(
           separatorBuilder: (_, __) => Divider(
