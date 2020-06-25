@@ -1,5 +1,7 @@
 import 'package:Share/models/service.dart';
 
+import 'mib.dart';
+
 class Share {
   final List<Service> services;
 
@@ -13,5 +15,9 @@ class Share {
 
   bool detach(Service service) {
     return this.services.remove(service);
+  }
+
+  Service find(String mib) {
+    return this.services.where((serv) => serv.mib == mib).single;
   }
 }

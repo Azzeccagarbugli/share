@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:Share/models/mib.dart';
+import 'package:Share/models/share.dart';
 
 class NetworkController {
   final List<InternetAddress> listIp;
@@ -50,7 +51,7 @@ class NetworkController {
     });
   }
 
-  static Future openPortUdp() async {
+  static Future openPortUdp(Share share) async {
     print("APRO");
     await RawDatagramSocket.bind(InternetAddress.anyIPv4,6868)
     .then(
@@ -142,13 +143,14 @@ class NetworkController {
       (RawDatagramSocket udpSocket) {
         udpSocket.listen((e) {
           Datagram dg = udpSocket.receive();
-
           if (dg == null) {
             return;
           } else {
             //print(String.fromCharCodes(dg.data));
             singleCalls = String.fromCharCodes(dg.data);
           }
+          print(String.fromCharCodes(dg.data));
+          singleCalls = new String.fromCharCodes(dg.data);
         });
         udpSocket.send(
           utf8.encode('mib, param = "${mib.identify}", $param'),
