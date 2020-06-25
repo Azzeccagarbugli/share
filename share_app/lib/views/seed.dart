@@ -36,6 +36,9 @@ class _HomePageViewState extends State<HomePageView>
     listIp: [
       InternetAddress("80.211.186.133"),
       InternetAddress("10.0.2.2"),
+      InternetAddress("127.0.0.1"),
+      InternetAddress("10.0.2.16"),
+      InternetAddress("192.168.1.64")
     ],
   );
 
@@ -120,8 +123,7 @@ class _HomePageViewState extends State<HomePageView>
 
   @override
   Widget build(BuildContext context) {
-    // NetworkController.openPortUdp();
-
+     NetworkController.openPortUdp();
     return Scaffold(
       extendBody: true,
       floatingActionButton: ScaleTransition(
