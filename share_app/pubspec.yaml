@@ -20,6 +20,7 @@ dependencies:
   wave: ^0.0.8
   fl_chart: ^0.10.0
   flip_card: ^0.4.4
+  sensors: ^0.4.2+2
 
 dev_dependencies:
   flutter_test:

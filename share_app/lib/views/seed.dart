@@ -7,9 +7,9 @@ import 'package:Share/models/service.dart';
 import 'package:Share/models/share.dart';
 import 'package:Share/views/category.dart';
 import 'package:Share/views/discovery.dart';
+import 'package:Share/views/sensors.dart';
 import 'package:Share/views/settings.dart';
 import 'package:Share/widgets/bottombar/central_button.dart';
-import 'package:Share/widgets/temp_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:Share/widgets/bottombar/bottombar.dart';
 
@@ -114,10 +114,7 @@ class _HomePageViewState extends State<HomePageView>
           str: _buildListMib(_networkController.str),
         );
       case 2:
-        return TempWidget(
-          context: context,
-          bottomNavIndex: _bottomNavIndex,
-        );
+        return SensorsView();
       case 3:
         return SettingsView();
       default:
