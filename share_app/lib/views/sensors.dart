@@ -1,5 +1,9 @@
 import 'dart:async';
 
+import 'package:Share/widgets/add_service_local.dart';
+import 'package:Share/widgets/card_sensor.dart';
+import 'package:Share/widgets/circle_graph.dart';
+import 'package:Share/widgets/effects/shadow.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
 
@@ -14,7 +18,6 @@ class SensorsView extends StatefulWidget {
 
 class _SensorsViewState extends State<SensorsView> {
   List<double> _accelerometerValues;
-  List<double> _userAccelerometerValues;
   List<double> _gyroscopeValues;
   List<StreamSubscription<dynamic>> _streamSubscriptions =
       <StreamSubscription<dynamic>>[];
@@ -25,31 +28,29 @@ class _SensorsViewState extends State<SensorsView> {
         _accelerometerValues?.map((double v) => v.toStringAsFixed(1))?.toList();
     final List<String> gyroscope =
         _gyroscopeValues?.map((double v) => v.toStringAsFixed(1))?.toList();
-    final List<String> userAccelerometer = _userAccelerometerValues
-        ?.map((double v) => v.toStringAsFixed(1))
-        ?.toList();
 
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: ListView(
         children: <Widget>[
-          Padding(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text('Accelerometer: $accelerometer'),
-              ],
+          MiniCard(
+            boolWaves: false,
+            text: "Your sensors here for you and for\nyour whole network!",
+            icon: Icon(
+              Icons.developer_mode,
+              color: Colors.white,
             ),
-            padding: const EdgeInsets.all(16.0),
+            onTap: () {},
           ),
-          Padding(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text('Gyroscope: $gyroscope'),
-              ],
-            ),
-            padding: const EdgeInsets.all(16.0),
+          CardValueSensor(
+            sensor: accelerometer == null ? ["0", "0", "0"] : accelerometer,
+            subtitile:
+                "A tool that measures proper acceleration of a body in its own instantaneous rest frame",
+            title: "Accelerometer",
+          ),
+          CardValueSensor(
+            sensor: gyroscope == null ? ["0", "0", "0"] : gyroscope,
+            subtitile: "Used for measuring orientation and angular velocity",
+            title: "Gyroscope",
           ),
         ],
       ),
@@ -76,12 +77,6 @@ class _SensorsViewState extends State<SensorsView> {
     _streamSubscriptions.add(gyroscopeEvents.listen((GyroscopeEvent event) {
       setState(() {
         _gyroscopeValues = <double>[event.x, event.y, event.z];
-      });
-    }));
-    _streamSubscriptions
-        .add(userAccelerometerEvents.listen((UserAccelerometerEvent event) {
-      setState(() {
-        _userAccelerometerValues = <double>[event.x, event.y, event.z];
       });
     }));
   }

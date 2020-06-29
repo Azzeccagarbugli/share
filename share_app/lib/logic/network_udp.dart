@@ -51,33 +51,21 @@ class NetworkController {
     });
   }
 
-  static Future openPortUdp(Share share) async {
-    print("APRO");
-    await RawDatagramSocket.bind(InternetAddress.anyIPv4,6868)
-    .then(
-      (RawDatagramSocket udpSocket) {
-        udpSocket.listen((e) {
-          switch (e) {
-            case RawSocketEvent.read:
-              print("VA BENE");
-              print(String.fromCharCodes(udpSocket.receive().data));
-              break;
-            case RawSocketEvent.readClosed:
-                print("READCLOSED");
-                break;
-            case RawSocketEvent.closed:
-              print("CHIUSO");
-              break;
-          }
-        });
-      },
-    );
+  static void openPortUdp() {
+    print("STARTO");
+    RawDatagramSocket.bind(InternetAddress.anyIPv4, 6868)
+        .then((RawDatagramSocket socket) {
+      socket.listen((e) {
+        Datagram dg = socket.receive();
+        if (dg != null) {
+          print("PIPPO BAUDO");
+        }
+      });
+    });
   }
 
   void _readDatagram() {
     Datagram datagram = _udpSocket.receive();
-
-   //print(String.fromCharCodes(datagram.data));
 
     if (datagram != null) {
       str.putIfAbsent(
@@ -146,7 +134,6 @@ class NetworkController {
           if (dg == null) {
             return;
           } else {
-            //print(String.fromCharCodes(dg.data));
             singleCalls = String.fromCharCodes(dg.data);
           }
           print(String.fromCharCodes(dg.data));

@@ -33,7 +33,7 @@ class CircleDataGraph extends StatelessWidget {
                 bottom: 16,
               ),
               child: Text(
-                "$value°",
+                "$value",
                 style: TextStyle(
                   fontSize: 38,
                   fontWeight: FontWeight.bold,

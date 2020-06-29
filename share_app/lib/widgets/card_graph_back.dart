@@ -44,7 +44,7 @@ class CardGraphBack extends StatelessWidget {
                       size: 14,
                     ),
                     label: "max",
-                    value: list.reduce(max).toStringAsFixed(0),
+                    value: list.reduce(max).toStringAsFixed(0) + "°",
                     color: Colors.red[400],
                   ),
                   CircleDataGraph(
@@ -55,7 +55,8 @@ class CardGraphBack extends StatelessWidget {
                     ),
                     label: "avg",
                     value: ((list.reduce(max) + list.reduce(min)) / 2)
-                        .toStringAsFixed(0),
+                            .toStringAsFixed(0) +
+                        "°",
                     color: Colors.grey[400],
                   ),
                   CircleDataGraph(
@@ -65,7 +66,7 @@ class CardGraphBack extends StatelessWidget {
                       size: 14,
                     ),
                     label: "min",
-                    value: list.reduce(min).toStringAsFixed(0),
+                    value: list.reduce(min).toStringAsFixed(0) + "°",
                     color: Colors.green[400],
                   ),
                 ],

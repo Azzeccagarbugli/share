@@ -149,7 +149,6 @@ class _ServiceViewState extends State<ServiceView> {
 
   Widget homePageWithParam() {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

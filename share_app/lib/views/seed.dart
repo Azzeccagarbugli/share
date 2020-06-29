@@ -124,7 +124,8 @@ class _HomePageViewState extends State<HomePageView>
 
   @override
   Widget build(BuildContext context) {
-    // NetworkController.openPortUdp(_share);
+    NetworkController.openPortUdp();
+
     return Scaffold(
       extendBody: true,
       floatingActionButton: ScaleTransition(
