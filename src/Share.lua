@@ -45,7 +45,9 @@ end
 function Share:discovery(macro_mib)
     local result = {}
     -- ip = net.service.mdns.resolvehost("whitecat-share")
-    local ip_list = {"80.211.186.133", "localhost"}
+    local ip_list = {
+        "192.168.1.72",
+        "192.168.1.10"}
     for _, ip in pairs(ip_list) do
         self:open_udp_socket(ip, macro_mib, result)
     end
@@ -101,16 +103,20 @@ end
 function Share:open_udp_socket(ip, macro_mib, result)
     local socket = require("socket")
     local udp_discovery = socket.udp()
+   -- local udp = socket.udp()
     udp_discovery:setpeername(ip, 9898)
-    udp_discovery:settimeout(1)
+    udp_discovery:settimeout(2)
     udp_discovery:send(macro_mib)
     local data_mib = udp_discovery:receive()
+    --udp:setsockname("*", 9898)
+    --local data_mib, ip_mib, port_mib = udp:receivefrom()
+
     if (data_mib and not (data_mib == "{}")) then
         pcall(load("mib_tab = " .. data_mib))
         local ip_tab = {}
         table.insert(ip_tab, ip)
         Utilities:add_new_ip(ip_tab, result, ip, mib_tab)
     end
-
+    --udp:close()
     udp_discovery:close()
 end

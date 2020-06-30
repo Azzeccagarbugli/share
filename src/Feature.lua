@@ -29,7 +29,7 @@ local function check_result(param, current_ip, data_func)
     if (param == nil) then
         return load(data_func)()(current_ip)
     elseif (param == nil and current_ip == nil) then
-        return load(data_func)()
+        return tonumber(data_func)
     else
         return load(data_func)()(param, current_ip)
     end
@@ -45,7 +45,6 @@ function Feature:call(...)
         log.fatal("[NO SERVICES MATCHED WITH THE SAME MIB]")
         return "nil"
     end
-
     log.trace("[" .. Utilities:get_table_size(set_services) .. " DEVICE FOUND]")
     Utilities:print_table(set_services)
 
@@ -57,6 +56,12 @@ function Feature:call(...)
             udp_feature:setpeername(current_ip, 8888)
             check_param(mib, ..., udp_feature)
             local data_func = udp_feature:receive()
+    
+            if not (data_func:find("return")) then
+                log.info("[A REPLY FROM MOBILE APP!]")
+                log.info("[MSG REDCEIVED: " .. data_func .. "] [FROM: " ..current_ip .. "]")
+                return data_func
+            end
 
             if not (data_func == "nil") then
                 log.info("[PRE-CONDITION SUCCESSFUL]")

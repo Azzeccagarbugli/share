@@ -15,7 +15,7 @@ dofile("Services.lua")
 -- end
 -- udp_mobile:close() 
 
-local socket = require("socket")
+--[[ local socket = require("socket")
 
 local udp2 = socket.udp()
 
@@ -30,19 +30,19 @@ while true do
         print(data2)
     end
     udp2:close()
-end
+end ]]
+
+-- call a Flutter
+--_G.services["1.2.6.0"].features[5]:call()
+
+-- Call radice quadrata (pre superate)
+ _G.services["1.2.6.0"].features[2]:call(2)
 
 -- ottenere e stampare tutti i services nella sottorete
 --[[ for i, k in pairs(_G.services["1.2.6.0"].features[4]:call()) do
     print("IP: " .. i)
     for _, v in pairs(k) do print("Servizi: " .. v) end
 end ]]
-
--- call alla temperatura
--- _G.services["1.2.6.0"].features[4]:call()
-
--- Call radice quadrata (pre superate)
--- _G.services["1.2.6.0"].features[2]:call(2)
 
 -- Radice quadrata (pre non superate)
 -- _G.services["1.2.6.0"].features[2]:call(-1)

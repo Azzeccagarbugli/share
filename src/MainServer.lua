@@ -25,11 +25,10 @@ udp_result:settimeout(1)
 
 local disc = Share:new()
 disc:attach(_G.services["1.2.6.0"])
--- disc:detach(_G.services["1.2.6.0"])
--- disc:attach(_G.services["2.1.4.0"])
+disc:attach(_G.services["2.1.4.0"])
 disc:attach(_G.services["2.1.1.0"])
 disc:attach(_G.services["3.5.8"])
--- disc:attach(_G.services["4.1.7"])
+disc:attach(_G.services["4.1.7"])
 
 while true do
     local data_discovery, ip_discovery, port_discovery =

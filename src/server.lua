@@ -7,15 +7,14 @@ dofile("Services.lua")
 local socket = require("socket")
 
 local udp = socket.udp()
-udp:setsockname("*", 2222)
+udp:setsockname("*", 9898)
 udp:settimeout(1)
 
 while true do
     print("ASCOLTO")
     local data_discovery, ip_discovery, port_discovery = udp:receivefrom()
     if data_discovery then
-        print("RICEVUTO DA",ip_discovery,port_discovery)
-        udp:sendto("CIAOOOO", ip_discovery,port_discovery)
+        print("RICEVUTO :"..data_discovery)
         break
     end
 end

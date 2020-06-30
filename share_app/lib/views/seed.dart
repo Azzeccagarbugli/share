@@ -39,7 +39,8 @@ class _HomePageViewState extends State<HomePageView>
   NetworkController _networkController = new NetworkController(
     listIp: [
       InternetAddress("80.211.186.133"),
-      InternetAddress("10.0.2.2"),
+      //InternetAddress("10.0.2.2"),
+      InternetAddress("192.168.1.85")
     ],
   );
 
@@ -124,7 +125,9 @@ class _HomePageViewState extends State<HomePageView>
 
   @override
   Widget build(BuildContext context) {
-    NetworkController.openPortUdp();
+    NetworkController.discovery(_share);
+    NetworkController.call(_share);
+  //NetworkController.openPortUdp(_share);
 
     return Scaffold(
       extendBody: true,

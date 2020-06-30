@@ -51,14 +51,46 @@ class NetworkController {
     });
   }
 
-  static void openPortUdp() {
+   static void discovery(Share share) {
+    print("DISCOVERY");
+    RawDatagramSocket.bind(InternetAddress.anyIPv4, 9898)
+        .then((RawDatagramSocket socket) {
+      socket.listen((e) {
+        Datagram dg = socket.receive();
+        if (dg != null) {
+          print(String.fromCharCodes(dg.data));
+          socket.send(utf8.encode('{"9.9.9"}'),dg.address,dg.port);
+          //share.find(String.fromCharCodes(dg.data));
+        }
+      });
+    });
+  }
+
+
+   static void call(Share share) {
+    print("CALL");
+    RawDatagramSocket.bind(InternetAddress.anyIPv4, 8888)
+        .then((RawDatagramSocket socket) {
+      socket.listen((e) {
+        Datagram dg = socket.receive();
+        if (dg != null) {
+          print(String.fromCharCodes(dg.data));
+          socket.send(utf8.encode('5672'),dg.address,dg.port);
+          //share.find(String.fromCharCodes(dg.data));
+        }
+      });
+    });
+  }
+
+  static void openPortUdp(Share share) {
     print("STARTO");
     RawDatagramSocket.bind(InternetAddress.anyIPv4, 6868)
         .then((RawDatagramSocket socket) {
       socket.listen((e) {
         Datagram dg = socket.receive();
         if (dg != null) {
-          print("PIPPO BAUDO");
+          print(String.fromCharCodes(dg.data));
+          socket.send(utf8.encode('CIAOZIO'),dg.address,7777);
         }
       });
     });

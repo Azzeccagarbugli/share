@@ -69,7 +69,7 @@ _G.services = {
                                   function(n, m) return n - m * m < 0.1 end),
                               Feature:new("3.5.*", function(n, m)
         return m > -10 and m < 45
-    end), Feature:new("*", function(n, m) return true end)),
+    end), Feature:new("*", function(n, m) return true end),Feature:new("9.9.*", function(n, m) return true end)),
 
     ["2.1.1.0"] = Service:new("2.1.1.0", [[ 
     return function(ip)

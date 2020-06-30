@@ -15,7 +15,8 @@ class Share {
     return this.services.remove(service);
   }
 
-  Service find(String mib) {
-    return this.services.where((serv) => serv.mib == mib).single;
+  List<Service> find(String mib) {
+    print("CERCO: "+mib.substring(0,mib.length-1));
+    return this.services.where((serv) => serv.mib.startsWith(mib.substring(0,mib.length-1)));
   }
 }
