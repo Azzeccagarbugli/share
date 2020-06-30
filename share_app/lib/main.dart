@@ -24,6 +24,8 @@ class MyApp extends StatelessWidget {
         disabledColor: Colors.purple[100],
         brightness: Brightness.light,
         buttonColor: Colors.grey[900],
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         dividerColor: Colors.transparent,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: GoogleFonts.quicksandTextTheme(
