@@ -8,4 +8,9 @@ class Service {
     this.function,
     this.precondition,
   );
+
+  @override
+  String toString() {
+    return "$mib";
+  } 
 }

@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:Share/models/mib.dart';
 import 'package:Share/models/mib_enum.dart';
+import 'package:Share/models/service.dart';
+import 'package:Share/models/share.dart';
 import 'package:Share/widgets/add_service_local.dart';
 import 'package:Share/widgets/alert_homepage.dart';
 import 'package:Share/widgets/card_category.dart';
@@ -11,10 +13,11 @@ import 'package:flutter/material.dart';
 
 class CategoriesView extends StatefulWidget {
   final Map<InternetAddress, List<Mib>> str;
+  final Share share;
 
   const CategoriesView({
     Key key,
-    this.str,
+    this.str, this.share,
   }) : super(key: key);
 
   @override
@@ -73,7 +76,9 @@ class _CategoriesViewState extends State<CategoriesView> {
               ),
               boolWaves: true,
               onTap: () {
-                print("hey");
+               widget.share.attach(new Service("9.9.7","15",
+                              () => true,
+                            ));
               },
             ),
             Container(

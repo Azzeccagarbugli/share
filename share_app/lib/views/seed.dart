@@ -32,7 +32,13 @@ class _HomePageViewState extends State<HomePageView>
 
   Service _service = new Service(
     "9.9.9",
-    "calcolo = 10",
+    "10",
+    () => true,
+  );
+
+  Service _service1 = new Service(
+    "9.9.8",
+    "54",
     () => true,
   );
 
@@ -71,7 +77,6 @@ class _HomePageViewState extends State<HomePageView>
 
     _share = new Share(
       <Service>[
-        _service,
       ],
     );
 
@@ -105,6 +110,7 @@ class _HomePageViewState extends State<HomePageView>
       case -1:
         return CategoriesView(
           str: _networkController.str,
+          share: _share,
         );
       case 0:
         return DiscoveryView(
@@ -127,7 +133,6 @@ class _HomePageViewState extends State<HomePageView>
   Widget build(BuildContext context) {
     NetworkController.discovery(_share);
     NetworkController.call(_share);
-  //NetworkController.openPortUdp(_share);
 
     return Scaffold(
       extendBody: true,
