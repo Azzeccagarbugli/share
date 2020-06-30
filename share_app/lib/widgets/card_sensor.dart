@@ -21,8 +21,10 @@ class CardValueSensor extends StatelessWidget {
         horizontal: 12,
         vertical: 10,
       ),
-      padding: const EdgeInsets.all(16),
-      height: MediaQuery.of(context).size.height / 3.5,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 18,
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         boxShadow: Neumorphism.boxShadow(context),
@@ -52,7 +54,7 @@ class CardValueSensor extends StatelessWidget {
           ),
           Text(subtitile),
           SizedBox(
-            height: 4,
+            height: 16,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

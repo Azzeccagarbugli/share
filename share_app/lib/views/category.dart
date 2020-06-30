@@ -5,6 +5,7 @@ import 'package:Share/models/mib.dart';
 import 'package:Share/models/mib_enum.dart';
 import 'package:Share/models/service.dart';
 import 'package:Share/models/share.dart';
+import 'package:Share/views/selection_share.dart';
 import 'package:Share/widgets/add_service_local.dart';
 import 'package:Share/widgets/alert_homepage.dart';
 import 'package:Share/widgets/card_category.dart';
@@ -17,7 +18,8 @@ class CategoriesView extends StatefulWidget {
 
   const CategoriesView({
     Key key,
-    this.str, this.share,
+    this.str,
+    this.share,
   }) : super(key: key);
 
   @override
@@ -54,6 +56,27 @@ class _CategoriesViewState extends State<CategoriesView> {
     );
   }
 
+  Route _createRoute() {
+    return PageRouteBuilder(
+      opaque: false,
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          SelectionShareView(
+        share: widget.share,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(0.0, 1.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
   Widget _buildView(int lenght) {
     switch (lenght) {
       case 0:
@@ -76,9 +99,7 @@ class _CategoriesViewState extends State<CategoriesView> {
               ),
               boolWaves: true,
               onTap: () {
-               widget.share.attach(new Service("9.9.7","15",
-                              () => true,
-                            ));
+                Navigator.push(context, _createRoute());
               },
             ),
             Container(

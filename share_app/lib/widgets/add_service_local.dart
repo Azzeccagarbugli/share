@@ -6,7 +6,7 @@ import 'effects/shadow.dart';
 
 class MiniCard extends StatelessWidget {
   final String text;
-  final Icon icon;
+  final Widget icon;
   final Function onTap;
   final bool boolWaves;
 

@@ -45,8 +45,7 @@ class _HomePageViewState extends State<HomePageView>
   NetworkController _networkController = new NetworkController(
     listIp: [
       InternetAddress("80.211.186.133"),
-      //InternetAddress("10.0.2.2"),
-      InternetAddress("192.168.1.85")
+      InternetAddress("10.0.2.2"),
     ],
   );
 
@@ -76,8 +75,7 @@ class _HomePageViewState extends State<HomePageView>
     );
 
     _share = new Share(
-      <Service>[
-      ],
+      <Service>[],
     );
 
     Timer.periodic(Duration(seconds: 2), (Timer t) {

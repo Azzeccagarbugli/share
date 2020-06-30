@@ -51,32 +51,40 @@ class NetworkController {
     });
   }
 
-   static void discovery(Share share) {
+  static void discovery(Share share) {
     RawDatagramSocket.bind(InternetAddress.anyIPv4, 9898)
         .then((RawDatagramSocket socket) {
       socket.listen((e) {
         Datagram dg = socket.receive();
         if (dg != null) {
-          print("DISCOVERY: "+String.fromCharCodes(dg.data));
-          socket.send(utf8.encode(share.find(String.fromCharCodes(dg.data)).toString()),
-                      dg.address,
-                      dg.port);
+          print("DISCOVERY: " + String.fromCharCodes(dg.data));
+          socket.send(
+            utf8.encode(share.find(String.fromCharCodes(dg.data)).toString()),
+            dg.address,
+            dg.port,
+          );
         }
       });
     });
   }
 
-   static void call(Share share) {
+  static void call(Share share) {
     RawDatagramSocket.bind(InternetAddress.anyIPv4, 8888)
         .then((RawDatagramSocket socket) {
       socket.listen((e) {
         Datagram dg = socket.receive();
         if (dg != null) {
-          print("CALL: "+String.fromCharCodes(dg.data));
-          // 6
-          print("SOTTOSTRINGA: "+String.fromCharCodes(dg.data).substring(7,dg.data.length-1));
-          String mib = String.fromCharCodes(dg.data).substring(7,dg.data.length-1);
-          socket.send(utf8.encode(share.getService(mib).function),dg.address,dg.port);
+          print("CALL: " + String.fromCharCodes(dg.data));
+
+          print("SOTTOSTRINGA: " +
+              String.fromCharCodes(dg.data).substring(7, dg.data.length - 1));
+          String mib =
+              String.fromCharCodes(dg.data).substring(7, dg.data.length - 1);
+          socket.send(
+            utf8.encode(share.getService(mib).function),
+            dg.address,
+            dg.port,
+          );
         }
       });
     });
