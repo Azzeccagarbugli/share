@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:Share/models/mib.dart';
 import 'package:Share/models/mib_enum.dart';
-import 'package:Share/models/service.dart';
 import 'package:Share/models/share.dart';
 import 'package:Share/views/selection_share.dart';
 import 'package:Share/widgets/add_service_local.dart';

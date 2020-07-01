@@ -10,7 +10,7 @@ Service.__index = Service
 --- @param p function The pre-condition necessary to checking 
 --- @vararg any The set of features
 --- @return Service The new Service just created or nil in case of any issues 
-function Service:new(i, f, d, p,res, ...)
+function Service:new(i, f, d, p, res, ...)
     if type(i) == "string" and type(f) == "string" and type(d) == "function" and
         type(p) == "function" and type(res) == "function" then
         return setmetatable({

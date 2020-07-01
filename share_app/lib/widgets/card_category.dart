@@ -21,6 +21,8 @@ class CategoryCard extends StatelessWidget {
         return "Mathematics";
       case Mibs.TEMPERATURE:
         return "Temperature";
+      case Mibs.BOILER:
+        return "Boiler";
       case Mibs.UNKNOWN:
         return "Unknown";
       default:
@@ -34,6 +36,8 @@ class CategoryCard extends StatelessWidget {
         return "Do your calculations!";
       case Mibs.TEMPERATURE:
         return "Is hot or cold?";
+      case Mibs.BOILER:
+        return "Your comfort starts now";
       case Mibs.UNKNOWN:
         return "We don't know these devices";
       default:
@@ -49,6 +53,9 @@ class CategoryCard extends StatelessWidget {
         break;
       case Mibs.TEMPERATURE:
         path += "temp.svg";
+        break;
+      case Mibs.BOILER:
+        path += "com.svg";
         break;
       case Mibs.UNKNOWN:
         path += "404.svg";

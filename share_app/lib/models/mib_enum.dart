@@ -2,4 +2,5 @@ enum Mibs {
   UNKNOWN,
   MATHEMATICS,
   TEMPERATURE,
+  BOILER,
 }

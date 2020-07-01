@@ -43,6 +43,8 @@ class Mib {
       return Mibs.MATHEMATICS;
     } else if (this.identify.startsWith("2.1.")) {
       return Mibs.TEMPERATURE;
+    } else if (this.identify.startsWith("5.3.")) {
+      return Mibs.BOILER;
     } else {
       return Mibs.UNKNOWN;
     }

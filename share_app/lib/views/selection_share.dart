@@ -21,7 +21,7 @@ class _SelectionShareViewState extends State<SelectionShareView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink[200].withOpacity(0.7),
+      backgroundColor: Colors.grey[100].withOpacity(0.7),
       body: Container(
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
@@ -70,7 +70,7 @@ class _SelectionShareViewState extends State<SelectionShareView> {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(96),
-                  color: Colors.pink[100],
+                  color: Colors.grey[300],
                 ),
               ),
               CardSensorShare(
