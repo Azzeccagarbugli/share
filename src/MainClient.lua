@@ -36,7 +36,10 @@ end ]]
 -- _G.services["1.2.6.0"].features[5]:call()
 
 -- Call radice quadrata (pre superate)
-_G.services["1.2.6.0"].features[2]:call(2)
+--_G.services["1.2.6.0"].features[2]:call(2)
+
+--Call caldaia
+_G.services["5.3.1"].features[1]:call(20)
 
 -- ottenere e stampare tutti i services nella sottorete
 --[[ for i, k in pairs(_G.services["1.2.6.0"].features[4]:call()) do

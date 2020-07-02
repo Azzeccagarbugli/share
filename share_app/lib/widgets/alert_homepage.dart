@@ -99,6 +99,8 @@ class BuildAlertCategories extends StatelessWidget {
         return "Temperature";
       case Mibs.UNKNOWN:
         return "Unkown";
+      case Mibs.BOILER:
+        return "Boiler";
       default:
         return null;
     }

@@ -29,6 +29,7 @@ disc:attach(_G.services["2.1.4.0"])
 disc:attach(_G.services["2.1.1.0"])
 disc:attach(_G.services["3.5.8"])
 disc:attach(_G.services["4.1.7"])
+disc:attach(_G.services["5.3.1"])
 
 while true do
     local data_discovery, ip_discovery, port_discovery =
@@ -71,6 +72,7 @@ while true do
                   "[IP: " .. ip_result .. "]", "[PORT: " .. port_result .. "]")
         load(data_result)()
         if (_G.services[mib].pre(param)) then
+            print("ARRIVA "..data_result)
             udp_result:sendto(_G.services[mib].result(param), ip_result,
                               port_result)
         else

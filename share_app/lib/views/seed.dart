@@ -30,21 +30,10 @@ class _HomePageViewState extends State<HomePageView>
 
   Share _share;
 
-  Service _service = new Service(
-    "9.9.9",
-    "10",
-    () => true,
-  );
-
-  Service _service1 = new Service(
-    "9.9.8",
-    "54",
-    () => true,
-  );
-
   NetworkController _networkController = new NetworkController(
     listIp: [
-      InternetAddress("80.211.186.133"),
+      InternetAddress("192.168.1.9"),
+      //InternetAddress("80.211.186.133"),
       InternetAddress("10.0.2.2"),
     ],
   );

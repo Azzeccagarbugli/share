@@ -37,7 +37,7 @@ end
 function Share:mobile_app()
     local result = {}
     -- ip = net.service.mdns.resolvehost("whitecat-share")
-    local ip_list = {"localhost", "80.211.186.133", "79.23.72.45"}
+    local ip_list = {"localhost", "192.168.1.9","192.168.1.10"}
     for _, ip in pairs(ip_list) do self:open_udp_mobile(ip, result) end
     return result
 end
@@ -45,7 +45,7 @@ end
 function Share:discovery(macro_mib)
     local result = {}
     -- ip = net.service.mdns.resolvehost("whitecat-share")
-    local ip_list = {"localhost", "192.168.1.72", "192.168.1.10"}
+    local ip_list = {"localhost","192.168.1.9","192.168.1.10"}
     for _, ip in pairs(ip_list) do
         self:open_udp_socket(ip, macro_mib, result)
     end

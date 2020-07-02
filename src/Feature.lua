@@ -62,10 +62,11 @@ function Feature:call(...)
                 log.info("[MSG REDCEIVED: " .. data_func .. "] [FROM: " ..current_ip .. "]")
                 return data_func
             end
-
+            print("RICEVO DATA_FUNC "..data_func)
             if not (data_func == "nil") then
                 log.info("[PRE-CONDITION SUCCESSFUL]")
                 local res = check_result(..., current_ip, data_func)
+                print("RES "..res)
                 if (res and self.post(..., res)) then
                     log.info("[POST-CONDITION SUCCESSFUL]")
                     log.info("[MSG REDCEIVED: " .. res .. "] [FROM: " ..
