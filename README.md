@@ -51,12 +51,6 @@ preconditions for function.
 A string attribute identifies service in a unique world. For example an **SNMP MIB** can be
 used to identify a service.
 
-.. note::
-A management information base **(MIB)** is a database used for managing the
-entities in a communication network. Most often associated with the
-Simple Network Management Protocol **(SNMP)**, the term is also used more
-generically in contexts such as in OSI/ISO Network management model.
-
 In `function` coding there may be calls to external services that are specified by implementations of
 **Feature**. The `id` attribute defines a regular expression that describes semantically the service requested. The invocation of a service within `function`
 occurs through the call invocation relating to a specification present in features.
