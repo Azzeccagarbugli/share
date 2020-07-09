@@ -16,23 +16,21 @@ class Share {
   }
 
   String find(String mib) {
-    print("CERCO: "+mib.substring(0,mib.length-1));
-    //tab = {"9.9.9","9.9.12"}
-    //return this.services.where((serv) => serv.mib.startsWith(mib.substring(0,mib.length-1))).toList();
     String tab = "{";
-    this.services.where((serv) => serv.mib.startsWith(mib.substring(0,mib.length-1)))
-      .forEach((element) {
-        print("ESAMINO: "+element.toString());
-       if( this.services.indexOf(element) == this.services.length-1){
-         tab += '"$element"';
-       }else
+    this
+        .services
+        .where((serv) => serv.mib.startsWith(mib.substring(0, mib.length - 1)))
+        .forEach((element) {
+      if (this.services.indexOf(element) == this.services.length - 1) {
+        tab += '"$element"';
+      } else
         tab += '"$element",';
-      });
-      tab += "}";
-  return tab;
+    });
+    tab += "}";
+    return tab;
   }
 
-  Service getService(String mib){
+  Service getService(String mib) {
     return this.services.where((element) => element.mib == mib).single;
   }
 }

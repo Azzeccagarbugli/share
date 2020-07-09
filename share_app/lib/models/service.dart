@@ -12,5 +12,5 @@ class Service {
   @override
   String toString() {
     return "$mib";
-  } 
+  }
 }

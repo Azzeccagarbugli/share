@@ -15,8 +15,16 @@ class SelectionShareView extends StatefulWidget {
 }
 
 class _SelectionShareViewState extends State<SelectionShareView> {
-  final Service _acc = new Service("9.9.3", "43", () => true);
-  final Service _gyr = new Service("9.9.2", "98", () => true);
+  final Service _acc = new Service(
+    "9.9.3",
+    "43",
+    () => true,
+  );
+  final Service _gyr = new Service(
+    "9.9.2",
+    "98",
+    () => true,
+  );
 
   @override
   Widget build(BuildContext context) {
